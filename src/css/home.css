@@ -24,7 +24,7 @@
     background-color: red;
     transform: scaleY(0.05);
     transform-origin: bottom;
-    transition: transform 80ms linear, background-color 120ms ease-out;
+    transition: transform 750ms linear, background-color 800ms ease-out;
 }
 
 .home__showcase .home__title {
