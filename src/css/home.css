@@ -10,6 +10,21 @@
 
 .home__showcase {
     margin-block: 2em;
+    gap: 1.25em;
+}
+
+.home__mixer {
+    width: 18rem;
+    height: 18rem;
+    background-color: black;
+}
+
+.home__mixer .mixer {
+    aspect-ratio: 1;
+    background-color: red;
+    transform: scaleY(0.05);
+    transform-origin: bottom;
+    transition: transform 80ms linear, background-color 120ms ease-out;
 }
 
 .home__showcase .home__title {
@@ -53,6 +68,10 @@
 }
 
 @media(max-width: 768px) {
+    .home__showcase {
+        flex-direction: column;
+    }
+
     .home__card {
         text-align: center;
     }

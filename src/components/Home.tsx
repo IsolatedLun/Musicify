@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { animateMixerBars } from '../misc/utils'
 
 const Home = () => {
+
+    useEffect(() => {
+        setInterval(() => {
+            animateMixerBars('mixers');
+        }, 800)
+    }, [])
+
     return (
         <div className="home-container container__overlay">
 
             <main className="home">
-                <div className="home__showcase">
+                <div className="home__showcase flex--align--between">
                     <div>
                         <h1 className="home__title">Musicify</h1>
                         <p className="home__p">Smoothly listen to any song you want to with
                         crispy quality and speed.</p>
                     </div>
 
-                    <div className="home__mixer">
-
+                    <div className="home__mixer flex gap--1" id='mixers'>
+                        <div className="mixer"></div>
+                        <div className="mixer"></div>
+                        <div className="mixer"></div>
+                        <div className="mixer"></div>
+                        <div className="mixer"></div>
+                        <div className="mixer"></div>
                     </div>
                 </div>
 
