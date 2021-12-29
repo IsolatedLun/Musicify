@@ -1,0 +1,5 @@
+.primary-nav {
+    display: flex;
+    padding-inline: 2em;
+    background-color: black;
+}
