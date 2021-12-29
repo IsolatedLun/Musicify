@@ -1,0 +1,36 @@
+/* Flex & Grid */
+.flex--align--between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex--align {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.gap--1 {
+    gap: 1em;
+}
+
+/* Buttons */
+.btn--def {
+    font-size: var(--fs-500);
+    background-color: transparent;
+    color: var(--txt);
+    border: 0;
+    cursor: pointer;
+}
+
+/* Misc */
+.link--split {
+    height: var(--fs-400);
+    border: 1px solid gray;
+}
+
+/* Transitions */
+.trans--bg {
+    transition: background-color 95ms ease-out;
+}

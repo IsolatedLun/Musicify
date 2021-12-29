@@ -1,5 +1,38 @@
 .primary-nav {
-    display: flex;
+    padding-block: 0.75em;
     padding-inline: 2em;
-    background-color: black;
+    background-color: var(--bg);
+}
+
+.primary-nav .nav__title {
+    font-size: var(--fs-500);
+}
+
+.primary-nav .nav__icon {
+    width: clamp(2.25rem, 4vw, 6rem);
+    aspect-ratio: 1;
+}
+
+.primary-nav .nav__link {
+    font-size: calc(var(--fs-450) * 0.95);
+    transition: color 95ms ease-out;
+    height: 100%;
+}
+
+.primary-nav .nav__link a:is(:hover, :focus-visible) {
+    color: var(--clr-primary);
+}
+
+.primary-nav .nav__dropdown {
+    display: none;
+}
+
+@media(max-width: 768px) {
+    .primary-nav .nav__links {
+        display: none;
+    }
+
+    .primary-nav .nav__dropdown {
+        display: block;
+    }
 }
