@@ -14,13 +14,23 @@
 }
 
 .home__mixer {
+    position: relative;
     width: 18rem;
     height: 18rem;
-    background-color: black;
+    background-color: hotpinks;
+}
+
+.home__mixer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url(src/images/test.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .home__mixer .mixer {
-    aspect-ratio: 1;
+    aspect-ratio: 16 / 9;
     background-color: red;
     transform: scaleY(0.05);
     transform-origin: bottom;
