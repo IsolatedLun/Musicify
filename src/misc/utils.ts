@@ -1,3 +1,5 @@
+import { UserAgent } from "./interfaces";
+
 export function animateMixerBars(id: string) {
     const mixers = (document.getElementById(id) as HTMLDivElement).children!
 
@@ -28,7 +30,20 @@ export function genNum(max: number) {
     return Math.floor(Math.random() * max);
 }
 
-export function getUserAgent() {
-    const agent = navigator.permissions;
-    console.log(agent);
+export function getUserAgent(): UserAgent {
+    const prefersReducedMotion: boolean = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersDarkMode: boolean = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const sysLang: string = navigator.language;
+
+    const user: UserAgent = {
+        prefersReducedMotion,
+        prefersDarkMode,
+        sysLang
+    }
+
+    return user;
+}
+
+export function toggleEl(id: string, clsName: string): void {
+    document.getElementById(id)?.classList.toggle(clsName);
 }

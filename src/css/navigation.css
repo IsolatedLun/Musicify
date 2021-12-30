@@ -50,6 +50,33 @@
     transform: translateX(120px)
 }
 
+/* Sidenav */
+.side-nav {
+    position: fixed;
+    font-size: var(--fs-450);
+    top: 0;
+    right: 0;
+    padding: 0.5em 1.5em;
+    height: 100%;
+    background-color: var(--bg);
+    text-align: center;
+    transform: translateX(200px);
+    z-index: 10001;
+    transition: transform 200ms ease-in;
+}
+
+.side-nav.active {
+    transform: translateX(0px);
+}
+
+.side-nav .side__links {
+    margin-top: 1em;
+}
+
+.side-nav .side__link:hover {
+    color: var(--clr-primary);
+}
+
 @media(max-width: 768px) {
     .primary-nav .nav__links {
         display: none;
