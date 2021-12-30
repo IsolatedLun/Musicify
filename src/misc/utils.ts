@@ -7,16 +7,16 @@ export function animateMixerBars(id: string) {
             const y: number = Math.random();
 
             if(y > 0.8) {
-                mixer.style.backgroundColor = 'red';
+                mixer.style.backgroundColor = 'var(--clr-err)';
                 
             }
 
             else if(y > 0.55) {
-                mixer.style.backgroundColor = 'yellow';
+                mixer.style.backgroundColor = 'var(--clr-warn)';
             }
 
             else {
-                mixer.style.backgroundColor = 'green';
+                mixer.style.backgroundColor = 'var(--clr-primary)';
             }
 
             mixer.style.transform = `scaleY(${y})`;
@@ -26,4 +26,9 @@ export function animateMixerBars(id: string) {
 
 export function genNum(max: number) {
     return Math.floor(Math.random() * max);
+}
+
+export function getUserAgent() {
+    const agent = navigator.permissions;
+    console.log(agent);
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { animateMixerBars } from '../misc/utils'
+import { animateMixerBars, getUserAgent } from '../misc/utils'
 
 const Home = () => {
 
@@ -7,6 +7,7 @@ const Home = () => {
         setInterval(() => {
             animateMixerBars('mixers');
         }, 800)
+        getUserAgent()
     }, [])
 
     return (

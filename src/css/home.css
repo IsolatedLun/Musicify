@@ -24,7 +24,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url(src/images/test.png);
+    background-image: url(src/images/mixer.png);
     background-repeat: no-repeat;
     background-size: cover;
 }
