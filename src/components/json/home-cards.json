@@ -1,0 +1,22 @@
+[
+
+    {
+        "iconClass": "fab fa-ethereum",
+        "title": "Pay",
+        "desc": "Send ETH to your beloved artists.",
+        "to": "#"
+    },
+    {
+        "iconClass": "fas fa-star",
+        "title": "Rate",
+        "desc": "Extol perpetual masterpieces.",
+        "to": "#"
+    },
+    {
+        "iconClass": "fa fa-eye",
+        "title": "View",
+        "desc": "Participate in thrilling priemeres.",
+        "to": "#"
+    }
+
+]

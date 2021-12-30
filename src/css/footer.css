@@ -1,0 +1,23 @@
+.primary-footer {
+    padding: 1em;
+    background-color: var(--bg);
+    height: 100%;
+    margin-top: 4rem;
+}
+
+.primary-footer .footer__head {
+    color: var(--clr-primary);
+}
+
+.primary-footer .footer__link {
+    color: var(--txt-muted);
+}
+
+.primary-footer .footer__link a:is(:hover, :focus-visible) {
+    color: white;
+}
+
+.primary-footer .footer__icon {
+    width: 2em;
+    aspect-ratio: 1;
+}

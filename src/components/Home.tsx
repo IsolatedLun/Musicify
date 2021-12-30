@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import { animateMixerBars, getUserAgent } from '../misc/utils'
+import homeCards from "./json/home-cards.json";
 
 const Home = () => {
 
@@ -13,7 +15,7 @@ const Home = () => {
     return (
         <div className="home-container container__overlay">
 
-            <main className="home" id='#main-content'>
+            <main className="home" id='main-content'>
                 <div className="home__showcase flex--align--between">
                     <div>
                         <h1 className="home__title">Musicify</h1>
@@ -33,23 +35,17 @@ const Home = () => {
 
                 <div className="home-cards">
 
-                    <div className="home__card">
-                        <i className="card__icon fab fa-ethereum"></i>
-                        <h2 className="card__title">Pay</h2>
-                        <p className="card__desc">Send ETH to your beloved artists.</p>
-                    </div>
-
-                    <div className="home__card">
-                        <i className="card__icon fas fa-star"></i>
-                        <h2 className="card__title">Rate</h2>
-                        <p className="card__desc">Extol perpetual masterpieces.</p>
-                    </div>
-
-                    <div className="home__card">
-                        <i className="card__icon fa fa-eye"></i>
-                        <h2 className="card__title">View</h2>
-                        <p className="card__desc">Participate in thrilling priemeres.</p>
-                    </div>
+                    {
+                        homeCards.map(card => (
+                            <Link to={card.to}>
+                                <div className="home__card">
+                                    <i className={`card__icon ${card.iconClass}`}></i>
+                                    <h2 className="card__title">{card.title}</h2>
+                                    <p className="card__desc">{card.desc}</p>
+                                </div>
+                            </Link>
+                        ))
+                    }
 
                 </div>
             </main>

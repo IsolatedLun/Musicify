@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-html:focus-within {
+html {
   scroll-behavior: smooth;
 }
 
@@ -15,6 +15,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeSpeed;
   position: relative;
+  display: flex;
+  flex-direction: column;
   font-family: 'Ubuntu', sans-serif;
   font-size: var(--fs-400);
   min-height: 100vh;
