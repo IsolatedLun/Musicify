@@ -37,6 +37,14 @@
     border: 1px solid gray;
 }
 
+.hidden {
+    display: none;
+}
+
+.round {
+    border-radius: 100vw;
+}
+
 /* Transitions */
 .trans--bg {
     transition: background-color 95ms ease-out;

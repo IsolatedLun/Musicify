@@ -1,7 +1,12 @@
 .primary-nav {
+    position: relative;
     padding-block: 0.75em;
     padding-inline: 2em;
     background-color: var(--bg);
+}
+
+.primary-nav .nav__head {
+    transition: transform 95ms ease-in;
 }
 
 .primary-nav .nav__title {
@@ -25,6 +30,24 @@
 
 .primary-nav .nav__dropdown {
     display: none;
+}
+
+.primary-nav .nav__skip {
+    position: absolute;
+    padding: 0.25em;
+    background-color: var(--clr-primary);
+    outline: 2px solid var(--txt);
+    outline-offset: 4px;
+    transform: translateX(-200px);
+    transition: transform 100ms ease-in;
+}
+
+.primary-nav .nav__skip:focus-visible {
+    transform: translateX(-10px)
+}
+
+.primary-nav .nav__skip:focus-visible + .nav__head {
+    transform: translateX(120px)
 }
 
 @media(max-width: 768px) {

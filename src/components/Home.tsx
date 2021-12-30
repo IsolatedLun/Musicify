@@ -12,7 +12,7 @@ const Home = () => {
     return (
         <div className="home-container container__overlay">
 
-            <main className="home">
+            <main className="home" id='#main-content'>
                 <div className="home__showcase flex--align--between">
                     <div>
                         <h1 className="home__title">Musicify</h1>
