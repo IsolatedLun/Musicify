@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { getAngleWithMouse } from '../misc/utils';
 
 const MusicPlayer = () => {
 
@@ -6,6 +7,8 @@ const MusicPlayer = () => {
     useEffect(() => {
         const playerHandle = document.getElementById('player-handle')!;
         const musicPlayer = document.getElementById('music-player')!
+        const analog: HTMLElement = document.getElementById('player-analog')!;
+
         playerHandle.addEventListener('mousedown', (e: MouseEvent) => {
             let transform: string = musicPlayer.style.transform;
 
@@ -17,6 +20,11 @@ const MusicPlayer = () => {
                 musicPlayer.style.transform = 'translateY(-85%)'
             }
         })
+
+        analog.addEventListener('mousemove', (e) => {
+            analog.style.transform = `rotate(${getAngleWithMouse(e, 'player-analog', 180)}deg)`
+        })
+        
     }, [])
 
     return (
@@ -43,7 +51,7 @@ const MusicPlayer = () => {
             </div>
 
             <div className="music__controls">
-                <button className='fa btn--def player__valve'>&#xf655;</button>
+                <button className='fa btn--def player__valve' id='player-analog'>&#xf655;</button>
             </div>
         </div>
     )

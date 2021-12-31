@@ -47,3 +47,15 @@ export function getUserAgent(): UserAgent {
 export function toggleEl(id: string, clsName: string): void {
     document.getElementById(id)?.classList.toggle(clsName);
 }
+
+export function getAngleWithMouse(e: MouseEvent, id: string, smoothness: number): number {
+    const el = document.getElementById(id)! as HTMLDivElement;
+    const bounds = el.getBoundingClientRect()
+    const elCenter: any = {
+        x: bounds.left + bounds.width / 2,
+        y: bounds.top + bounds.height / 2
+    }
+
+    const angle = Math.atan2(e.pageX - elCenter.x,  -(e.pageY - elCenter.y))
+    return (angle * (180 / Math.PI)) - smoothness;
+}
