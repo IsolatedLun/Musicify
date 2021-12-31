@@ -1,0 +1,21 @@
+.music-player {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    left: 1%;
+    height: 100%;
+    transform: translateY(8%); /* open: -85%, close: 8% */
+    border-radius: 6px 6px 0 0;
+    background-color: var(--bg-hov);
+    transition: transform 120ms ease-in;
+}
+
+.music-player .player__handle {
+    width: 10%;
+    height: 1rem;
+    margin: 0.25em;
+    align-self: center;
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+}
