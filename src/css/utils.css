@@ -11,6 +11,10 @@
     height: 100%;
 }
 
+.flex--center {
+    justify-content: center;
+}
+
 .flex--col {
     flex-direction: column;
 }

@@ -20,15 +20,30 @@ const MusicPlayer = () => {
     }, [])
 
     return (
-        <div className='music-player' id='music-player'>
+        <div className='music-player flex flex--align text--center gap--1' id='music-player'>
             <div className="player__handle round" id='player-handle'></div>
 
-            <div className="player__thumbnail">
-                <img src="" alt='' />
+            <div className="music__repr">
+                <div className="music__head">
+                    <h1 className="music__title">Homage</h1>
+                    <div className="music__stats flex--align flex--center gap--1 text--center">
+                        <div className="music__stat">
+                            <i className="fas fa-eye views"></i>
+                            <p className="stat__num">900</p>
+                        </div>
+                        <div className="music__stat">
+                            <i className="fas fa-star rate"></i>
+                            <p className="stat__num">200</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="music__thumbnail">
+                    <img src="" alt="" />
+                </div>
             </div>
 
-            <div className="player__controls">
-
+            <div className="music__controls">
+                <button className='fa btn--def player__valve'>&#xf655;</button>
             </div>
         </div>
     )

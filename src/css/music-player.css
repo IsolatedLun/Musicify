@@ -11,6 +11,19 @@
     transition: transform 120ms ease-in;
 }
 
+.music-player .music__stats {
+    font-size: calc(var(--fs-400) * 0.8);
+    color: var(--txt-muted);
+}
+
+.music-player .music__stats .rate {
+    color: var(--clr-warn);
+}
+
+.music-player .music__stats .views {
+    color: var(--clr-primary);
+}
+
 .music-player .player__handle {
     width: 10%;
     height: 1rem;
@@ -18,4 +31,17 @@
     align-self: center;
     background-color: var(--bg-secondary);
     cursor: pointer;
+}
+
+.music-player .music__thumbnail {
+    width: 18em;
+    aspect-ratio: 1;
+    margin-block: 1em;
+    background-color: black;
+    border-radius: 0.5rem;
+}
+
+.music-player .music__controls {
+    font-size: var(--fs-500);
+    margin-top: 1em;
 }
