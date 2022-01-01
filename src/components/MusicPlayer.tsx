@@ -1,9 +1,8 @@
 import React, { SyntheticEvent, useEffect } from 'react'
-import { getAngleWithMouse } from '../misc/utils';
+import { getAngleWithMouse, getRotation } from '../misc/utils';
 import ClickNHold from 'react-click-n-hold';
 
 const MusicPlayer = () => {
-    let isMouseDown = false;
 
     const toggleMusicPlayer = () => {
         const musicPlayer = document.getElementById('music-player')!
@@ -14,24 +13,13 @@ const MusicPlayer = () => {
             musicPlayer.style.transform = 'translateY(-85%)'
     }
 
-    const handleChanger = (e: any) => {
-        const changer: HTMLElement = document.getElementById('player-changer')!;
-        const angle: number = getAngleWithMouse(e, 'player-changer', 0.5);
-        if(isMouseDown) {
-            changer.style.transform = 
-                `rotate(${angle}deg)`
-        }
-
-        console.log(angle)
-    }
-
     return (
-        <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
-        className='music-player flex flex--align text--center gap--1' id='music-player'>
+        <div className='music-player flex flex--align text--center gap--1' id='music-player'>
             <div onClick={() => toggleMusicPlayer()} 
             className="player__handle round" id='player-handle'></div>
             <div className="music__repr">
                 <div className="music__head">
+                    <h1 className="music__title">Homage</h1>
                     <div className="music__stats flex--align flex--center gap--1 text--center">
                         <div className="music__stat">
                             <i className="fas fa-eye views"></i>
@@ -48,10 +36,19 @@ const MusicPlayer = () => {
                 </div>
             </div>
 
-            <div className="music__controls">
-                <button
-                 onMouseMove={(e: React.MouseEvent<HTMLButtonElement, Event>) => handleChanger(e)}
-                className='fa btn--def player__valve' id='player-changer'>&#xf655;</button>
+            <div className="music__controls flex gap--2">
+                <button 
+                className='fa reverse btn--def music__control' id='music-toggler'>&#xf050;</button>
+                
+                <button 
+                className='fa btn--def music__control' id='music-toggler'>&#xf04b;</button>
+
+                <button 
+                className='fa btn--def music__control' id='music-toggler'>&#xf050;</button>
+            </div>
+
+            <div className="music__bar">
+                <div className="music__progress"></div>
             </div>
         </div>
     )

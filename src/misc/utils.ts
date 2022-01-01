@@ -48,6 +48,7 @@ export function toggleEl(id: string, clsName: string): void {
     document.getElementById(id)?.classList.toggle(clsName);
 }
 
+// Gets the angle of the mouse from the element.
 export function getAngleWithMouse(e: MouseEvent, id: string, factor: number): number {
     const el = document.getElementById(id)! as HTMLDivElement;
     const bounds = el.getBoundingClientRect()
@@ -58,4 +59,15 @@ export function getAngleWithMouse(e: MouseEvent, id: string, factor: number): nu
 
     const angle = Math.atan2(e.pageX - elCenter.x,  -(e.pageY - elCenter.y))
     return (angle * ((180 * factor) / Math.PI));
+}
+
+// Gets the roation of an element.
+export const getRotation = (el: HTMLElement): number => {
+    let vals: string | string[] = window.getComputedStyle(el, null).getPropertyValue('transform');
+    vals = vals.split('(')[1].split(')')[0].split(',');
+    let a: number = Number(vals[0]);
+    let b: number =  Number(vals[1]);
+
+    const scale = Math.sqrt(a*a + b*b);
+    return Math.round(Math.asin(b / scale) * (180 / Math.PI));
 }
