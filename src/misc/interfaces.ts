@@ -3,3 +3,7 @@ export interface UserAgent {
     prefersDarkMode: boolean;
     sysLang: string;
 } 
+
+export interface EventState {
+    isMouseDown: boolean;
+}

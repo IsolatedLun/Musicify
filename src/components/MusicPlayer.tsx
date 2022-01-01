@@ -1,39 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { SyntheticEvent, useEffect } from 'react'
 import { getAngleWithMouse } from '../misc/utils';
+import ClickNHold from 'react-click-n-hold';
 
 const MusicPlayer = () => {
+    let isMouseDown = false;
 
-    
-    useEffect(() => {
-        const playerHandle = document.getElementById('player-handle')!;
+    const toggleMusicPlayer = () => {
         const musicPlayer = document.getElementById('music-player')!
-        const analog: HTMLElement = document.getElementById('player-analog')!;
 
-        playerHandle.addEventListener('mousedown', (e: MouseEvent) => {
-            let transform: string = musicPlayer.style.transform;
+        if(musicPlayer.style.transform === 'translateY(-85%)')
+            musicPlayer.style.transform = `translateY(8%)`;
+        else
+            musicPlayer.style.transform = 'translateY(-85%)'
+    }
 
-            if(transform === 'translateY(-85%)') {
-                musicPlayer.style.transform = `translateY(8%)`;
-            }
+    const handleChanger = (e: any) => {
+        const changer: HTMLElement = document.getElementById('player-changer')!;
+        const angle: number = getAngleWithMouse(e, 'player-changer', 0.5);
+        if(isMouseDown) {
+            changer.style.transform = 
+                `rotate(${angle}deg)`
+        }
 
-            else {
-                musicPlayer.style.transform = 'translateY(-85%)'
-            }
-        })
-
-        analog.addEventListener('mousemove', (e) => {
-            analog.style.transform = `rotate(${getAngleWithMouse(e, 'player-analog', 180)}deg)`
-        })
-        
-    }, [])
+        console.log(angle)
+    }
 
     return (
-        <div className='music-player flex flex--align text--center gap--1' id='music-player'>
-            <div className="player__handle round" id='player-handle'></div>
-
+        <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
+        className='music-player flex flex--align text--center gap--1' id='music-player'>
+            <div onClick={() => toggleMusicPlayer()} 
+            className="player__handle round" id='player-handle'></div>
             <div className="music__repr">
                 <div className="music__head">
-                    <h1 className="music__title">Homage</h1>
                     <div className="music__stats flex--align flex--center gap--1 text--center">
                         <div className="music__stat">
                             <i className="fas fa-eye views"></i>
@@ -51,7 +49,9 @@ const MusicPlayer = () => {
             </div>
 
             <div className="music__controls">
-                <button className='fa btn--def player__valve' id='player-analog'>&#xf655;</button>
+                <button
+                 onMouseMove={(e: React.MouseEvent<HTMLButtonElement, Event>) => handleChanger(e)}
+                className='fa btn--def player__valve' id='player-changer'>&#xf655;</button>
             </div>
         </div>
     )

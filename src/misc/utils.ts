@@ -48,7 +48,7 @@ export function toggleEl(id: string, clsName: string): void {
     document.getElementById(id)?.classList.toggle(clsName);
 }
 
-export function getAngleWithMouse(e: MouseEvent, id: string, smoothness: number): number {
+export function getAngleWithMouse(e: MouseEvent, id: string, factor: number): number {
     const el = document.getElementById(id)! as HTMLDivElement;
     const bounds = el.getBoundingClientRect()
     const elCenter: any = {
@@ -57,5 +57,5 @@ export function getAngleWithMouse(e: MouseEvent, id: string, smoothness: number)
     }
 
     const angle = Math.atan2(e.pageX - elCenter.x,  -(e.pageY - elCenter.y))
-    return (angle * (180 / Math.PI)) - smoothness;
+    return (angle * ((180 * factor) / Math.PI));
 }
