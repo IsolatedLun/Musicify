@@ -30,7 +30,7 @@
 }
 
 .home__mixer .mixer {
-    min-width: min(2.172em, 2.172em);
+    min-width: 2.172em;
     aspect-ratio: 1;
     background-color: red;
     transform: scaleY(0.05);

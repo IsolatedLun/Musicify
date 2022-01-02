@@ -14,15 +14,20 @@ function App() {
   return (
     <Router>
 
-      <Navbar />
-      
-      <Routes>
+      <div className="main-container">
+        <div>
+          <Navbar />
+          
+          <Routes>
 
-        <Route path='/' element={<Home />} />
+            <Route path='/' element={<Home />} />
 
-      </Routes>
-      <MusicPlayer />
-      <Footer />
+          </Routes>
+          <MusicPlayer />
+        </div>
+
+        <Footer />
+      </div>
 
     </Router>
   )
