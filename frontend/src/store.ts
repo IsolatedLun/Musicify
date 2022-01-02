@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import eventReducer from "./features/events-slice";
+import musicSlice from "./features/music-slice";
 
 export const store = configureStore({
     reducer: {
-        events: eventReducer
+        events: eventReducer,
+        music: musicSlice
     }
 })
 
