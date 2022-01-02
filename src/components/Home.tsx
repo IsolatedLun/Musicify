@@ -6,10 +6,15 @@ import homeCards from "./json/home-cards.json";
 const Home = () => {
 
     useEffect(() => {
-        setInterval(() => {
+        let mixerInterval = setInterval(() => {
             animateMixerBars('mixers');
-        }, 800)
-        getUserAgent()
+            console.log('1')
+        }, 1000)
+
+        return(() => {
+            clearInterval(mixerInterval);
+            console.log('cleared')
+        })
     }, [])
 
     return (
