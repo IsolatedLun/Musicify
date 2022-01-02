@@ -5,7 +5,7 @@
 .loader .loader__icon {
     width: 8em;
     aspect-ratio: 1;
-    animation: spinLoad 5s ease-in-out infinite forwards alternate;
+    animation: spinLoad 3s ease-in-out infinite forwards alternate;
     transition: all 2s ease-out;
 }
 
@@ -15,6 +15,6 @@
     }
 
     to {
-        transform: rotate(720deg) translateY(20px);
+        transform: rotate(920deg) translateY(20px);
     }
 }
