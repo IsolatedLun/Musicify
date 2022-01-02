@@ -1,0 +1,20 @@
+.loader {
+    margin-block: 7em;
+}
+
+.loader .loader__icon {
+    width: 8em;
+    aspect-ratio: 1;
+    animation: spinLoad 5s ease-in-out infinite forwards alternate;
+    transition: all 2s ease-out;
+}
+
+@keyframes spinLoad {
+    from {
+        transform: rotate(0deg) translateY(0px);
+    }
+
+    to {
+        transform: rotate(720deg) translateY(20px);
+    }
+}

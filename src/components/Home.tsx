@@ -8,12 +8,10 @@ const Home = () => {
     useEffect(() => {
         let mixerInterval = setInterval(() => {
             animateMixerBars('mixers');
-            console.log('1')
         }, 1000)
 
         return(() => {
             clearInterval(mixerInterval);
-            console.log('cleared')
         })
     }, [])
 

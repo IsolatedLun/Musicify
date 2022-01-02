@@ -4,6 +4,7 @@ import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import { useEffect } from "react";
 import MusicPlayer from "./components/MusicPlayer";
+import Browse from "./components/Browse";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Routes>
 
             <Route path='/' element={<Home />} />
+            <Route path='/browse' element={<Browse />} />
 
           </Routes>
           <MusicPlayer />
