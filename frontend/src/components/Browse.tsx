@@ -9,7 +9,9 @@ const Browse = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchSongs());
+        if(songs.length < 1) {
+            dispatch(fetchSongs());
+        }
     }, [])
 
     return (
