@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Song, MusicState } from '../misc/interfaces';
+import { INF_Song, MusicState } from '../misc/interfaces';
 import axios from 'axios';
 
 const initialState: MusicState = {

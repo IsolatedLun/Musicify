@@ -8,7 +8,7 @@ export interface EventState {
     isMouseDown: boolean;
 }
 
-export interface Song {
+export interface INF_Song {
     id: number;
     title: string;
     author: string;
@@ -18,6 +18,6 @@ export interface Song {
 }
 
 export interface MusicState {
-    songs: Song[];
+    songs: INF_Song[];
     status: 'idle' | 'fulfilled' | 'rejected';
 }

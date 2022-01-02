@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { fetchSongs } from '../features/music-slice';
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Loader from './layout/Loader'
+import Song from './parts/Song';
 
 const Browse = () => {
     const { songs, status } = useAppSelector(state => state.music);
@@ -16,7 +17,13 @@ const Browse = () => {
         ?
         <Loader />
         :
-        <h1>{ songs[0].author }</h1>
+        <div className="songs">
+            {
+                songs.map((song) => (
+                    <Song song={song} />
+                ))
+            }
+        </div>
     )
 }
 
