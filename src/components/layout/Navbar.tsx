@@ -1,5 +1,6 @@
-import React from 'react'
-import { toggleEl } from '../../misc/utils'
+import React from 'react';
+import { toggleEl } from '../../misc/utils';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
@@ -12,11 +13,11 @@ const Navbar = () => {
                 </div>
 
                 <ul className="nav__links flex--align gap--1">
-                    <li className="nav__link"><a href="#">Home</a></li>
-                    <li className="nav__link"><a href="#">Browse</a></li>
+                    <li className="nav__link"><Link to={'/'}>Home</Link></li>
+                    <li className="nav__link"><Link to={'/browse'}>Browse</Link></li>
                     <li className="link--split y"></li>
-                    <li className='nav__link'><a href="#">Log in</a></li>
-                    <li className="nav__link"><a href="#">Sign up</a></li>
+                    <li className='nav__link'><Link to={'/login'}>Log in</Link></li>
+                    <li className="nav__link"><Link to={'/signup'}>Sign up</Link></li>
                 </ul>
 
                 <button onClick={() => toggleEl('side-nav', 'active')}
@@ -26,8 +27,8 @@ const Navbar = () => {
             <div className="side-nav" id='side-nav'>
                 <h2 className="side__title">Musicify</h2>
                 <ul className="side__links flex--align flex--col gap--05">
-                    <li className="side__link"><a href="#">Home</a></li>
-                    <li className="side__link"><a href="#">Browse</a></li>
+                    <li className="side__link"><Link to={'/'}>Home</Link></li>
+                    <li className="side__link"><Link to={'/browse'}>Browse</Link></li>
                     <button onClick={() => toggleEl('side-nav', 'active')}
                         className='fa btn--def'>&#xf00d;</button>
                 </ul>
