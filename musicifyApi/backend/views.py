@@ -1,3 +1,4 @@
+from django.http.response import FileResponse
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from rest_framework import status
@@ -11,10 +12,22 @@ OK = status.HTTP_200_OK
 class Songs(APIView):
     serializer = SongSerializer
 
-    def get(self, req):
+    def get(self, req, song_id=None):
         songs = Song.objects.all();
-
         return Response(self.serializer(songs, many=True).data, OK)
 
-    def post(self, req):
-        pass
+class SongThumbnail(APIView):
+    def get(self, req, song_id):
+        thumbnail = Song.objects.get(id=song_id).thumbnail
+
+        if thumbnail is not None:
+            return FileResponse(thumbnail)
+        return Response({'400': f'Song with id of {song_id} is None'}, ERR)
+
+class SongAudio(APIView):
+    def get(self, req, song_id):
+        audio = Song.objects.get(id=song_id).audio
+
+        if audio is not None:
+            return FileResponse(audio)
+        return Response({'400': f'Song with id of {song_id} is None'}, ERR)
