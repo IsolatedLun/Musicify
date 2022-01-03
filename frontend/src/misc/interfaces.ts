@@ -20,4 +20,5 @@ export interface INF_Song {
 export interface MusicState {
     songs: INF_Song[];
     status: 'idle' | 'fulfilled' | 'rejected';
+    currSong: INF_Song;
 }

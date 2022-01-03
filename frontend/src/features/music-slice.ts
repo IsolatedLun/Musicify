@@ -4,7 +4,15 @@ import axios from 'axios';
 
 const initialState: MusicState = {
     songs: [],
-    status: 'idle'
+    status: 'idle',
+    currSong: {
+        id: Infinity,
+        title: 'No Music',
+        author: 'No Author',
+        views: 0,
+        rating: 0,
+        created_at: new Date(),
+    }
 }
 
 export const fetchSongs = createAsyncThunk(

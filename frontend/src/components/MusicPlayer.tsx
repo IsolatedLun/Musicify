@@ -1,8 +1,9 @@
-import React, { SyntheticEvent, useEffect } from 'react'
-import { getAngleWithMouse, getRotation } from '../misc/utils';
-import ClickNHold from 'react-click-n-hold';
+import { useAppSelector } from "../hooks";
+import { API_URL } from "../misc/consts";
+import { INF_Song } from "../misc/interfaces";
 
 const MusicPlayer = () => {
+    const { currSong } = useAppSelector(state => state.music);
 
     const toggleMusicPlayer = () => {
         const musicPlayer = document.getElementById('music-player')!
@@ -19,20 +20,20 @@ const MusicPlayer = () => {
             className="player__handle round" id='player-handle'></div>
             <div className="music__repr">
                 <div className="music__head">
-                    <h1 className="music__title">Homage</h1>
+                    <h1 className="music__title">{ currSong.title }</h1>
                     <div className="music__stats flex--align flex--center gap--1 text--center">
                         <div className="music__stat">
                             <i className="fas fa-eye views"></i>
-                            <p className="stat__num">900</p>
+                            <p className="stat__num">{ currSong.views }</p>
                         </div>
                         <div className="music__stat">
                             <i className="fas fa-star rate"></i>
-                            <p className="stat__num">200</p>
+                            <p className="stat__num">{ currSong.rating }</p>
                         </div>
                     </div>
                 </div>
                 <div className="music__thumbnail">
-                    <img src="" alt="" />
+                    <img src={ API_URL + 'songs/thumb/' + currSong.id } alt={currSong.title + ' thumbnail'} />
                 </div>
             </div>
 
