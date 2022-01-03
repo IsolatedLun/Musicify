@@ -26,6 +26,15 @@ export function animateMixerBars(id: string) {
     }
 }
 
+export const toggleMusicPlayer = () => {
+    const musicPlayer = document.getElementById('music-player')!
+
+    if(musicPlayer.style.transform === 'translateY(96%)')
+        musicPlayer.style.transform = `translateY(2%)`;
+    else
+        musicPlayer.style.transform = 'translateY(96%)'
+}
+
 export function genNum(max: number) {
     return Math.floor(Math.random() * max);
 }

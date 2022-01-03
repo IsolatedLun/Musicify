@@ -1,10 +1,21 @@
 import React from 'react';
+import { fetchAudio, setCurrSong } from '../../features/music-slice';
+import { useAppDispatch } from '../../hooks';
 import { API_URL } from '../../misc/consts';
 import { INF_Song } from '../../misc/interfaces';
+import { toggleMusicPlayer } from '../../misc/utils';
 
-const Song = ({ song } : { song: INF_Song }) => {
+const Song = ({ song, idx } : { song: INF_Song, idx: number }) => {
+    const dispatch = useAppDispatch();
+
+    const selectSong = (id: number) => {
+        dispatch(setCurrSong(idx));
+        dispatch(fetchAudio(id));
+        toggleMusicPlayer();
+    }
+
     return (
-        <div className='song'>
+        <div className='song' onClick={() => selectSong(song.id)}>
             <div className="song__thumbnail">
                 <img loading='lazy'
                 src={API_URL + 'songs/thumb/' + song.id} alt={song.title + ' thumbnail'} />

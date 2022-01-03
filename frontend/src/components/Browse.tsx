@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { fetchSongs } from '../features/music-slice';
 import { useAppDispatch, useAppSelector } from '../hooks'
+import { INF_Song } from '../misc/interfaces';
 import Loader from './layout/Loader'
 import Song from './parts/Song';
 
@@ -19,12 +20,16 @@ const Browse = () => {
         ?
         <Loader />
         :
-        <div className="songs">
-            {
-                songs.map((song) => (
-                    <Song song={song} />
-                ))
-            }
+        <div className="browse-container">
+
+            <div className="songs">
+                {
+                    songs.map((song: INF_Song, idx: number) => (
+                        <Song song={song} key={song.id} idx={idx} />
+                    ))
+                }
+            </div>
+
         </div>
     )
 }

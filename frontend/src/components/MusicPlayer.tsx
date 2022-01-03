@@ -1,18 +1,10 @@
 import { useAppSelector } from "../hooks";
 import { API_URL } from "../misc/consts";
 import { INF_Song } from "../misc/interfaces";
+import { toggleMusicPlayer } from "../misc/utils";
 
 const MusicPlayer = () => {
     const { currSong } = useAppSelector(state => state.music);
-
-    const toggleMusicPlayer = () => {
-        const musicPlayer = document.getElementById('music-player')!
-
-        if(musicPlayer.style.transform === 'translateY(96%)')
-            musicPlayer.style.transform = `translateY(2%)`;
-        else
-            musicPlayer.style.transform = 'translateY(96%)'
-    }
 
     return (
         <div className='music-player flex flex--align text--center gap--1' id='music-player'>

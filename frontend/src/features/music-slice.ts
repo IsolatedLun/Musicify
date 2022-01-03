@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { INF_Song, MusicState } from '../misc/interfaces';
 import axios from 'axios';
+import { API_URL } from '../misc/consts';
 
 const initialState: MusicState = {
     songs: [],
@@ -18,7 +19,15 @@ const initialState: MusicState = {
 export const fetchSongs = createAsyncThunk(
     'music/fetch-songs',
     async(thunk) => {
-        const res: any = await axios.get('http://localhost:8000/api/songs');
+        const res: any = await axios.get(API_URL + 'songs');
+        return res.data
+    }
+)
+
+export const fetchAudio = createAsyncThunk(
+    'music/fetch-audio',
+    async(id: number, thunk) => {
+        const res: any = await axios.get(API_URL + 'songs/audio' + id);
         return res.data
     }
 )
@@ -27,7 +36,9 @@ export const musicSlice = createSlice({
     name: 'music',
     initialState,
     reducers: {
-        
+        setCurrSong(state, action) {
+            state.currSong = state.songs[action.payload];
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSongs.fulfilled, (state, action) => {
@@ -41,5 +52,5 @@ export const musicSlice = createSlice({
     }
 })
 
-export const { } = musicSlice.actions;
+export const { setCurrSong } = musicSlice.actions;
 export default musicSlice.reducer;
