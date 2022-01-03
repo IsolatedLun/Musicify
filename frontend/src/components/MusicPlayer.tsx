@@ -7,18 +7,19 @@ import Song from "./parts/Song";
 
 const MusicPlayer = () => {
     const { currSong } = useAppSelector(state => state.music);
-    let audioEl: HTMLAudioElement;
-    let audioBar: HTMLDivElement;
-    let toggleBtn: HTMLButtonElement;
+    const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
+    const audioBar = document.getElementById('audio-bar') as HTMLDivElement;
+    const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
+    const toggleBtn = document.getElementById('music-toggler') as HTMLButtonElement;
 
-    useEffect(() => {
-        audioEl = document.getElementById('audio-el') as HTMLAudioElement;
-        audioBar = document.getElementById('audio-bar') as HTMLDivElement;
-        toggleBtn = document.getElementById('music-toggler') as HTMLButtonElement;
+    useEffect(() => {   
+        if(audioEl) {
+            handleAudioBar();
 
-        audioEl.addEventListener('canplay', () => {
-            audioEl.play();
-        })
+            audioEl.addEventListener('canplay', () => {
+                audioEl.play();
+            })
+        }
     }, [])
 
     const handleControls = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,6 +28,7 @@ const MusicPlayer = () => {
            case 'toggle-song':
                handleAudio();
                break;
+
             case 'change-song':
                 changeSong();
                 break;
@@ -49,8 +51,14 @@ const MusicPlayer = () => {
 
     }
 
+    const changeTime = (e: React.MouseEvent<HTMLDivElement>) => {
+        const pct: number = e.nativeEvent.offsetX / (e.target as HTMLDivElement).offsetWidth;
+        audioEl.currentTime = pct * audioEl.duration;
+    }
+
     const handleAudioBar = () => {
-        
+        const pct: number = (audioEl.currentTime / audioEl.duration);
+        audioBarProgress.style.transform = `scaleX(${pct})`;
     }
 
     return (
@@ -76,7 +84,7 @@ const MusicPlayer = () => {
                 </div>
             </div>
 
-            <audio onCanPlay={() => handleAudio()} onPlaying={() => ''}
+            <audio onTimeUpdate={() => handleAudioBar()}
             id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
             <div className="music__controls flex gap--2">
@@ -90,8 +98,8 @@ const MusicPlayer = () => {
                 className='fa btn--def music__control' name='change-song'>&#xf050;</button>
             </div>
 
-            <div className="music__bar" id='audio-bar'>
-                <div className="music__progress"></div>
+            <div className="music__bar" id='audio-bar' onClick={(e: React.MouseEvent<HTMLDivElement>) => changeTime(e)}>
+                <div className="music__progress" id='audio-bar-progress'></div>
             </div>
         </div>
     )
