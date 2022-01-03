@@ -13,7 +13,9 @@ const initialState: MusicState = {
         views: 0,
         rating: 0,
         created_at: new Date(),
-    }
+    },
+
+    currAudio: null
 }
 
 export const fetchSongs = createAsyncThunk(
@@ -27,7 +29,7 @@ export const fetchSongs = createAsyncThunk(
 export const fetchAudio = createAsyncThunk(
     'music/fetch-audio',
     async(id: number, thunk) => {
-        const res: any = await axios.get(API_URL + 'songs/audio' + id);
+        const res: any = await axios.get(API_URL + 'songs/audio/' + id);
         return res.data
     }
 )
@@ -47,7 +49,11 @@ export const musicSlice = createSlice({
         })
 
         builder.addCase(fetchSongs.rejected, (state, action) => {
-            console.log(action.payload)
+            
+        })
+
+        builder.addCase(fetchAudio.fulfilled, (state, action) => {
+            state.currAudio = action.payload
         })
     }
 })

@@ -10,7 +10,6 @@ const Song = ({ song, idx } : { song: INF_Song, idx: number }) => {
 
     const selectSong = (id: number) => {
         dispatch(setCurrSong(idx));
-        dispatch(fetchAudio(id));
         toggleMusicPlayer();
     }
 
