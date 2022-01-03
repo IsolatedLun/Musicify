@@ -29,6 +29,10 @@ export function animateMixerBars(id: string) {
 export const toggleMusicPlayer = () => {
     const musicPlayer = document.getElementById('music-player')!
 
+    if(!musicPlayer.style.transform) {
+        musicPlayer.style.transform = 'translateY(96%)';
+    }
+
     if(musicPlayer.style.transform === 'translateY(96%)')
         musicPlayer.style.transform = `translateY(2%)`;
     else

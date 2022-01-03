@@ -80,11 +80,12 @@ const MusicPlayer = () => {
                     </div>
                 </div>
                 <div className="music__thumbnail">
-                    <img src={ API_URL + 'songs/thumb/' + currSong.id } alt={currSong.title + ' thumbnail'} />
+                    <img src={ currSong ? API_URL + 'songs/thumb/' + currSong.id : '' } 
+                        alt={currSong.title + ' thumbnail'} />
                 </div>
             </div>
 
-            <audio onTimeUpdate={() => handleAudioBar()}
+            <audio onCanPlay={() => handleAudio()} onTimeUpdate={() => handleAudioBar()}
             id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
             <div className="music__controls flex gap--2">
