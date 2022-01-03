@@ -7,7 +7,7 @@ const initialState: MusicState = {
     songs: [],
     status: 'idle',
     currSong: {
-        id: Infinity,
+        id: null,
         title: 'No Music',
         author: 'No Author',
         views: 0,

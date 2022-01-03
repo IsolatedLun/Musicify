@@ -11,6 +11,8 @@ const MusicPlayer = () => {
     const audioBar = document.getElementById('audio-bar') as HTMLDivElement;
     const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
     const toggleBtn = document.getElementById('music-toggler') as HTMLButtonElement;
+    const audioTime = document.getElementById('audio-time') as HTMLParagraphElement;
+    let audioDuration: Date | string = '00:00:00';
 
     useEffect(() => {   
         if(audioEl) {
@@ -61,6 +63,11 @@ const MusicPlayer = () => {
         audioBarProgress.style.transform = `scaleX(${pct})`;
     }
 
+    const updateTime = () => {
+        const currTime = new Date(audioEl.currentTime * 1000).toISOString().substr(11, 8);
+        audioTime.innerText = currTime + ' / ' + audioDuration;
+    }
+
     return (
         <div className='music-player flex flex--align text--center gap--1' id='music-player'>
             <div onClick={() => toggleMusicPlayer()} 
@@ -85,7 +92,8 @@ const MusicPlayer = () => {
                 </div>
             </div>
 
-            <audio onCanPlay={() => handleAudio()} onTimeUpdate={() => handleAudioBar()}
+            <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
+            autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }}
             id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
             <div className="music__controls flex gap--2">
@@ -102,7 +110,11 @@ const MusicPlayer = () => {
             <div className="music__bar" id='audio-bar' onClick={(e: React.MouseEvent<HTMLDivElement>) => changeTime(e)}>
                 <div className="music__progress" id='audio-bar-progress'></div>
             </div>
+            
+            <p className="music__time" id='audio-time'>00:00:00 / 00:00:00</p>
+
         </div>
+        
     )
 }
 

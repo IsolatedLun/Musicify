@@ -8,7 +8,7 @@ import { toggleMusicPlayer } from '../../misc/utils';
 const Song = ({ song, idx } : { song: INF_Song, idx: number }) => {
     const dispatch = useAppDispatch();
 
-    const selectSong = (id: number) => {
+    const selectSong = (id: number | null) => {
         dispatch(setCurrSong(idx));
         toggleMusicPlayer();
     }

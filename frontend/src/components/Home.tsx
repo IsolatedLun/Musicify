@@ -39,8 +39,8 @@ const Home = () => {
                 <div className="home-cards">
 
                     {
-                        homeCards.map(card => (
-                            <Link to={card.to}>
+                        homeCards.map((card, idx: number) => (
+                            <Link to={card.to} key={idx}>
                                 <div className="home__card">
                                     <i className={`card__icon ${card.iconClass}`}></i>
                                     <h2 className="card__title">{card.title}</h2>

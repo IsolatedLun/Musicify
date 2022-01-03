@@ -6,7 +6,8 @@
 
 .songs {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem));
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1em;
     margin: 0.75em;
 }
 

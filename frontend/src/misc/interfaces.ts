@@ -9,7 +9,7 @@ export interface EventState {
 }
 
 export interface INF_Song {
-    id: number;
+    id: number | null;
     title: string;
     author: string;
     views: number;

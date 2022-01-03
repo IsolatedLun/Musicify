@@ -67,6 +67,10 @@
     cursor: pointer;
 }
 
+.music-player .music__time {
+    letter-spacing: 1px;
+}
+
 .music-player .music__progress {
     content: '';
     position: absolute;
