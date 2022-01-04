@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -6,12 +7,14 @@ const Footer = () => {
             <div className="footer__content flex--align flex--around text--center">
                 <ul className="footer_links">
                     <h2 className="footer__head">Main</h2>
-                    <li className="footer__link"><a href="#">Home</a></li>
+                    <li className="footer__link"><Link to='/'>Home</Link></li>
                 </ul>
 
                 <ul className="footer_links">
                     <h2 className="footer__head">Development</h2>
-                    <li className="footer__link"><a href="#">Source code</a></li>
+                    <li className="footer__link">
+                        <a href='https://github.com/IsolatedLun/Musicify' target='_blank'>Source code</a>
+                    </li>
                 </ul>
             </div>
 

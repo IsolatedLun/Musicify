@@ -15,7 +15,8 @@ const initialState: MusicState = {
         created_at: new Date(),
     },
 
-    currAudio: null
+    currAudio: null,
+    currIdx: NaN
 }
 
 export const fetchSongs = createAsyncThunk(
@@ -40,6 +41,10 @@ export const musicSlice = createSlice({
     reducers: {
         setCurrSong(state, action) {
             state.currSong = state.songs[action.payload];
+        },
+
+        setIndex(state, action) {
+            state.currIdx = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -58,5 +63,5 @@ export const musicSlice = createSlice({
     }
 })
 
-export const { setCurrSong } = musicSlice.actions;
+export const { setCurrSong, setIndex } = musicSlice.actions;
 export default musicSlice.reducer;

@@ -20,12 +20,12 @@ const Browse = () => {
         ?
         <Loader />
         :
-        <div className="browse-container">
+        <div className="browse-container" id='main-content'>
 
             <div className="songs">
                 {
                     songs.map((song: INF_Song, idx: number) => (
-                        <Song song={song} key={song.id} idx={idx} />
+                        <Song song={song} key={song.id} idx={idx} ignore={false} queueType={null} />
                     ))
                 }
             </div>

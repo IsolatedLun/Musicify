@@ -5,22 +5,30 @@ import { API_URL } from '../../misc/consts';
 import { INF_Song } from '../../misc/interfaces';
 import { toggleMusicPlayer } from '../../misc/utils';
 
-const Song = ({ song, idx } : { song: INF_Song, idx: number }) => {
+const Song = ({ song, idx, ignore, queueType } : 
+    { song: INF_Song, idx: number, ignore: boolean, queueType: string | null }) => {
     const dispatch = useAppDispatch();
 
     const selectSong = (id: number | null) => {
         dispatch(setCurrSong(idx));
-        toggleMusicPlayer();
+        toggleMusicPlayer(ignore);
+        console.log(ignore)
+    }
+
+    if(!song) {
+        return(<div></div>)
     }
 
     return (
-        <div className='song' onClick={() => selectSong(song.id)}>
+        <div className='song' data-type={queueType}
+            onClick={() => selectSong(song.id)} id={'song-' + idx + (queueType ? '-queue' : '')}>
+            <h2 className='song__queue capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'
                 src={API_URL + 'songs/thumb/' + song.id} alt={song.title + ' thumbnail'} />
             </div>
-            <h1 className="song__title">{ song.title }</h1>
-            <p className="song__author">{ song.author }</p>
+            <h1 className="song__title capitalize">{ song.title }</h1>
+            <p className="song__author capitalize">{ song.author }</p>
         </div>
     )
 }

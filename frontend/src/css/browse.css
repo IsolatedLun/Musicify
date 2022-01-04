@@ -26,10 +26,25 @@
     background-color: var(--bg-hov);
 }
 
+.song .song__queue {
+    font-size: var(--fs-600);
+    font-weight: lighter;
+    margin-bottom: 0.5em;
+}
+
 .song .song__thumbnail {
     width: 10em;
     aspect-ratio: 1;
     border-radius: 4px;
+}
+
+.song .song__title {
+    font-size: var(--fs-450);
+    margin: 0.35em;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .song .song__author {

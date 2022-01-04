@@ -67,6 +67,12 @@
     cursor: pointer;
 }
 
+.music-player .music__title {
+    display: inline;
+    font-size: var(--fs-500);
+    white-space: nowrap;
+}
+
 .music-player .music__time {
     letter-spacing: 1px;
 }
@@ -76,8 +82,34 @@
     position: absolute;
     inset: 0;
     background-color: var(--clr-primary);
-    transform: scaleX(0.58);
+    transform: scaleX(0);
     transform-origin: left;
-    transition: transform 120ms linear;
     pointer-events: none;
+}
+
+
+
+.music-player .music__queue {
+    font-size: calc(var(--fs-400) * 0.75);
+    transform: scale(0.75);
+    opacity: 0.9;
+}
+
+/* Queue songs */
+.music-player .song {
+    position: absolute;
+    top: 25%;
+    width: 14rem;
+}
+
+.music-player .song:is(:hover, :focus) {
+    outline: 2px solid var(--clr-primary);
+}
+
+.music-player .song[data-type="next"] {
+    right: 18%;
+}
+
+.music-player .song[data-type="previous"] {
+    left: 18%;
 }
