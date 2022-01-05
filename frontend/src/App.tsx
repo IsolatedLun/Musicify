@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import MusicPlayer from "./components/MusicPlayer";
 import Browse from "./components/Browse";
 import { toggleMusicPlayer } from "./misc/utils";
+import SignUp from "./components/auth/SignUp";
+import LogIn from "./components/auth/LogIn";
 
 function App() {
 
@@ -30,6 +32,9 @@ function App() {
 
             <Route path='/' element={<Home />} />
             <Route path='/browse' element={<Browse />} />
+
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/login' element={<LogIn />} />
 
           </Routes>
           <MusicPlayer />

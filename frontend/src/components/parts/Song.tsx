@@ -19,7 +19,7 @@ const Song = ({ song, idx, ignore, queueType } :
     }
 
     return (
-        <a className='song' data-type={queueType} tabIndex={idx} onKeyDown={(e) => {
+        <a className='song' data-type={queueType} tabIndex={0} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(song.id)
         }}
 

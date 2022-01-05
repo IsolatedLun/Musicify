@@ -37,8 +37,7 @@ const MusicPlayer = () => {
                break;
 
             case 'change-song':
-                const idx: number = Number(target.getAttribute('data-num'));
-                playBetween(idx);
+                playBetween();
                 break;
        }       
     }
@@ -100,9 +99,9 @@ const MusicPlayer = () => {
 
                 <div className="music__reprs">
 
-                    <Song song={songs[currIdx - 1]} idx={currIdx - 1} ignore={true} queueType='previous' />
+                    <Song song={songs[currIdx - 1]} idx={songs.length + 1} ignore={true} queueType='previous' />
                     <SongPreview song={currSong} currId={null} isQueue={false} />
-                    <Song song={songs[currIdx + 1]} idx={currIdx + 1} ignore={true} queueType='next' />
+                    <Song song={songs[currIdx + 1]} idx={songs.length + 2} ignore={true} queueType='next' />
 
                 </div>
 
