@@ -4,6 +4,11 @@
     margin-inline: auto;
 }
 
+.browse__controls {
+    margin-block: 1em;
+    width: 100%;
+}
+
 .songs {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));

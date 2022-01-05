@@ -13,7 +13,7 @@ function App() {
     window.addEventListener('keydown', (e) => {
       const key = e.code;
 
-      if(key === 'KeyE') {
+      if( e.shiftKey && key === 'KeyE') {
         toggleMusicPlayer();
       }
     })

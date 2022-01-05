@@ -48,6 +48,38 @@
     cursor: pointer;
 }
 
+/* Inputs */
+.inpt--def {
+    font-size: calc(var(--fs-400) * 1.25);
+    background-color: transparent;
+    color: var(--txt);
+    border: 0;
+}
+
+.input--primary {
+    width: 75%;
+    max-width: 75%;
+    padding: 0.25em 0.65em;
+    color: var(--txt-muted);
+    background-color: var(--bg-hov);
+    border: 2px solid var(--bg-secondary);
+    border-radius: 6px;
+}
+
+.input--select {
+    font-size: var(--fs-450);
+    padding: 0.25em;
+    border: 0;
+    color: var(--txt);
+    background-color: var(--bg);
+}
+
+.input--select option {
+    text-transform: capitalize;
+    color: var(--txt);
+    background-color: var(--bg);
+}
+
 /* Backgrounds */
 
 
