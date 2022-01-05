@@ -41,10 +41,6 @@
 .song .song__title {
     font-size: var(--fs-450);
     margin: 0.35em;
-    max-width: 12rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .song .song__author {

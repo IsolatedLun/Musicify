@@ -30,7 +30,7 @@ const Song = ({ song, idx, ignore, queueType } :
                 <img loading='lazy'
                 src={API_URL + 'songs/thumb/' + song.id} alt={song.title + ' thumbnail'} />
             </div>
-            <h1 className="song__title capitalize">{ song.title }</h1>
+            <h1 className="song__title capitalize elliptic">{ song.title }</h1>
             <p className="song__author capitalize">{ song.author }</p>
         </a>
     )

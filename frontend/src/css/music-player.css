@@ -35,8 +35,12 @@
     cursor: pointer;
 }
 
+.music-player .music__title {
+    max-width: calc(90% + 1rem);
+}
+
 .music-player .music__thumbnail {
-    width: 18em;
+    width: clamp(12rem, 24vw, 18em);
     aspect-ratio: 1;
     margin-block: 1em;
     background-color: black;
@@ -97,6 +101,7 @@
 
 /* Queue songs */
 .music-player .song {
+    display: none;
     position: absolute;
     top: 25%;
     width: 14rem;
@@ -107,9 +112,15 @@
 }
 
 .music-player .song[data-type="next"] {
-    right: 18%;
+    right: 100px;
 }
 
 .music-player .song[data-type="previous"] {
-    left: 18%;
+    left: 100px;
+}
+
+@media(min-width: 60rem) {
+    .music-player .song {
+        display: flex;
+    }
 }
