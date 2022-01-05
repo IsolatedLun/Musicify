@@ -3,7 +3,7 @@ import { setIndex } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { API_URL } from "../misc/consts";
 import { INF_Song } from "../misc/interfaces";
-import { toggleMusicPlayer } from "../misc/utils";
+import { getSongEl, toggleMusicPlayer } from "../misc/utils";
 import Song from "./parts/Song";
 import SongPreview from "./parts/SongPreview";
 
@@ -30,14 +30,15 @@ const MusicPlayer = () => {
     }, [currSong.id])
 
     const handleControls = (e: React.MouseEvent<HTMLButtonElement>) => {
-       const action = (e.target as HTMLButtonElement).name;
-       switch(action) {
+       const target = (e.target as HTMLButtonElement);
+       switch(target.name) {
            case 'toggle-song':
                handleAudio();
                break;
 
             case 'change-song':
-                changeSong();
+                const idx: number = Number(target.getAttribute('data-num'));
+                playBetween(idx);
                 break;
        }       
     }
@@ -52,10 +53,6 @@ const MusicPlayer = () => {
             toggleBtn.innerText = '\uf04b';
             audioEl.pause()
         }
-    }
-
-    const changeSong = () => {
-    
     }
 
     const changeTime = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -74,11 +71,19 @@ const MusicPlayer = () => {
         }
     }
 
-    const playNext = () => {
-        if(songs[currIdx + 1]) {
-            const nextSong = document.getElementById('song-' + (currIdx + 1) + '-queue') as HTMLButtonElement;
-            nextSong.click();
+    const playBetween = (idx: number) => {
+        let nextSong: HTMLButtonElement | null = null;
+
+        if(songs[currIdx + idx]) {
+            nextSong = getSongEl(currIdx, idx);
         }
+
+        else if(songs[currIdx + -idx]) {
+            nextSong = getSongEl(currIdx, -idx);
+        }
+
+        if(nextSong)
+            nextSong.click();
     }
 
     const updateTime = () => {
@@ -102,18 +107,18 @@ const MusicPlayer = () => {
 
 
             <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
-            autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playNext()}
+            autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playBetween(1)}
             id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
             <div className="music__controls flex gap--2">
                 <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
-                className='fa reverse btn--def music__control' name='change-song'>&#xf050;</button>
+                className='fa reverse btn--def music__control' name='change-song' data-num='-1'>&#xf050;</button>
                 
                 <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
                 className='fa btn--def music__control' id='music-toggler' name='toggle-song'>&#xf04c;</button>
 
                 <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
-                className='fa btn--def music__control' name='change-song'>&#xf050;</button>
+                className='fa btn--def music__control' name='change-song' data-num='1'>&#xf050;</button>
             </div>
 
             <div onMouseMove={(e) => dragAudioBar(e)}

@@ -22,7 +22,7 @@ const Song = ({ song, idx, ignore, queueType } :
     return (
         <div className='song' data-type={queueType}
             onClick={() => selectSong(song.id)} id={'song-' + idx + (queueType ? '-queue' : '')}>
-            <h2 className='song__queue capitalize'>{ queueType }</h2>
+            <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'
                 src={API_URL + 'songs/thumb/' + song.id} alt={song.title + ' thumbnail'} />

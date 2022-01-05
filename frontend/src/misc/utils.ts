@@ -41,6 +41,10 @@ export const toggleMusicPlayer = (ignore: boolean=false) => {
     }
 }
 
+export const getSongEl = (currNum: number, num: number): HTMLButtonElement => {
+    return document.getElementById('song-' + (currNum + num) + '-queue') as HTMLButtonElement;
+}
+
 export function genNum(max: number) {
     return Math.floor(Math.random() * max);
 }
