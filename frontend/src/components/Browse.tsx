@@ -10,7 +10,7 @@ const Browse = () => {
     const dispatch = useAppDispatch();
 
     const [search, setSearch] = useState('');
-    const [genre, setGenre] = useState('');
+    const [genre, setGenre] = useState('all');
 
     useEffect(() => {
         if(songs.length < 1) {
@@ -33,34 +33,33 @@ const Browse = () => {
         :
         <div className="browse-container" id='main-content'>
             <div className="browse__controls flex--align gap--1">
-
                 <input id='search-inpt' type="text" placeholder='Search songs...' 
                     onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)} className='inpt--def input--primary' />
 
-                <select id='genres-input' onInput={(e: FormEvent<HTMLSelectElement>) => handleSelect(e)}
-                    className='input--select' name='Genres' onChange={() => null}>
+                <select id='genres-input' onChange={(e: FormEvent<HTMLSelectElement>) => handleSelect(e)}
+                    className='input--select' name='Genres'>
                     <option value="all">All</option>
                     <option value="pop">Pop</option>
                     <option value="intrumental">Instrumental</option>
                     <option value="metal">Metal</option>
                     <option value="rap">Rap</option>
+                    <option value="rock">Rock</option>
                 </select>
-
             </div>
 
             <div className="songs">
                 {
-                    songs.filter(song => {
-                        if(search.length > 0) {
-                            if(song.title.toLowerCase().indexOf(search) > -1) {
+                    songs.filter(song => song.title.toLowerCase().indexOf(search) > -1)
+                        .filter(song => {
+                            if(genre === 'all') {
                                 return song;
                             }
-                        }
 
-                        else {
-                            return song;
-                        }
-                    }).map((song: INF_Song, idx: number) => (
+                            else if(song.genre === genre) {
+                                return song
+                            }
+                        })
+                        .map((song: INF_Song, idx: number) => (
                         <Song song={song} key={song.id} idx={idx} ignore={false} queueType={null} />
                     ))
                 }

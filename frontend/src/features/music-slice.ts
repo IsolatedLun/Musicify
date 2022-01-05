@@ -11,6 +11,7 @@ const initialState: MusicState = {
         title: 'No Music',
         author: 'No Author',
         views: 0,
+        genre: 'all',
         rating: 0,
         created_at: new Date(),
     },
@@ -40,7 +41,7 @@ export const musicSlice = createSlice({
     initialState,
     reducers: {
         setCurrSong(state, action) {
-            state.currSong = state.songs[action.payload];
+            state.currSong = state.songs.filter(song => song.id === action.payload)[0];
         },
 
         setIndex(state, action) {

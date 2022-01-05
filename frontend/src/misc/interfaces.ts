@@ -12,6 +12,7 @@ export interface INF_Song {
     id: number | null;
     title: string;
     author: string;
+    genre: string;
     views: number;
     rating: number;
     created_at: Date;

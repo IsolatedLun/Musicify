@@ -10,9 +10,8 @@ const Song = ({ song, idx, ignore, queueType } :
     const dispatch = useAppDispatch();
 
     const selectSong = (id: number | null) => {
-        dispatch(setCurrSong(idx));
+        dispatch(setCurrSong(id));
         toggleMusicPlayer(ignore);
-        console.log(ignore)
     }
 
     if(!song) {
@@ -20,11 +19,11 @@ const Song = ({ song, idx, ignore, queueType } :
     }
 
     return (
-        <a className='song' data-type={queueType} tabIndex={0} onKeyDown={(e) => {
+        <a className='song' data-type={queueType} tabIndex={idx} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(song.id)
         }}
 
-            onClick={() => selectSong(song.id)} id={'song-' + idx + (queueType ? '-queue' : '')}>
+            onClick={() => selectSong(song.id)} id={'song-' + song.id + (queueType ? '-queue' : '')}>
             <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'
