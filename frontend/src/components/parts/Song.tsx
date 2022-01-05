@@ -20,7 +20,10 @@ const Song = ({ song, idx, ignore, queueType } :
     }
 
     return (
-        <div className='song' data-type={queueType}
+        <a className='song' data-type={queueType} tabIndex={0} onKeyDown={(e) => {
+            if(e.key === 'Enter') selectSong(song.id)
+        }}
+
             onClick={() => selectSong(song.id)} id={'song-' + idx + (queueType ? '-queue' : '')}>
             <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
@@ -29,7 +32,7 @@ const Song = ({ song, idx, ignore, queueType } :
             </div>
             <h1 className="song__title capitalize">{ song.title }</h1>
             <p className="song__author capitalize">{ song.author }</p>
-        </div>
+        </a>
     )
 }
 

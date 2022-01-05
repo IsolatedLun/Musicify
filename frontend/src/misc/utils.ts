@@ -32,6 +32,7 @@ export const toggleMusicPlayer = (ignore: boolean=false) => {
 
         if(!musicPlayer.style.transform) {
             musicPlayer.style.transform = 'translateY(96%)';
+            musicPlayer.focus();
         }
 
         if(musicPlayer.style.transform === 'translateY(96%)')

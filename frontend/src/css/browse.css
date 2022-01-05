@@ -22,7 +22,7 @@
     transition: background-color 95ms ease-out;
 }
 
-.song:is(:hover) {
+.song:is(:hover, :focus-visible, :focus-within) {
     background-color: var(--bg-hov);
 }
 
