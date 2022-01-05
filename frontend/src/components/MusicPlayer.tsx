@@ -71,15 +71,16 @@ const MusicPlayer = () => {
         }
     }
 
-    const playBetween = (idx: number) => {
+    const playBetween = () => {
         let nextSong: HTMLButtonElement | null = null;
+        let idx = songs.indexOf(songs.filter(song => song.id === currSong.id)[0])
 
         if(songs[currIdx + idx]) {
-            nextSong = getSongEl(currIdx, idx);
+            nextSong = getSongEl(songs[idx + 1].id!)
         }
 
         else if(songs[currIdx + -idx]) {
-            nextSong = getSongEl(currIdx, -idx);
+            nextSong = getSongEl(songs[idx - 1].id!);
         }
 
         if(nextSong)
@@ -107,7 +108,7 @@ const MusicPlayer = () => {
 
 
             <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
-            autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playBetween(1)}
+            autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playBetween()}
             id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
             <div className="music__controls flex gap--2">
