@@ -52,6 +52,7 @@
 
 .form__part {
     display: flex;
+    position: relative;
     flex-direction: column;
     gap: 0.45em;
     width: 100%;
@@ -89,9 +90,22 @@
     background-color: var(--clr-primary);
 }
 
+.part__btn {
+    position: absolute;
+    top: 47.5%;
+    right: 1%;
+    font-size: var(--fs-400);
+    color: var(--txt-muted);
+}
+
 @media(max-width: 768px) {
     .form__double-part {
         flex-direction: column;
         margin-bottom: 0.5em;
+    }
+
+    .part__btn {
+        top: 45.2%;
+        right: 3%;
     }
 }

@@ -16,13 +16,15 @@ const LogIn = () => {
 
                 <div className="form__part">
                     <label className="form__label">Email address</label>
-                    <input type="email" placeholder='Enter email address' className="form__inpt" />
+                    <input type="email" placeholder='Enter email address' className="form__inpt"
+                        data-realType='email' />
                     <p className="form__helptext"></p>
                 </div>
 
                 <div className="form__part">
                     <label className="form__label">Password</label>
-                    <input type="password" placeholder='Enter password' className="form__inpt" />
+                    <input type="password" placeholder='Enter password' className="form__inpt"
+                        data-realType='password' />
                     <p className="form__helptext"></p>
                 </div>
 

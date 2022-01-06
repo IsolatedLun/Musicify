@@ -20,17 +20,22 @@ export function validateInputs(inputs: NodeListOf<HTMLInputElement>) {
 function validateInput(input: HTMLInputElement): boolean {
     const val: string | number = input.value;
     const type: string = input.type;
+    const realType: string | null = input.getAttribute('data-realType') ?? null;
 
     clearHelpText(input);
-    if(type === 'text' && isValidText(input, val)) {
+    if(realType === 'ignore') {
         return true;
     }
 
-    else if(type === 'password' && isValidPassword(input, val)) {
+    else if(realType === 'text' && isValidText(input, val)) {
         return true;
     }
 
-    else if(type === 'email' && isValidText(input, val)) {
+    else if(realType === 'password' && isValidPassword(input, val)) {
+        return true;
+    }
+
+    else if(realType === 'email' && isValidText(input, val)) {
         return true
     }
 
