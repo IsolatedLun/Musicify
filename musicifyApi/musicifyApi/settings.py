@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backend',
+    'users',
     'rest_framework',
     'corsheaders'
 ]
@@ -48,6 +49,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CORS_ALLOW_ALL_ORIGINS = True
+AUTH_USER_MODEL = 'users.cUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
