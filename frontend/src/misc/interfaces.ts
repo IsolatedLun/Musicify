@@ -32,3 +32,8 @@ export interface UserForm {
     password?: string;
     bandName?: string;
 }
+
+export interface UserLogin {
+    email?: string;
+    password?: string;
+}

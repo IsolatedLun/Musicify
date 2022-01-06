@@ -1,14 +1,26 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { validateInputs } from '../../misc/formHandler';
+import { UserLogin } from '../../misc/interfaces';
 
 const LogIn = () => {
+    const [user, setUser] = useState<UserLogin>({
+        email: '',
+        password: ''
+    })
 
     const handleForm = (e: FormEvent) => {
         e.preventDefault();
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
-        validateInputs(inputs);
+        if(validateInputs(inputs)) {
+
+        }
+    }
+
+    const handleInput = (e: FormEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
+        setUser({ ...user, [target.name]: target.value });
     }
 
     return (
@@ -17,15 +29,17 @@ const LogIn = () => {
 
                 <div className="form__part">
                     <label className="form__label">Email address</label>
-                    <input type="email" placeholder='Enter email address' className="form__inpt"
-                        data-realType='email' />
+                    <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                    placeholder='Enter email address' className="form__inpt"
+                        data-realType='email' name='email' />
                     <p className="form__helptext"></p>
                 </div>
 
                 <div className="form__part">
                     <label className="form__label">Password</label>
-                    <input type="password" placeholder='Enter password' className="form__inpt"
-                        data-realType='password' />
+                    <input type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                        placeholder='Enter password' className="form__inpt"
+                        data-realType='password' name='password' />
                     <p className="form__helptext"></p>
                 </div>
 
