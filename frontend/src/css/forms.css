@@ -69,7 +69,17 @@
     width: 100%;
     color: var(--txt-muted);
     background-color: var(--bg-secondary);
-    border: 0;
+    border: 2px solid var(--bg-primary);
+}
+
+.form__part .form__helptext::first-letter {
+    text-transform: uppercase;
+}
+
+.form__part .form__helptext {
+    font-size: calc(var(--fs-400) * 0.8);
+    color: var(--clr-err);
+    text-transform: lowercase;
 }
 
 .form__btn {

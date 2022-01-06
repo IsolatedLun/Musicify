@@ -22,6 +22,5 @@ export interface MusicState {
     songs: INF_Song[];
     status: 'idle' | 'fulfilled' | 'rejected';
     currSong: INF_Song;
-    currAudio: File | null;
     currIdx: number;
 }

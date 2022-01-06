@@ -16,8 +16,7 @@ const initialState: MusicState = {
         created_at: new Date(),
     },
 
-    currAudio: null,
-    currIdx: NaN
+    currIdx: NaN,
 }
 
 export const fetchSongs = createAsyncThunk(
@@ -56,10 +55,6 @@ export const musicSlice = createSlice({
 
         builder.addCase(fetchSongs.rejected, (state, action) => {
             
-        })
-
-        builder.addCase(fetchAudio.fulfilled, (state, action) => {
-            state.currAudio = action.payload
         })
     }
 })
