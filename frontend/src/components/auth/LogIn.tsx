@@ -1,4 +1,5 @@
 import React, { FormEvent } from 'react'
+import { Link } from 'react-router-dom';
 import { validateInputs } from '../../misc/formHandler';
 
 const LogIn = () => {
@@ -27,6 +28,8 @@ const LogIn = () => {
                         data-realType='password' />
                     <p className="form__helptext"></p>
                 </div>
+
+                <Link to='/signup' className='form__link' replace>Don't have an account?</Link>
 
                 <button className="btn--def form__btn">Log in</button>
 

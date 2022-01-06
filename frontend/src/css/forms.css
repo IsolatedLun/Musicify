@@ -98,6 +98,11 @@
     color: var(--txt-muted);
 }
 
+.form__link {
+    font-size: calc(var(--fs-400) * 0.9);
+    color: var(--clr-primary);
+}
+
 @media(max-width: 768px) {
     .form__double-part {
         flex-direction: column;

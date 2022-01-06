@@ -1,4 +1,4 @@
-export function validateInputs(inputs: NodeListOf<HTMLInputElement>) {
+export function validateInputs(inputs: NodeListOf<HTMLInputElement>): boolean {
     let validAmt = 0;
 
     for(let i = 0; i < inputs.length; i++) {
@@ -13,14 +13,16 @@ export function validateInputs(inputs: NodeListOf<HTMLInputElement>) {
     }
 
     if(validAmt === inputs.length) {
-        alert('nice')
+        return true;
     }
+
+    return false;
 }
 
 function validateInput(input: HTMLInputElement): boolean {
     const val: string | number = input.value;
     const type: string = input.type;
-    const realType: string | null = input.getAttribute('data-realType') ?? null;
+    const realType: string | null = input.getAttribute('data-realtype') ?? null;
 
     clearHelpText(input);
     if(realType === 'ignore') {
@@ -96,4 +98,22 @@ function isValidText(input: HTMLInputElement, str: string) {
     }
 
     return false;
+}
+
+/* Misc */
+export const togglePasswordVisibility = (e: React.MouseEvent, inputId: string) => {
+    e.preventDefault();
+    
+    const input = document.getElementById(inputId)! as HTMLInputElement;
+    const target = e.target as HTMLButtonElement;
+
+    if(input.type === 'password') {
+        target.style.color = 'var(--txt)';
+        input.type = 'text';
+    }
+
+    else {
+        target.style.color = 'var(--txt-muted)';
+        input.type = 'password';
+    }
 }
