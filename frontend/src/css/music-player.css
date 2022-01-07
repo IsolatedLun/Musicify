@@ -13,6 +13,14 @@
     transition: transform 120ms ease-in;
 }
 
+.music-player:not(.active) > *:not(.player__handle) {
+    visibility: hidden;
+}
+
+.music-player.active > * {
+    visibility: visible;
+}
+
 .music-player .music__stats {
     font-size: calc(var(--fs-400) * 0.8);
     color: var(--txt-muted);

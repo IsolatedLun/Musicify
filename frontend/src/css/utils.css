@@ -133,3 +133,12 @@
 .trans--bg {
     transition: background-color 95ms ease-out;
 }
+
+/* Accessibility */
+.absolute--open > * {
+    visibility: hidden;
+}
+
+.absolute--open.active > * {
+    visibility: visible;
+}

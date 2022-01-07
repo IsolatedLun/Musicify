@@ -32,13 +32,19 @@ export const toggleMusicPlayer = (ignore: boolean=false) => {
 
         if(!musicPlayer.style.transform) {
             musicPlayer.style.transform = 'translateY(96%)';
+            musicPlayer.classList.remove('active');
             musicPlayer.focus();
         }
 
-        if(musicPlayer.style.transform === 'translateY(96%)')
+        if(musicPlayer.style.transform === 'translateY(96%)') {
+            musicPlayer.classList.add('active');
             musicPlayer.style.transform = `translateY(2%)`;
-        else
-            musicPlayer.style.transform = 'translateY(96%)'
+        }
+            
+        else {
+            musicPlayer.style.transform = 'translateY(96%)';
+            musicPlayer.classList.remove('active');
+        }
     }
 }
 

@@ -24,7 +24,7 @@ const Navbar = () => {
                     className='fa nav__dropdown btn--def'>&#xf0c9;</button>
             </nav>
         
-            <div className="side-nav" id='side-nav'>
+            <div className="side-nav absolute--open" id='side-nav'>
                 <h2 className="side__title">Musicify</h2>
                 <ul className="side__links flex--align flex--col gap--05">
                     <li className="side__link"><Link to={'/'}>Home</Link></li>
