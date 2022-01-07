@@ -69,7 +69,8 @@ img {
   --clr-primary: hsl(274, 76%, 52%);
   --clr-secondary: hsl(274, 76%, 58%);
   --clr-warn: #ff960d;
-  --clr-err: #ff1d0d;
+  --clr-err: hsl(4, 100%, 53%);
+  --clr-err-secondary: hsl(4, 100%, 60%);
 }
 
 @media(max-width: 768px) {

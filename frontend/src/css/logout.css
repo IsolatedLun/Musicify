@@ -1,0 +1,7 @@
+.logout {
+    padding: 1em;
+    margin-inline: auto;
+    margin-top: 7em;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+}

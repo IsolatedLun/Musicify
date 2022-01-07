@@ -10,6 +10,7 @@ import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
 import { useAppDispatch } from "./hooks";
 import { getUserByToken, setIsLogged } from "./features/user.slice";
+import Logout from "./components/auth/Logout";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ function App() {
 
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<LogIn />} />
+            <Route path='/logout' element={<Logout />} />
 
           </Routes>
           <MusicPlayer />

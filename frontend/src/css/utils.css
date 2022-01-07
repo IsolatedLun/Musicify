@@ -56,8 +56,22 @@
     transition: background-color 95ms ease-out;
 }
 
-.btn--primary:hover {
+.btn--primary:hover:not(.cust) {
     background-color: var(--clr-secondary);
+}
+
+.btn--err:has(.err) {
+    background-color: var(--clr-err);
+}
+
+.btn--err:has(.err):hover {
+    background-color: var(--clr-err-secondary);
+}
+
+.btn--group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* Inputs */
@@ -94,6 +108,14 @@
 
 /* Backgrounds */
 
+/* Colors */
+.err {
+    background-color: var(--clr-err);
+}
+
+.warn {
+    background-color: var(--clr-warn);
+}
 
 /* Misc */
 .link--split {

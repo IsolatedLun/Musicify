@@ -81,5 +81,5 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setIsLogged } = userSlice.actions;
+export const { setIsLogged, logout } = userSlice.actions;
 export default userSlice.reducer;
