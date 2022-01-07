@@ -36,6 +36,7 @@ a {
 img {
   display: block;
   max-width: 100%;
+  border-radius: inherit;
   object-fit: cover;
 }
 

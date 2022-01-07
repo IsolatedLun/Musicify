@@ -14,7 +14,7 @@ const Logout = () => {
 
     return (
         <div className="form-container">
-            <div className="logout text--center">
+            <div className="logout text--center" id='main-content'>
                 <h1 className="logout__title">Are you sure you want to logout?</h1>
                 <div className="btn--group">
                     <button onClick={() => commenceLogout()}

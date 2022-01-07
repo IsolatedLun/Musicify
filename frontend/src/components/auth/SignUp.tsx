@@ -6,7 +6,7 @@ import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler
 import { UserForm } from '../../misc/interfaces';
 
 const SignUp = () => {
-    const { isSignedUp } = useAppSelector(state => state.user)
+    const { isSignedUp, isLogged } = useAppSelector(state => state.user)
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
@@ -15,7 +15,7 @@ const SignUp = () => {
         lastName: '',
         email: '',
         password: '',
-        bandName: ''
+        producerName: ''
     });
 
     useEffect(() => {
@@ -23,6 +23,12 @@ const SignUp = () => {
             navigate('/login')
         }
     }, [isSignedUp])
+
+    useEffect(() => {
+        if(isLogged) {
+            navigate(-1);
+        }
+    })
 
     const handleForm = (e: FormEvent) => {
         e.preventDefault();
@@ -83,10 +89,10 @@ const SignUp = () => {
                 <p className="form__splitter">Misc</p>
 
                 <div className="form__part">
-                    <label className="form__label">band name<span className='txt--muted'>*</span></label>
+                    <label className="form__label">Producer name<span className='txt--muted'>* (Public username)</span></label>
                     <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
-                        placeholder='Enter band name' className='form__inpt' 
-                        data-realtype='ignore' name='bandName' />
+                        placeholder='Enter producer name' className='form__inpt' 
+                        data-realtype='ignore' name='producerName' />
                     <p className="form__helptext"></p>
                 </div>
 

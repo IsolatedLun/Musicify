@@ -14,12 +14,12 @@ class SignUp(APIView):
     def post(self, req):
         data = req.data['data']
 
-        if(len(data['bandName']) < 1):
+        if(len(data['producerName']) < 1):
             data['bandName'] = None;
 
         try:
             user = cUser.objects.create(email=data['email'], password=data['password'], first_name=data['firstName'],
-            last_name=data['lastName'], band_name=data['bandName'])
+            last_name=data['lastName'], band_name=data['producerName'])
 
             token, created = Token.objects.get_or_create(user=user)
         except Exception as e:

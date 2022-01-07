@@ -11,6 +11,10 @@
     height: 100%;
 }
 
+.flex--align--end {
+    align-items: flex-end;
+}
+
 .flex--center {
     justify-content: center;
 }
@@ -72,6 +76,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.group--y {
+    flex-direction: column;
 }
 
 /* Inputs */

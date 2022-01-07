@@ -29,7 +29,7 @@ const Browse = () => {
     return (
         status === 'idle'
         ?
-        <Loader />
+        <Loader text='Loading songs...' />
         :
         <div className="browse-container" id='main-content'>
             <div className="browse__controls flex--align gap--1">

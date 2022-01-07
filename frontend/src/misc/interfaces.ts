@@ -30,7 +30,7 @@ export interface UserForm {
     lastName?: string;
     email?: string;
     password?: string;
-    bandName?: string;
+    producerName?: string;
 }
 
 export interface UserLogin {
@@ -46,9 +46,9 @@ export interface UserState {
 
 export interface User {
     id: number;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    bandName: string;
-    isSuperUser: boolean;
+    producer_name: string;
+    is_super_user: boolean;
 }
