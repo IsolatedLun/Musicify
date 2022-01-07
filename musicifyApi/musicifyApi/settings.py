@@ -41,8 +41,15 @@ INSTALLED_APPS = [
     'backend',
     'users',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 # Custom Changes
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
