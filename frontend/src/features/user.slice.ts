@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const initialState: UserState = {
     user: {
+        id: -1,
         firstName: '',
         lastName: '',
         email: '',
@@ -21,9 +22,17 @@ const initialState: UserState = {
 export const login = createAsyncThunk(
     'user/auth-login',
     async(loginData: UserLogin, thunk) => {
-        const res: any = await axios.post(API_URL + 'users/tok', { 
-            username: loginData.email, password: loginData.password });
+        const res: any = await axios.post(API_URL + 'users/login', { 
+            email: loginData.email, password: loginData.password });
         return res.data
+    }
+)
+
+export const getUserByToken = createAsyncThunk(
+    'user/auth-loginWithTok',
+    async(thunk) => {
+        const res: any = await axios.get(API_URL + 'users/tok/' + localStorage.getItem('tok'));
+        return res.data;
     }
 )
 
@@ -33,7 +42,7 @@ export const signUp = createAsyncThunk(
         const res: any = await axios.post(API_URL + 'users/signup', { data: newUserData });
         return res.data
     }
-)
+) 
 
 export const userSlice = createSlice({
     name: 'user',
@@ -47,12 +56,23 @@ export const userSlice = createSlice({
             else {
                 state.isLogged = false;
             }
+        },
+
+        logout(state) {
+            localStorage.removeItem('tok');
+            state.isLogged = false;
+            state.user = null;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
-            localStorage.setItem('tok', action.payload)
+            state.user = action.payload['user'];
+            localStorage.setItem('tok', action.payload['tok']);
             state.isLogged = true;
+        })
+
+        builder.addCase(getUserByToken.fulfilled, (state, action) => {
+            state.user = action.payload['user'];
         })
 
         builder.addCase(signUp.fulfilled, (state, action) => {

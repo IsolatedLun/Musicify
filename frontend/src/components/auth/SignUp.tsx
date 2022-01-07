@@ -92,7 +92,7 @@ const SignUp = () => {
 
                 <Link to='/login' className='form__link' replace>Already have an account?</Link>
 
-                <button className="btn--def form__btn">Sign in</button>
+                <button className="btn--def btn--primary form__btn">Sign in</button>
 
             </form>
         </div>

@@ -67,6 +67,7 @@ img {
   --fs-600: 2.25em;
 
   --clr-primary: hsl(274, 76%, 52%);
+  --clr-secondary: hsl(274, 76%, 58%);
   --clr-warn: #ff960d;
   --clr-err: #ff1d0d;
 }

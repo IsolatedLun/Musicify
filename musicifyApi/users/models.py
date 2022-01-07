@@ -26,7 +26,7 @@ class cUser(AbstractUser):
 
     band_name = models.CharField(max_length=72, unique=True, null=True)
 
-    profile = models.ImageField(upload_to='profiles/')
+    profile = models.ImageField(upload_to='profiles/', default='profiles/def.png')
 
     joined_at = models.DateTimeField(auto_now_add=True)
 

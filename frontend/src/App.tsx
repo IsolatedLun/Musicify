@@ -9,7 +9,7 @@ import { toggleMusicPlayer } from "./misc/utils";
 import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
 import { useAppDispatch } from "./hooks";
-import { setIsLogged } from "./features/user.slice";
+import { getUserByToken, setIsLogged } from "./features/user.slice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,6 +25,10 @@ function App() {
 
     dispatch(setIsLogged());
   }, [])
+
+  useEffect(() => {
+    dispatch(getUserByToken())
+  })
 
   return (
     <Router>

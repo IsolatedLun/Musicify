@@ -24,7 +24,7 @@
     height: 100%;
 }
 
-.primary-nav .nav__link a:is(:hover, :focus-visible) {
+.primary-nav .nav__link a:not(.btn--def):is(:hover, :focus-visible) {
     color: var(--clr-primary);
 }
 
@@ -48,6 +48,11 @@
 
 .primary-nav .nav__skip:focus-visible + .nav__head {
     transform: translateX(120px)
+}
+
+.primary-nav .nav__user {
+    width: 2.25em;
+    aspect-ratio: 1;
 }
 
 /* Sidenav */

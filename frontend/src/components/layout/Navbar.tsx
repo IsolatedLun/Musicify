@@ -1,8 +1,12 @@
 import React from 'react';
 import { toggleEl } from '../../misc/utils';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { API_URL } from '../../misc/consts';
 
 const Navbar = () => {
+    const { isLogged, user } = useAppSelector(state => state.user);
+
     return (
         <>
             <nav className='primary-nav flex--align--between'>
@@ -16,8 +20,29 @@ const Navbar = () => {
                     <li className="nav__link"><Link to={'/'}>Home</Link></li>
                     <li className="nav__link"><Link to={'/browse'}>Browse</Link></li>
                     <li className="link--split y"></li>
-                    <li className='nav__link'><Link to={'/login'}>Log in</Link></li>
-                    <li className="nav__link"><Link to={'/signup'}>Sign up</Link></li>
+                    {
+                        !isLogged
+                        ?
+                        <>
+                        <li className='nav__link'><Link to={'/login'}>Log in</Link></li>
+                        <li className="nav__link"><Link to={'/signup'}>Sign up</Link></li>
+                        </>
+                        : user !== null && user.id > -1 
+                        ?
+                        <>
+                            <li className='nav__link'>
+                                <Link to={'/user/' + user.id}>
+                                    <div className='nav__user'>
+                                        <img src={API_URL + 'users/profiles/' + user.id} />
+                                    </div>
+                                </Link>
+                            </li>
+                            <li className="nav__link">
+                                <Link to='/logout' className='btn--def btn--primary'>Logout</Link>
+                            </li>
+                        </>
+                        : null
+                    }
                 </ul>
 
                 <button onClick={() => toggleEl('side-nav', 'active')}

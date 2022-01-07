@@ -41,11 +41,23 @@
 
 /* Buttons */
 .btn--def {
-    font-size: var(--fs-500);
+    font-size: var(--fs-450);
     background-color: transparent;
     color: var(--txt);
     border: 0;
     cursor: pointer;
+}
+
+.btn--primary {
+    font-size: var(--fs-450);
+    padding: 0.35em 0.7em;
+    background-color: var(--clr-primary);
+    border-radius: 6px;
+    transition: background-color 95ms ease-out;
+}
+
+.btn--primary:hover {
+    background-color: var(--clr-secondary);
 }
 
 /* Inputs */

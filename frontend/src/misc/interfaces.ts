@@ -39,12 +39,13 @@ export interface UserLogin {
 }
 
 export interface UserState {
-    user: User;
+    user: User | null;
     isLogged: boolean;
     isSignedUp: boolean;
 }
 
 export interface User {
+    id: number;
     firstName: string;
     lastName: string;
     email: string;

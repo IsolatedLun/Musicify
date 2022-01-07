@@ -57,7 +57,7 @@ const LogIn = () => {
 
                 <Link to='/signup' className='form__link' replace>Don't have an account?</Link>
 
-                <button className="btn--def form__btn">Log in</button>
+                <button className="btn--def btn--primary form__btn">Log in</button>
 
             </form>
         </div>
