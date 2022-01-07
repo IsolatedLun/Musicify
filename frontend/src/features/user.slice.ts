@@ -61,6 +61,7 @@ export const userSlice = createSlice({
         logout(state) {
             localStorage.removeItem('tok');
             state.isLogged = false;
+            state.isSignedUp = false;
             state.user = null;
         }
     },
@@ -69,6 +70,7 @@ export const userSlice = createSlice({
             state.user = action.payload['user'];
             localStorage.setItem('tok', action.payload['tok']);
             state.isLogged = true;
+            state.isSignedUp = false;
         })
 
         builder.addCase(getUserByToken.fulfilled, (state, action) => {

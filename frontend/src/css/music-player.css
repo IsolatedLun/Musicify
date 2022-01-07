@@ -56,11 +56,11 @@
 }
 
 .music-player .music__controls {
-    font-size: var(--fs-450);
     margin-top: 1em;
 }
 
 .music-player .music__control {
+    font-size: var(--fs-600);
     color: var(--txt-muted);
     transition: color 100ms ease-out;
 }
