@@ -1,9 +1,15 @@
-import React, { FormEvent, FormEventHandler, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { signUp } from '../../features/user.slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserForm } from '../../misc/interfaces';
 
 const SignUp = () => {
+    const { isSignedUp } = useAppSelector(state => state.user)
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    
     const [newUser, setNewUser] = useState<UserForm>({
         firstName: '',
         lastName: '',
@@ -12,12 +18,18 @@ const SignUp = () => {
         bandName: ''
     });
 
+    useEffect(() => {
+        if(isSignedUp) {
+            navigate('/login')
+        }
+    }, [isSignedUp])
+
     const handleForm = (e: FormEvent) => {
         e.preventDefault();
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
         if(validateInputs(inputs)) {
-
+            dispatch(signUp(newUser));
         }
     }
 

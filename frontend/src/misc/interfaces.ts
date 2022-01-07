@@ -37,3 +37,17 @@ export interface UserLogin {
     email?: string;
     password?: string;
 }
+
+export interface UserState {
+    user: User;
+    isLogged: boolean;
+    isSignedUp: boolean;
+}
+
+export interface User {
+    firstName: string;
+    lastName: string;
+    email: string;
+    bandName: string;
+    isSuperUser: boolean;
+}

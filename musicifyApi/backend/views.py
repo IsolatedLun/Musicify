@@ -18,18 +18,20 @@ class Songs(APIView):
 
 class SongThumbnail(APIView):
     def get(self, req, song_id):
-        thumbnail = Song.objects.get(id=song_id).thumbnail
+        if song_id is not None:
+            thumbnail = Song.objects.get(id=song_id).thumbnail
 
-        if thumbnail is not None:
-            return FileResponse(thumbnail)
+            if thumbnail is not None:
+                return FileResponse(thumbnail)
         return Response({'400': f'Song with id of {song_id} is None'}, ERR)
 
 class SongAudio(APIView):
     def get(self, req, song_id):
-        song = Song.objects.get(id=song_id)
-        song.views += 1
-        song.save()
+        if song_id is not None:
+            song = Song.objects.get(id=song_id)
+            song.views += 1
+            song.save()
 
-        if song is not None:
-            return FileResponse(song.audio)
+            if song is not None:
+                return FileResponse(song.audio)
         return Response({'400': f'Song with id of {song_id} is None'}, ERR)

@@ -1,20 +1,32 @@
-import React, { FormEvent, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { FormEvent, useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../features/user.slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { validateInputs } from '../../misc/formHandler';
 import { UserLogin } from '../../misc/interfaces';
 
 const LogIn = () => {
+    const { isLogged } = useAppSelector(state => state.user)
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    
     const [user, setUser] = useState<UserLogin>({
         email: '',
         password: ''
     })
+
+    useEffect(() => {
+        if(isLogged) {
+            navigate('/')
+        }
+    }, [isLogged])
 
     const handleForm = (e: FormEvent) => {
         e.preventDefault();
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
         if(validateInputs(inputs)) {
-
+            dispatch(login(user));
         }
     }
 

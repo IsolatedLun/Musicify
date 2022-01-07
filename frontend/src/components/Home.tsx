@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { animateMixerBars, getUserAgent } from '../misc/utils'
 import homeCards from "./json/home-cards.json";
 
 const Home = () => {
+    const navigate = useNavigate();
 
     useEffect(() => {
         let mixerInterval = setInterval(() => {
@@ -14,6 +15,7 @@ const Home = () => {
             clearInterval(mixerInterval);
         })
     }, [])
+
 
     return (
         <div className="home-container container__overlay">

@@ -24,7 +24,7 @@ class cUser(AbstractUser):
     last_name = models.CharField(max_length=64)
     password = models.CharField(max_length=128)
 
-    band_name = models.CharField(max_length=72, unique=True)
+    band_name = models.CharField(max_length=72, unique=True, null=True)
 
     profile = models.ImageField(upload_to='profiles/')
 

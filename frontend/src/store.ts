@@ -1,11 +1,13 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import eventReducer from "./features/events-slice";
 import musicSlice from "./features/music-slice";
+import userSlice from "./features/user.slice";
 
 export const store = configureStore({
     reducer: {
         events: eventReducer,
-        music: musicSlice
+        music: musicSlice,
+        user: userSlice
     },
     middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

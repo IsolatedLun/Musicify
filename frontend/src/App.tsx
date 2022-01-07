@@ -8,8 +8,11 @@ import Browse from "./components/Browse";
 import { toggleMusicPlayer } from "./misc/utils";
 import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
+import { useAppDispatch } from "./hooks";
+import { setIsLogged } from "./features/user.slice";
 
 function App() {
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.addEventListener('keydown', (e) => {
@@ -19,6 +22,8 @@ function App() {
         toggleMusicPlayer();
       }
     })
+
+    dispatch(setIsLogged());
   }, [])
 
   return (
