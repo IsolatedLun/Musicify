@@ -41,14 +41,17 @@ class RecentSongs(APIView):
     def get(self, req, user_id):
         user = cUser.objects.get(id=user_id)
         recent_songs = RecentSong.objects.filter(user=user)
-        return Response({'data': recent_songs}, OK)
+        songs = [Song.objects.get(id=x.id) for x in recent_songs]
+
+        serializer = SongSerializer(songs, many=True).data
+        return Response({'data': serializer}, OK)
 
     def post(self, req, user_id, song_id):
         user = cUser.objects.get(id=user_id)
         song = Song.objects.get(id=song_id)
         recent_songs = RecentSong.objects.filter(user=user)
 
-        if recent_songs.filter(id=song.id).exists():
+        if not recent_songs.filter(song_id=song.id).exists():
             RecentSong.objects.create(user=user, song_id=song_id)
             return Response({'data': f'Added song {song.title} for user {user.producer_name}'})
 

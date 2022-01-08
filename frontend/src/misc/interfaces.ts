@@ -20,6 +20,9 @@ export interface INF_Song {
 
 export interface MusicState {
     songs: INF_Song[];
+    recentSongs: INF_Song[];
+    favoriteSongs: INF_Song[];
+    mainSongs: INF_Song[];
     status: 'idle' | 'fulfilled' | 'rejected';
     currSong: INF_Song;
     currIdx: number;

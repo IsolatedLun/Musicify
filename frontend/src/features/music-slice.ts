@@ -5,6 +5,9 @@ import { API_URL } from '../misc/consts';
 
 const initialState: MusicState = {
     songs: [],
+    recentSongs: [],
+    favoriteSongs: [],
+    mainSongs: [],
     status: 'idle',
     currSong: {
         id: null,
@@ -28,6 +31,14 @@ export const fetchSongs = createAsyncThunk(
     }
 )
 
+export const fetchRecentSongs = createAsyncThunk(
+    'music/fetch-songs',
+    async(user_id: number, thunk) => {
+        const res: any = await axios.get(API_URL + 'songs/recents/get/' + user_id);
+        return res.data
+    }
+)
+
 export const fetchAudio = createAsyncThunk(
     'music/fetch-audio',
     async(id: number, thunk) => {
@@ -47,6 +58,10 @@ export const musicSlice = createSlice({
 
         setIndex(state, action) {
             state.currIdx = action.payload;
+        },
+
+        setMainSongs(state, action) {
+            state.mainSongs = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -61,5 +76,5 @@ export const musicSlice = createSlice({
     }
 })
 
-export const { setCurrSong, setIndex } = musicSlice.actions;
+export const { setCurrSong, setIndex, setMainSongs } = musicSlice.actions;
 export default musicSlice.reducer;
