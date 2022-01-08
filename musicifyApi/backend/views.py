@@ -49,6 +49,9 @@ class RecentSongs(APIView):
         recent_songs = RecentSong.objects.filter(user=user)
 
         if recent_songs.filter(id=song.id).exists():
-            return Response({'data': f'song {song.title} exists for user {user.producer_name}'})
-        return Response({'data': f'song {song.title} doesn\'t exist for user {user.producer_name}'})
+            RecentSong.objects.create(user=user, song_id=song_id)
+            return Response({'data': f'Added song {song.title} for user {user.producer_name}'})
+
+        else:
+            return Response({'data': f'Updated song {song.title} for user {user.producer_name}'})
 
