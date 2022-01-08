@@ -3,7 +3,8 @@ import { fetchSongs } from '../features/music-slice';
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { INF_Song } from '../misc/interfaces';
 import Loader from './layout/Loader'
-import Song from './parts/Song';
+import Song from './parts/song/Song';
+import Songs from './parts/song/Songs';
 
 const Browse = () => {
     const { songs, status } = useAppSelector(state => state.music);
@@ -48,21 +49,7 @@ const Browse = () => {
             </div>
 
             <div className="songs">
-                {
-                    songs.filter(song => song.title.toLowerCase().indexOf(search) > -1)
-                        .filter(song => {
-                            if(genre === 'all') {
-                                return song;
-                            }
-
-                            else if(song.genre === genre) {
-                                return song
-                            }
-                        })
-                        .map((song: INF_Song, idx: number) => (
-                        <Song song={song} key={song.id} idx={idx} ignore={false} queueType={null} />
-                    ))
-                }
+                <Songs songs={songs} referBy='ref-browse' mode='filter' genre={genre} search={search} />
             </div>
 
         </div>

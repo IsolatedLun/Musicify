@@ -23,6 +23,7 @@ export interface MusicState {
     status: 'idle' | 'fulfilled' | 'rejected';
     currSong: INF_Song;
     currIdx: number;
+    currRefer: string;
 }
 
 export interface UserForm {
@@ -51,4 +52,8 @@ export interface User {
     email: string;
     producer_name: string;
     is_super_user: boolean;
+}
+
+export interface UtilsState {
+    loc: string;
 }

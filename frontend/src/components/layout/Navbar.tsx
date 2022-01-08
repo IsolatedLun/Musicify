@@ -1,11 +1,18 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { toggleEl } from '../../misc/utils';
-import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { Link, useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { API_URL } from '../../misc/consts';
+import { setLocation } from '../../features/utils-slice';
 
 const Navbar = () => {
+    const dispatch = useAppDispatch();
     const { isLogged, user } = useAppSelector(state => state.user);
+    const location = useLocation();
+
+    useEffect(() => {
+        dispatch(setLocation(location.pathname.replace('/', '')))
+    }, [location])
 
     return (
         <>
@@ -31,7 +38,7 @@ const Navbar = () => {
                         ?
                         <>
                             <li className='nav__link'>
-                                <Link to={'/user/' + user.id}>
+                                <Link to={'/user'}>
                                     <div className='nav__user'>
                                         <img src={API_URL + 'users/profiles/' + user.id} />
                                     </div>

@@ -17,6 +17,7 @@ const initialState: MusicState = {
     },
 
     currIdx: NaN,
+    currRefer: '',
 }
 
 export const fetchSongs = createAsyncThunk(
@@ -40,7 +41,8 @@ export const musicSlice = createSlice({
     initialState,
     reducers: {
         setCurrSong(state, action) {
-            state.currSong = state.songs.filter(song => song.id === action.payload)[0];
+            state.currSong = state.songs.filter(song => song.id === action.payload['id'])[0];
+            state.currRefer = action.payload['referBy'];
         },
 
         setIndex(state, action) {

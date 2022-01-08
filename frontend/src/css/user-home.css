@@ -1,0 +1,9 @@
+.user__home {
+    margin-block: 1em;
+}
+
+.user__home .home__items {
+    width: 100%;
+    height: 14em;
+    overflow-x: auto;
+}

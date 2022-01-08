@@ -23,6 +23,10 @@
     cursor: pointer;
 }
 
+.user__head .user__link.active {
+    border-bottom: 2px solid white;
+}
+
 .user__head .user__link:hover {
     background-color: var(--bg-secondary);
 }

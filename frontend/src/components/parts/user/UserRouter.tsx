@@ -8,7 +8,7 @@ const UserRouter = () => {
         <div className="user-container">
             <UserHeader />
             <Routes>
-                <Route path='/' element={<h1>User home</h1>} />
+                <Route path='/' element={<UserHome />} />
                 <Route path='songs' element={<h1>User songs</h1>}/>
                 <Route path='albums' element={<h1>User albums</h1>}/>
             </Routes>

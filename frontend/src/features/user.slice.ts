@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom';
 const initialState: UserState = {
     user: {
         id: -1,
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         email: '',
-        bandName: '',
-        isSuperUser: false
+        producer_name: '',
+        is_super_user: false
     },
 
     isLogged: false,

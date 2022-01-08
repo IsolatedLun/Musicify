@@ -1,25 +1,12 @@
-import React from 'react'
-import { API_URL } from '../../misc/consts'
-import { INF_Song } from '../../misc/interfaces'
+import React from 'react';
+import { API_URL } from '../../../misc/consts';
+import { INF_Song } from '../../../misc/interfaces';
 
 const SongPreview = ({ song, currId, isQueue } : { song: INF_Song, currId: number | null, isQueue: boolean }) => {
     if(!song || song.id === currId) {
         if(isQueue) {
             return(<div></div>);
         }
-
-        // else {
-        //     const defaultSong: INF_Song = {
-        //         title: 'No title',
-        //         author: 'No author',
-        //         id: -1,
-        //         views: 0,
-        //         rating: 0,
-        //         created_at: new Date()
-        //     } 
-
-        //     return(<SongPreview song={defaultSong} currId={-1} isQueue={false} />);
-        // }
     }
 
     return (

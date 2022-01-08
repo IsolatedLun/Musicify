@@ -1,16 +1,16 @@
 import React from 'react';
-import { fetchAudio, setCurrSong } from '../../features/music-slice';
-import { useAppDispatch } from '../../hooks';
-import { API_URL } from '../../misc/consts';
-import { INF_Song } from '../../misc/interfaces';
-import { toggleMusicPlayer } from '../../misc/utils';
+import { fetchAudio, setCurrSong } from '../../../features/music-slice';
+import { useAppDispatch } from '../../../hooks';
+import { API_URL } from '../../../misc/consts';
+import { INF_Song } from '../../../misc/interfaces';
+import { toggleMusicPlayer } from '../../../misc/utils';
 
-const Song = ({ song, idx, ignore, queueType } : 
-    { song: INF_Song, idx: number, ignore: boolean, queueType: string | null }) => {
+const Song = ({ song, idx, ignore, queueType, referBy } : 
+    { song: INF_Song, idx: number, ignore: boolean, queueType: string | null, referBy: string }) => {
     const dispatch = useAppDispatch();
 
-    const selectSong = (id: number | null) => {
-        dispatch(setCurrSong(id));
+    const selectSong = (id: number | null, referBy: string) => {
+        dispatch(setCurrSong({ id, referBy }));
         toggleMusicPlayer(ignore);
     }
 
@@ -20,10 +20,10 @@ const Song = ({ song, idx, ignore, queueType } :
 
     return (
         <a className='song' data-type={queueType} tabIndex={0} onKeyDown={(e) => {
-            if(e.key === 'Enter') selectSong(song.id)
+            if(e.key === 'Enter') selectSong(song.id, referBy)
         }}
 
-            onClick={() => selectSong(song.id)} id={'song-' + song.id + (queueType ? '-queue' : '')}>
+            onClick={() => selectSong(song.id, referBy)} id={'song-' + song.id + (queueType ? '-queue' : '')}>
             <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'

@@ -1,10 +1,23 @@
-import React from 'react'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../../hooks'
 import { API_URL } from '../../../misc/consts'
 import { User } from '../../../misc/interfaces'
 
 const UserHeader = () => {
     const user = useAppSelector(state => state.user.user)
+    let path = location.pathname.split('/').pop();
+
+    useEffect(() => {
+
+        if(path) {
+            if(path === 'user') {
+                path = 'home';
+            }
+
+            document.getElementById('user-' + path + '__link')?.classList.add('active')!
+        }
+    }, [])
 
     if(user !== null)
         return (
@@ -17,9 +30,9 @@ const UserHeader = () => {
                 </div>
             
                 <ul className="user__nav flex flex--align flex--center">
-                    <li className="user__link">Home</li>
-                    <li className="user__link">Songs</li>
-                    <li className="user__link">Albums</li>
+                    <li id='user-home__link'><Link className="user__link" to=''>Home</Link></li>
+                    <li id='user-songs__link'><Link className="user__link" to='songs'>Songs</Link></li>
+                    <li id='user-albums__link'><Link className="user__link" to='albums'>Albums</Link></li>
                 </ul>
             </div>
         )

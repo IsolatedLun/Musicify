@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { API_URL } from "../misc/consts";
 import { INF_Song } from "../misc/interfaces";
 import { getSongEl, toggleMusicPlayer } from "../misc/utils";
-import Song from "./parts/Song";
-import SongPreview from "./parts/SongPreview";
+import Song from "./parts/song/Song";
+import SongPreview from "./parts/song/SongPreview";
 
 const MusicPlayer = () => {
     const { currSong, songs, currIdx } = useAppSelector(state => state.music);
@@ -99,9 +99,11 @@ const MusicPlayer = () => {
 
                 <div className="music__reprs">
 
-                    <Song song={songs[currIdx - 1]} idx={songs.length + 1} ignore={true} queueType='previous' />
+                    <Song song={songs[currIdx - 1]} idx={songs.length + 1} ignore={true} 
+                        queueType='previous' referBy="ref-player" />
                     <SongPreview song={currSong} currId={null} isQueue={false} />
-                    <Song song={songs[currIdx + 1]} idx={songs.length + 2} ignore={true} queueType='next' />
+                    <Song song={songs[currIdx + 1]} idx={songs.length + 2} ignore={true} 
+                        queueType='next' referBy="ref-player" />
 
                 </div>
 
