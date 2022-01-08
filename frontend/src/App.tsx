@@ -11,7 +11,10 @@ import LogIn from "./components/auth/LogIn";
 import { useAppDispatch } from "./hooks";
 import { getUserByToken, setIsLogged } from "./features/user.slice";
 import Logout from "./components/auth/Logout";
-import UserView from "./components/UserView";
+import UserHeader from "./components/parts/user/UserHeader";
+import UserView from "./components/parts/UserView";
+import UserHome from "./components/parts/user/UserHome";
+import UserRouter from "./components/parts/user/UserRouter";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -48,9 +51,10 @@ function App() {
             <Route path='/login' element={<LogIn />} />
             <Route path='/logout' element={<Logout />} />
 
-            <Route path='/user/:id' element={<UserView />}/>
+            <Route path='user/*' element={<UserRouter />} />
 
           </Routes>
+
           <MusicPlayer />
         </div>
 

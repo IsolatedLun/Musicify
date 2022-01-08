@@ -43,6 +43,7 @@ img {
 :focus {
   outline: 2px solid var(--clr-primary);
   outline-offset: 0.25rem;
+  border-radius: 8px;
 }
 
 .main-container {
