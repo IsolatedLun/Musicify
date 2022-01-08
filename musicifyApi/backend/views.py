@@ -5,6 +5,7 @@ from rest_framework import status
 from .models import Song, RecentSong
 from .serializers import SongSerializer
 from users.models import cUser
+from datetime import datetime
 
 ERR = status.HTTP_400_BAD_REQUEST
 OK = status.HTTP_200_OK
@@ -40,7 +41,7 @@ class SongAudio(APIView):
 class RecentSongs(APIView):
     def get(self, req, user_id):
         user = cUser.objects.get(id=user_id)
-        recent_songs = RecentSong.objects.filter(user=user)
+        recent_songs = RecentSong.objects.filter(user=user).order_by('-listened_at')
         songs = [Song.objects.get(id=x.id) for x in recent_songs]
 
         serializer = SongSerializer(songs, many=True).data
@@ -49,12 +50,18 @@ class RecentSongs(APIView):
     def post(self, req, user_id, song_id):
         user = cUser.objects.get(id=user_id)
         song = Song.objects.get(id=song_id)
-        recent_songs = RecentSong.objects.filter(user=user)
+        recent_songs = RecentSong.objects.filter(user=user).order_by('-listened_at')
+        recent_song = recent_songs.filter(song_id=song.id)
 
-        if not recent_songs.filter(song_id=song.id).exists():
+
+        if not recent_song.exists():
             RecentSong.objects.create(user=user, song_id=song_id)
             return Response({'data': f'Added song {song.title} for user {user.producer_name}'})
 
         else:
+            recent_song = RecentSong.objects.get(id=recent_song[0].id)
+            recent_song.listened_at = datetime.now()
+            recent_song.save()
+
             return Response({'data': f'Updated song {song.title} for user {user.producer_name}'})
 

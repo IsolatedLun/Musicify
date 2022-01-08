@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { setIndex, setMainSongs } from "../features/music-slice";
+import { postRecentSong, setIndex, setMainSongs } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { API_URL } from "../misc/consts";
 import { INF_Song } from "../misc/interfaces";
@@ -10,6 +10,7 @@ import SongPreview from "./parts/song/SongPreview";
 const MusicPlayer = () => {
     const { currSong, songs, recentSongs, favoriteSongs, mainSongs,
         currIdx, currRefer } = useAppSelector(state => state.music);
+    const user = useAppSelector(state => state.user.user)!;
     const dispatch = useAppDispatch();
 
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
@@ -31,6 +32,8 @@ const MusicPlayer = () => {
         else if(currRefer === 'ref-favorite') {
             dispatch(setMainSongs(favoriteSongs));
         }
+
+        dispatch(postRecentSong({ user_id: user.id, song_id: currSong.id }));
     }, [currSong.id])
 
     useEffect(() => {

@@ -32,9 +32,17 @@ export const fetchSongs = createAsyncThunk(
 )
 
 export const fetchRecentSongs = createAsyncThunk(
-    'music/fetch-songs',
+    'music/fetch-recent-songs',
     async(user_id: number, thunk) => {
         const res: any = await axios.get(API_URL + 'songs/recents/get/' + user_id);
+        return res.data
+    }
+)
+
+export const postRecentSong = createAsyncThunk(
+    'music/post-recent-song',
+    async(data: any, thunk) => {
+        const res: any = await axios.post(API_URL + 'songs/recents/post/' + data.user_id + '/' + data.song_id);
         return res.data
     }
 )
@@ -70,8 +78,13 @@ export const musicSlice = createSlice({
             state.status = 'fulfilled';
         })
 
+
         builder.addCase(fetchSongs.rejected, (state, action) => {
             
+        })
+
+        builder.addCase(fetchRecentSongs.fulfilled, (state, action) => {
+            state.recentSongs = action.payload['data']
         })
     }
 })

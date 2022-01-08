@@ -2,8 +2,13 @@
     margin-block: 1em;
 }
 
-.user__home .home__items {
+.user__home .part__items {
     width: 100%;
-    height: 14em;
+    height: 16em;
     overflow-x: auto;
+}
+
+.user__home .part__items > * {
+    width: 12em;
+    max-height: 100%;
 }

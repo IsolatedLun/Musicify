@@ -42,6 +42,7 @@ class Song(models.Model):
 class RecentSong(models.Model):
     user = models.ForeignKey(cUser, on_delete=models.CASCADE)
     song_id = models.PositiveBigIntegerField()
+    listened_at = models.DateTimeField(auto_now_add=True)
 
 class Album(models.Model):
     name = models.CharField(max_length=64, unique=True)
