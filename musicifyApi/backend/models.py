@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from users.models import cUser
 
 def callback(extensions, ext_needed):
     def validate_extension(file):
@@ -23,7 +24,6 @@ genres_choices = [
     ('jazz', 'Jazz'),
 ]
 
-# Create your models here.
 class Song(models.Model):
     title = models.CharField(max_length=64, unique=True)
     author = models.CharField(max_length=64, unique=True)
@@ -38,6 +38,10 @@ class Song(models.Model):
         validators=[])
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+class RecentSong(models.Model):
+    user = models.ForeignKey(cUser, on_delete=models.CASCADE)
+    song_id = models.PositiveBigIntegerField()
 
 class Album(models.Model):
     name = models.CharField(max_length=64, unique=True)
