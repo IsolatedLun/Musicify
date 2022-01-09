@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import FileResponse
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
@@ -23,28 +24,29 @@ class SignUp(APIView):
 
             token, created = Token.objects.get_or_create(user=user)
         except Exception as e:
-            print(e)
             return Response({'detail': 'Something went wrong'}, ERR)
 
         return Response({'tok': token.key}, OK)
 
 class Login(APIView):
     def post(self, req):
-        data = req.data.get
-
-        email = data('email', None)
-        password = data('password', None)
+        email = req.data.get('email', None)
+        password = req.data.get('password', None)
 
         if email is not None and password is not None:
             try:
                 user = cUser.objects.get(email=email)
-                serializer = cUserSerializer(user).data
-                token = Token.objects.get(user=user).key
+                if cUser.check_password(password):
+                    serializer = cUserSerializer(user).data
+                    token = Token.objects.get(user=user).key
 
-                return Response({'user': serializer, 'tok': token}, OK)
-            except Exception as e:
-                return Response({'detail': f'Something went wrong: {e}'}, ERR)
-        return Response({'detail': f'Something went wrong: {email}, {password}'}, ERR)
+                    return Response({'user': serializer, 'tok': token}, OK)
+                else:
+                    raise ObjectDoesNotExist('User does not exist')
+
+            except ObjectDoesNotExist:
+                return Response({'err': 'User does not exist'}, ERR)
+        return Response({'err': f'Invalid email or password'}, ERR)
 
 class UserProfile(APIView):
     def get(self, req, user_id):
@@ -53,7 +55,10 @@ class UserProfile(APIView):
 
 class UserWithToken(APIView):
     def get(self, req, tok):
-        user = Token.objects.get(key=tok).user
-        serializer = cUserSerializer(user).data
+        try:
+            user = Token.objects.get(key=tok).user
+            serializer = cUserSerializer(user).data
 
-        return Response({'user': serializer}, OK)
+            return Response({'user': serializer}, OK)
+        except:
+            return Response({'err': 'User with this token does not exist.'}, ERR)

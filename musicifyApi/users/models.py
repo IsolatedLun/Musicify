@@ -34,3 +34,9 @@ class cUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = cUserManager()
+
+    def check_password(self, raw_password):
+        if self.password == raw_password:
+            return True
+        else:
+            return False
