@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchAudio, setCurrSong } from '../../../features/music-slice';
+import { fetchAudio, setCurrSong, setSongsToPlay, setSongType } from '../../../features/music-slice';
 import { useAppDispatch } from '../../../hooks';
 import { API_URL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';
@@ -10,6 +10,7 @@ const Song = ({ song, idx, ignore, queueType, referBy } :
     const dispatch = useAppDispatch();
 
     const selectSong = (id: number | null, referBy: string) => {
+        dispatch(setSongType(referBy));
         dispatch(setCurrSong({ id, referBy }));
         toggleMusicPlayer(ignore);
     }

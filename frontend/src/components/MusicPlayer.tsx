@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { postRecentSong, setIndex, setMainSongs } from "../features/music-slice";
+import { postRecentSong, setIndex, setSongsToPlay } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { API_URL } from "../misc/consts";
-import { INF_Song } from "../misc/interfaces";
+import { INF_Song, User } from "../misc/interfaces";
 import { getSongEl, toggleMusicPlayer } from "../misc/utils";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
-const MusicPlayer = () => {
-    const { currSong, songs, recentSongs, favoriteSongs, mainSongs,
-        currIdx, currRefer } = useAppSelector(state => state.music);
-    const user = useAppSelector(state => state.user.user)!;
+const MusicPlayer = ({ user } : { user: User | null }) => {
+    const { currSong, browseSongs, recentSongs, favoriteSongs, songsToPlay,
+        currIdx, currSongType } = useAppSelector(state => state.music);
+    const { loc } = useAppSelector(state => state.utils)
     const dispatch = useAppDispatch();
 
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
@@ -21,30 +21,14 @@ const MusicPlayer = () => {
     let isMouseDown = false;
 
     useEffect(() => {
-        if(currRefer === 'ref-browse') {
-            dispatch(setMainSongs(songs));
-        }
-
-        else if(currRefer === 'ref-recent') {
-            dispatch(setMainSongs(recentSongs));
-        }
-
-        else if(currRefer === 'ref-favorite') {
-            dispatch(setMainSongs(favoriteSongs));
-        }
-
-        dispatch(postRecentSong({ user_id: user.id, song_id: currSong.id }));
-    }, [currSong.id])
-
-    useEffect(() => {
         if(audioEl) {
             handleAudio();
         }
     }, [isMouseDown, currSong.id])
 
     useEffect(() => {
-        dispatch(setIndex(mainSongs.map(song => song.id).indexOf(currSong.id)))
-    }, [currSong.id])
+        dispatch(setIndex(songsToPlay.map(song => song.id).indexOf(currSong.id)))
+    }, [songsToPlay, currSong.id])
 
     const handleControls = (e: React.MouseEvent<HTMLButtonElement>) => {
        const target = (e.target as HTMLButtonElement);
@@ -89,14 +73,14 @@ const MusicPlayer = () => {
 
     const playBetween = () => {
         let nextSong: HTMLButtonElement | null = null;
-        let idx = mainSongs.indexOf(songs.filter(song => song.id === currSong.id)[0])
+        let idx = songsToPlay.indexOf(songsToPlay.filter(song => song.id === currSong.id)[0])
 
-        if(mainSongs[currIdx + idx]) {
-            nextSong = getSongEl(mainSongs[idx + 1].id!)
+        if(songsToPlay[currIdx + idx]) {
+            nextSong = getSongEl(songsToPlay[idx + 1].id!)
         }
 
-        else if(mainSongs[currIdx + -idx]) {
-            nextSong = getSongEl(mainSongs[idx - 1].id!);
+        else if(songsToPlay[currIdx + -idx]) {
+            nextSong = getSongEl(songsToPlay[idx - 1].id!);
         }
 
         if(nextSong)
@@ -116,10 +100,10 @@ const MusicPlayer = () => {
 
                 <div className="music__reprs">
 
-                    <Song song={mainSongs[currIdx - 1]} idx={mainSongs.length + 1} ignore={true} 
+                    <Song song={songsToPlay[currIdx - 1]} idx={songsToPlay.length + 1} ignore={true} 
                         queueType='previous' referBy="ref-player" />
                     <SongPreview song={currSong} currId={null} isQueue={false} />
-                    <Song song={mainSongs[currIdx + 1]} idx={mainSongs.length + 2} ignore={true} 
+                    <Song song={songsToPlay[currIdx + 1]} idx={songsToPlay.length + 2} ignore={true} 
                         queueType='next' referBy="ref-player" />
 
                 </div>

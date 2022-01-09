@@ -1,9 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { User } from '../../../misc/interfaces';
 import UserHeader from './UserHeader';
 import UserHome from './UserHome';
 
-const UserRouter = () => {
+const UserRouter = ({ user }: { user: User | null }) => {
     return (
         <div className="user-container">
             <UserHeader />

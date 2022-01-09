@@ -8,6 +8,7 @@ export interface EventState {
     isMouseDown: boolean;
 }
 
+// Music related
 export interface INF_Song {
     id: number | null;
     title: string;
@@ -19,16 +20,17 @@ export interface INF_Song {
 }
 
 export interface MusicState {
-    songs: INF_Song[];
+    browseSongs: INF_Song[];
     recentSongs: INF_Song[];
     favoriteSongs: INF_Song[];
-    mainSongs: INF_Song[];
+    songsToPlay: INF_Song[];
     status: 'idle' | 'fulfilled' | 'rejected';
     currSong: INF_Song;
     currIdx: number;
-    currRefer: string;
+    currSongType: string;
 }
 
+// User related 
 export interface UserForm {
     firstName?: string;
     lastName?: string;

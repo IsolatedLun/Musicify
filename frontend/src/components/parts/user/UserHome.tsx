@@ -7,11 +7,13 @@ import UserHeader from './UserHeader'
 const UserHome = () => {
     const dispatch = useAppDispatch();
     const { recentSongs, favoriteSongs } = useAppSelector(state => state.music)
-    const { id } = useAppSelector(state => state.user.user)!;
+    const user = useAppSelector(state => state.user.user);
 
     useEffect(() => {
-        dispatch(fetchRecentSongs(id))
-    }, [])
+        if(user !== null) {
+            dispatch(fetchRecentSongs(user.id))
+        }
+    }, [user])
 
     return (
         <div className='user__home flex flex--col gap--1'>

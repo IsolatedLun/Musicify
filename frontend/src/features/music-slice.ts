@@ -4,10 +4,10 @@ import axios from 'axios';
 import { API_URL } from '../misc/consts';
 
 const initialState: MusicState = {
-    songs: [],
+    browseSongs: [],
     recentSongs: [],
     favoriteSongs: [],
-    mainSongs: [],
+    songsToPlay: [],
     status: 'idle',
     currSong: {
         id: null,
@@ -20,7 +20,7 @@ const initialState: MusicState = {
     },
 
     currIdx: NaN,
-    currRefer: '',
+    currSongType: '',
 }
 
 export const fetchSongs = createAsyncThunk(
@@ -60,21 +60,37 @@ export const musicSlice = createSlice({
     initialState,
     reducers: {
         setCurrSong(state, action) {
-            state.currSong = state.songs.filter(song => song.id === action.payload['id'])[0];
-            state.currRefer = action.payload['referBy'];
+            state.currSong = state.songsToPlay.filter(song => song.id === action.payload['id'])[0];
+            state.currSongType = action.payload['referBy'];
         },
 
         setIndex(state, action) {
             state.currIdx = action.payload;
         },
 
-        setMainSongs(state, action) {
-            state.mainSongs = action.payload;
+        setSongsToPlay(state, action) {
+            state.songsToPlay = action.payload;
+        },
+
+        setSongType(state, action) {
+            state.currSongType = action.payload;
+
+            if(state.currSongType === 'ref-browse') {
+                state.songsToPlay = state.browseSongs
+            }
+
+            else if(state.currSongType === 'ref-recent') {
+                state.songsToPlay = state.recentSongs
+            }
+
+            else if(state.currSongType === 'ref-favorites') {
+                state.songsToPlay = state.favoriteSongs
+            }
         }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSongs.fulfilled, (state, action) => {
-            state.songs = action.payload;
+            state.browseSongs = action.payload;
             state.status = 'fulfilled';
         })
 
@@ -89,5 +105,5 @@ export const musicSlice = createSlice({
     }
 })
 
-export const { setCurrSong, setIndex, setMainSongs } = musicSlice.actions;
+export const { setCurrSong, setIndex, setSongsToPlay, setSongType } = musicSlice.actions;
 export default musicSlice.reducer;

@@ -8,13 +8,14 @@ import Browse from "./components/Browse";
 import { toggleMusicPlayer } from "./misc/utils";
 import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
-import { useAppDispatch } from "./hooks";
+import { useAppDispatch, useAppSelector } from "./hooks";
 import { getUserByToken, setIsLogged } from "./features/user.slice";
 import Logout from "./components/auth/Logout";
 import UserRouter from "./components/parts/user/UserRouter";
 
 function App() {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user.user)
 
   useEffect(() => {
     window.addEventListener('keydown', (e) => {
@@ -30,7 +31,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserByToken())
-  })
+  }, [])
 
   return (
     <Router>
@@ -48,11 +49,11 @@ function App() {
             <Route path='/login' element={<LogIn />} />
             <Route path='/logout' element={<Logout />} />
 
-            <Route path='user/*' element={<UserRouter />} />
+            <Route path='user/*' element={<UserRouter user={user} />} />
 
           </Routes>
 
-          <MusicPlayer />
+          <MusicPlayer user={user} />
         </div>
 
         <Footer />

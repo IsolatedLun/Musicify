@@ -25,7 +25,7 @@ const LogIn = () => {
         e.preventDefault();
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
-        if(validateInputs(inputs)) {
+        if(validateInputs(inputs) && !isLogged) {
             dispatch(login(user));
         }
     }

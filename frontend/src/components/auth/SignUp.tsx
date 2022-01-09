@@ -28,7 +28,7 @@ const SignUp = () => {
         if(isLogged) {
             navigate(-1);
         }
-    })
+    }, [])
 
     const handleForm = (e: FormEvent) => {
         e.preventDefault();

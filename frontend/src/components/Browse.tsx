@@ -1,23 +1,23 @@
 import React, { FormEvent, useEffect, useState } from 'react'
-import { fetchSongs } from '../features/music-slice';
+import { fetchSongs, setSongsToPlay } from '../features/music-slice';
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { INF_Song } from '../misc/interfaces';
-import Loader from './layout/Loader'
-import Song from './parts/song/Song';
+import Loader from './layout/Loader';
 import Songs from './parts/song/Songs';
 
 const Browse = () => {
-    const { songs, status } = useAppSelector(state => state.music);
+    const { browseSongs, status } = useAppSelector(state => state.music);
     const dispatch = useAppDispatch();
 
     const [search, setSearch] = useState('');
     const [genre, setGenre] = useState('all');
 
     useEffect(() => {
-        if(songs.length < 1) {
+        if(browseSongs.length < 1) {
             dispatch(fetchSongs());
         }
-    }, [])
+
+        dispatch(setSongsToPlay(browseSongs));
+    }, [browseSongs])
 
     const handleInput = (e: FormEvent<HTMLInputElement>) => {
         setSearch((e.target as HTMLInputElement).value.toLowerCase());
@@ -49,7 +49,7 @@ const Browse = () => {
             </div>
 
             <div className="songs">
-                <Songs songs={songs} referBy='ref-browse' mode='filter' genre={genre} search={search} />
+                <Songs songs={browseSongs} referBy='ref-browse' mode='filter' genre={genre} search={search} />
             </div>
 
         </div>

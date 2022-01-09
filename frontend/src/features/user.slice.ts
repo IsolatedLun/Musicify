@@ -6,14 +6,7 @@ import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const initialState: UserState = {
-    user: {
-        id: -1,
-        first_name: '',
-        last_name: '',
-        email: '',
-        producer_name: '',
-        is_super_user: false
-    },
+    user: null,
 
     isLogged: false,
     isSignedUp: false,
