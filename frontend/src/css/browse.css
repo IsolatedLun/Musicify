@@ -39,6 +39,7 @@
 
 .song .song__thumbnail {
     width: 10em;
+    max-width: 10em;
     aspect-ratio: 1;
     border-radius: 4px;
 }
