@@ -28,6 +28,9 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
     useEffect(() => {
         dispatch(setIndex(songsToPlay.map(song => song.id).indexOf(currSong.id)))
+        if(user && currSongType === 'ref-recent') {
+            dispatch(postRecentSong({ userId: user.id, songId: currSong.id }))
+        }
     }, [songsToPlay, currSong.id])
 
     const handleControls = (e: React.MouseEvent<HTMLButtonElement>) => {

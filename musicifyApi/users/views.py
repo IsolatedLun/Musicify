@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from .models import cUser
 from .serializers import cUserSerializer
+from django.contrib.auth.hashers import make_password, check_password
 
 ERR = status.HTTP_400_BAD_REQUEST
 OK = status.HTTP_200_OK
@@ -19,8 +20,8 @@ class SignUp(APIView):
             data['bandName'] = None;
 
         try:
-            user = cUser.objects.create(email=data['email'], password=data['password'], first_name=data['firstName'],
-            last_name=data['lastName'], band_name=data['producerName'])
+            user = cUser.objects.create(email=data['email'], password=make_password(data['password']), 
+                first_name=data['firstName'], last_name=data['lastName'], band_name=data['producerName'])
 
             token, created = Token.objects.get_or_create(user=user)
         except Exception as e:
@@ -36,14 +37,17 @@ class Login(APIView):
         if email is not None and password is not None:
             try:
                 user = cUser.objects.get(email=email)
-                if cUser.check_password(password):
+                
+                if check_password(password, user.password):
                     serializer = cUserSerializer(user).data
                     token = Token.objects.get(user=user).key
 
                     return Response({'user': serializer, 'tok': token}, OK)
                 else:
-                    raise ObjectDoesNotExist('User does not exist')
+                    raise ValueError('Wrong password.')
 
+            except ValueError as e:
+                return Response({'err': f'{e}'}, ERR)
             except ObjectDoesNotExist:
                 return Response({'err': 'User does not exist'}, ERR)
         return Response({'err': f'Invalid email or password'}, ERR)

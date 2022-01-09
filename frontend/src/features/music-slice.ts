@@ -42,7 +42,7 @@ export const fetchRecentSongs = createAsyncThunk(
 export const postRecentSong = createAsyncThunk(
     'music/post-recent-song',
     async(data: any, thunk) => {
-        const res: any = await axios.post(API_URL + 'songs/recents/post/' + data.user_id + '/' + data.song_id);
+        const res: any = await axios.post(API_URL + 'songs/recents/post/' + data.userId + '/' + data.songId);
         return res.data
     }
 )
