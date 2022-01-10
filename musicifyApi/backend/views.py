@@ -44,11 +44,13 @@ class RecentSongs(APIView):
         try:
             user = cUser.objects.get(id=user_id)
             recent_songs = RecentSong.objects.filter(user=user).order_by('-listened_at')
-            songs = [Song.objects.get(id=x.id) for x in recent_songs]
+            songs = [Song.objects.get(id=x.song_id) for x in recent_songs]
 
             serializer = SongSerializer(songs, many=True).data
             return Response({'data': serializer}, OK)
-
+            
+        except Song.DoesNotExist:
+            return Response({'err': 'User has no recent songs'}, ERR)
         except cUser.DoesNotExist:
             return Response({'err': 'User does not exist.'}, ERR)
 
