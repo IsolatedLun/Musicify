@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.utils import IntegrityError
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render
@@ -23,22 +24,25 @@ class SignUp(APIView):
 
         try:
             user = cUser.objects.create(email=data['email'], password=make_password(data['password']), 
-                first_name=data['firstName'], last_name=data['lastName'], profile=data['profilePicture'],
-                    producer_name=data['producerName'])
+                first_name=data['firstName'], last_name=data['lastName'], producer_name=data['producerName'])
+            
+            if isinstance(data['profilePicture'], InMemoryUploadedFile):
+                user.profile = data['profilePicture']
+                user.save()
 
-            Token.objects.get_or_create(user=user)
+            Token.objects.create(user=user)
+
         except IntegrityError as e:
             field = str(e).split('.')[1].replace('_', ' ')
             return Response({'err': f'An account with this {field} already exists.'}, ERR)
-
-        return Response({'detail': 'success'}, OK)
+        return Response({'detail': 'Account created'}, OK)
 
 class Login(APIView):
     def post(self, req):
         email = req.data.get('email', None)
         password = req.data.get('password', None)
 
-        if email is not None and password is not None:
+        if email and password:
             try:
                 user = cUser.objects.get(email=email)
                 
