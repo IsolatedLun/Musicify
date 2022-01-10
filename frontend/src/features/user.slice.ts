@@ -40,13 +40,20 @@ export const getUserByToken = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
     'user/auth-signup',
-    async(newUserData: FormData, thunk) => {
-        const res: any = await axios.post(API_URL + 'users/signup', newUserData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        });
-        return res.data
+    async(newUserData: FormData, { rejectWithValue }) => {
+        try {
+            const res: any = await axios.post(API_URL + 'users/signup', newUserData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            return res.data
+        }
+
+        catch(err: any) {
+            popup(err.response.data['err'], 'err');
+            return rejectWithValue(err.response.data['err'])
+        }
     }
 ) 
 

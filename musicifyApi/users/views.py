@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import IntegrityError
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
@@ -14,22 +15,23 @@ OK = status.HTTP_200_OK
 # Create your views here.
 class SignUp(APIView):
     def post(self, req):
+        req.data._mutable = True
         data = req.data
 
         if(len(data['producerName']) < 1):
-            data['bandName'] = None;
+            data['producerName'] = None;
 
         try:
             user = cUser.objects.create(email=data['email'], password=make_password(data['password']), 
                 first_name=data['firstName'], last_name=data['lastName'], profile=data['profilePicture'],
                     producer_name=data['producerName'])
 
-            token, created = Token.objects.get_or_create(user=user)
-        except Exception as e:
-            print(e)
-            return Response({'err': 'Something went wrong'}, ERR)
+            Token.objects.get_or_create(user=user)
+        except IntegrityError as e:
+            field = str(e).split('.')[1].replace('_', ' ')
+            return Response({'err': f'An account with this {field} already exists.'}, ERR)
 
-        return Response({'tok': token.key}, OK)
+        return Response({'detail': 'success'}, OK)
 
 class Login(APIView):
     def post(self, req):
