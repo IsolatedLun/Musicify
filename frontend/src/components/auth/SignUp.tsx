@@ -15,7 +15,8 @@ const SignUp = () => {
         lastName: '',
         email: '',
         password: '',
-        producerName: ''
+        producerName: '',
+        profilePicture: null
     });
 
     useEffect(() => {
@@ -35,7 +36,18 @@ const SignUp = () => {
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
         if(validateInputs(inputs)) {
-            dispatch(signUp(newUser));
+            const formData = new FormData()
+
+            formData.append('email', newUser.email as string);
+            formData.append('password', newUser.password as string);
+            formData.append('firstName', newUser.firstName as string);
+            formData.append('lastName', newUser.lastName as string);
+            formData.append('producerName', newUser.producerName as string);
+            formData.append('profilePicture', newUser.profilePicture as File);
+
+            console.log(formData.get('email'))
+            
+            dispatch(signUp(formData));
         }
     }
 
@@ -44,9 +56,15 @@ const SignUp = () => {
         setNewUser({ ...newUser, [target.name]: target.value });
     }
 
+    const handleProfileInput = (e: FormEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement
+        setNewUser({ ...newUser, profilePicture: target.files![0] })
+    }
+
     return (
         <div className="form-container" id='main-content'>
-            <form className="auth--form capitalize" onSubmit={(e: FormEvent) => handleForm(e)}>
+            <form className="auth--form capitalize" encType='multipart/form-data'
+                onSubmit={(e: FormEvent) => handleForm(e)}>
 
                 <div className="form__double-part">
 
@@ -93,6 +111,14 @@ const SignUp = () => {
                     <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
                         placeholder='Enter producer name' className='form__inpt' 
                         data-realtype='ignore' name='producerName' />
+                    <p className="form__helptext"></p>
+                </div>
+
+                <div className="form__part">
+                    <label className="form__label">Profile<span className='txt--muted'>*</span></label>
+                    <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => handleProfileInput(e)}
+                        placeholder='Upload profie pciture' className='form__inpt' 
+                        data-realtype='ignore' name='profilePicture' />
                     <p className="form__helptext"></p>
                 </div>
 

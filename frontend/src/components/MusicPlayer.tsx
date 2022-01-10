@@ -41,7 +41,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                break;
 
             case 'change-song':
-                playBetween();
+                playBetween(target.getAttribute('data-num')!);
                 break;
        }       
     }
@@ -74,15 +74,15 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         }
     }
 
-    const playBetween = () => {
+    const playBetween = (action: string='any') => {
         let nextSong: HTMLButtonElement | null = null;
         let idx = songsToPlay.indexOf(songsToPlay.filter(song => song.id === currSong.id)[0])
 
-        if(songsToPlay[currIdx + idx]) {
+        if(songsToPlay[currIdx + idx] && (action === 'any' || action === '1')) {
             nextSong = getSongEl(songsToPlay[idx + 1].id!)
         }
 
-        else if(songsToPlay[currIdx + -idx]) {
+        else if(songsToPlay[currIdx + -idx] && (action === 'any' || action === '-1')) {
             nextSong = getSongEl(songsToPlay[idx - 1].id!);
         }
 

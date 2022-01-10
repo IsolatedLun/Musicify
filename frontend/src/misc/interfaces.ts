@@ -37,6 +37,7 @@ export interface UserForm {
     email?: string;
     password?: string;
     producerName?: string;
+    profilePicture?: File | null;
 }
 
 export interface UserLogin {

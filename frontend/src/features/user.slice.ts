@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_URL } from '../misc/consts';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../hooks';
 
 const initialState: UserState = {
     user: null,
@@ -31,8 +32,12 @@ export const getUserByToken = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
     'user/auth-signup',
-    async(newUserData: UserForm, thunk) => {
-        const res: any = await axios.post(API_URL + 'users/signup', { data: newUserData });
+    async(newUserData: FormData, thunk) => {
+        const res: any = await axios.post(API_URL + 'users/signup', newUserData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
         return res.data
     }
 ) 
@@ -53,6 +58,7 @@ export const userSlice = createSlice({
 
         logout(state) {
             localStorage.removeItem('tok');
+
             state.isLogged = false;
             state.isSignedUp = false;
             state.user = null;

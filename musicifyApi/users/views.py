@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http.response import FileResponse
+from django.http.response import FileResponse, Http404
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from rest_framework import status
@@ -14,18 +14,20 @@ OK = status.HTTP_200_OK
 # Create your views here.
 class SignUp(APIView):
     def post(self, req):
-        data = req.data['data']
+        data = req.data
 
         if(len(data['producerName']) < 1):
             data['bandName'] = None;
 
         try:
             user = cUser.objects.create(email=data['email'], password=make_password(data['password']), 
-                first_name=data['firstName'], last_name=data['lastName'], band_name=data['producerName'])
+                first_name=data['firstName'], last_name=data['lastName'], profile=data['profilePicture'],
+                    producer_name=data['producerName'])
 
             token, created = Token.objects.get_or_create(user=user)
         except Exception as e:
-            return Response({'detail': 'Something went wrong'}, ERR)
+            print(e)
+            return Response({'err': 'Something went wrong'}, ERR)
 
         return Response({'tok': token.key}, OK)
 

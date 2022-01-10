@@ -22,14 +22,17 @@ const UserHeader = () => {
     if(user !== null)
         return (
             <div className="user__head flex flex--col gap--05">
-                <div className='flex flex--align gap--05'>
-                    <div className="user__profile">
-                        <img src={API_URL + 'users/profiles/' + user.id} alt="" />
+                <div className='flex flex--align--between'>
+                    <div className='flex flex--align gap--05'>
+                        <div className="user__profile">
+                            <img src={API_URL + 'users/profiles/' + user.id} alt="" />
+                        </div>
+                        <h1 className="user__title">{ user.producer_name }</h1>
                     </div>
-                    <h1 className="user__title">{ user.producer_name }</h1>
+                    <Link to='settings' className='btn--def btn--primary'>Settings</Link>
                 </div>
             
-                <ul className="user__nav flex flex--align flex--center">
+                <ul className="user__nav flex flex--align flex--center gap--05">
                     <li id='user-home__link'><Link className="user__link" to=''>Home</Link></li>
                     <li id='user-songs__link'><Link className="user__link" to='songs'>Songs</Link></li>
                     <li id='user-albums__link'><Link className="user__link" to='albums'>Albums</Link></li>
