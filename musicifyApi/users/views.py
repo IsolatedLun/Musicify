@@ -51,8 +51,8 @@ class Login(APIView):
             except ValueError as e:
                 return Response({'err': f'{e}'}, ERR)
             except ObjectDoesNotExist:
-                return Response({'err': 'User does not exist'}, ERR)
-        return Response({'err': f'Invalid email or password'}, ERR)
+                return Response({'err': 'Invalid email.'}, ERR)
+        return Response({'err': f'Invalid email or password.'}, ERR)
 
 class UserProfile(APIView):
     def get(self, req, user_id):

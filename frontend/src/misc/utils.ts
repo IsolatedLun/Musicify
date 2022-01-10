@@ -74,26 +74,17 @@ export function toggleEl(id: string, clsName: string): void {
     document.getElementById(id)?.classList.toggle(clsName);
 }
 
-// Gets the angle of the mouse from the element.
-export function getAngleWithMouse(e: MouseEvent, id: string, factor: number): number {
-    const el = document.getElementById(id)! as HTMLDivElement;
-    const bounds = el.getBoundingClientRect()
-    const elCenter: any = {
-        x: bounds.left + bounds.width / 2,
-        y: bounds.top + bounds.height / 2
+export function popup(text: string, type: string) {
+    const popup = document.getElementById('popup') as HTMLDivElement;
+    const popupIcon = document.getElementById('popup-icon') as HTMLParagraphElement;
+    const popupText = document.getElementById('popup-text') as HTMLParagraphElement;
+
+    if(!popup.classList.contains('active')) {
+        popupText.textContent = text;
+        popup.className = `popup ${type} active`;
+        setTimeout(() => {
+            popup.classList.remove('active');
+            popup.classList.add('inactive');
+        }, 5000);
     }
-
-    const angle = Math.atan2(e.pageX - elCenter.x,  -(e.pageY - elCenter.y))
-    return (angle * ((180 * factor) / Math.PI));
-}
-
-// Gets the roation of an element.
-export const getRotation = (el: HTMLElement): number => {
-    let vals: string | string[] = window.getComputedStyle(el, null).getPropertyValue('transform');
-    vals = vals.split('(')[1].split(')')[0].split(',');
-    let a: number = Number(vals[0]);
-    let b: number =  Number(vals[1]);
-
-    const scale = Math.sqrt(a*a + b*b);
-    return Math.round(Math.asin(b / scale) * (180 / Math.PI));
 }

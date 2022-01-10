@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "./hooks";
 import { getUserByToken, setIsLogged } from "./features/user.slice";
 import Logout from "./components/auth/Logout";
 import UserRouter from "./components/parts/user/UserRouter";
+import Popup from "./components/layout/Popup";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -54,6 +55,8 @@ function App() {
           </Routes>
 
           <MusicPlayer user={user} />
+          
+          <Popup />
         </div>
 
         <Footer />

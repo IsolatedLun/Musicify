@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
 import { INF_Song, MusicState, UserState, User, UserForm, UserLogin } from '../misc/interfaces';
 import axios from 'axios';
 import { API_URL } from '../misc/consts';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
+import { popup } from '../misc/utils';
 
 const initialState: UserState = {
     user: null,
@@ -15,10 +16,17 @@ const initialState: UserState = {
 
 export const login = createAsyncThunk(
     'user/auth-login',
-    async(loginData: UserLogin, thunk) => {
-        const res: any = await axios.post(API_URL + 'users/login', { 
-            email: loginData.email, password: loginData.password });
-        return res.data
+    async(loginData: UserLogin, { rejectWithValue }) => {
+        try {
+            const res: any = await axios.post(API_URL + 'users/login', { 
+                email: loginData.email, password: loginData.password });
+            return res.data;
+        }
+
+        catch(err: any) {
+            popup(err.response.data['err'], 'err');
+            return rejectWithValue(err.response.data['err'])
+        }
     }
 )
 
@@ -70,6 +78,10 @@ export const userSlice = createSlice({
             localStorage.setItem('tok', action.payload['tok']);
             state.isLogged = true;
             state.isSignedUp = false;
+        })
+
+        builder.addCase(login.rejected, (state, action) => {
+            
         })
 
         builder.addCase(getUserByToken.fulfilled, (state, action) => {

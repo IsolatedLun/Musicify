@@ -1,0 +1,33 @@
+.popup {
+    position: fixed;
+    top: 92%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 150ms ease-out;
+}
+
+.popup .popup__content {
+    padding: 0.25em 0.6em;
+    border-radius: 6px;
+}
+
+.popup .popup__content.warn {
+    background-color: var(--clr-warn);
+}
+
+.popup .popup__content.err {
+    background-color: var(--clr-err);
+}
+
+.popup .popup__content.info {
+    background-color: var(--clr-primary);
+}
+
+.popup.active {
+    visibility: visible;
+    transition: translate(-50%, -50%);
+}
+
+.popup.inactive {
+    transform: translate(-50%, 320%);
+}
