@@ -1,0 +1,40 @@
+.user__head {
+    display: none;
+    margin-block: 0.45em;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.user__head .user__profile {
+    width: 7em;
+    border-radius: 8px;
+    aspect-ratio: 1;
+}
+
+.user__head .user__link {
+    font-size: var(--fs-450);
+    padding: 0.45em 0.8em;
+    cursor: pointer;
+}
+
+.user__head .user__link.active {
+    border-bottom: 2px solid white;
+}
+
+.user__head .user__link:hover {
+    background-color: var(--bg-secondary);
+}
+
+@media(max-width: 768px) {
+    .user__head .head__part {
+        width: 100%;
+        margin-inline: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .user__head .head__info {
+        align-self: center;
+        flex-direction: column;
+    }
+}

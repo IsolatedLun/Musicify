@@ -3,30 +3,3 @@
     max-width: 1300px;
     margin-inline: auto;
 }
-
-.user__head {
-    display: flex;
-    margin-block: 0.45em;
-    flex-grow: 1;
-    width: 100%;
-}
-
-.user__head .user__profile {
-    width: 7em;
-    border-radius: 8px;
-    aspect-ratio: 1;
-}
-
-.user__head .user__link {
-    font-size: var(--fs-450);
-    padding: 0.45em 0.8em;
-    cursor: pointer;
-}
-
-.user__head .user__link.active {
-    border-bottom: 2px solid white;
-}
-
-.user__head .user__link:hover {
-    background-color: var(--bg-secondary);
-}

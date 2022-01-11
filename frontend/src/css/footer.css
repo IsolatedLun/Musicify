@@ -21,3 +21,10 @@
     width: 2em;
     aspect-ratio: 1;
 }
+
+@media(max-width: 768px) {
+    .primary-footer, .primary-footer .footer__content {
+        align-items: center;
+        flex-direction: column;
+    }
+}

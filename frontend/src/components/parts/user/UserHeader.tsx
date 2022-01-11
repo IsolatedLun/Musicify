@@ -24,8 +24,8 @@ const UserHeader = () => {
     if(user !== null)
         return (
             <div className="user__head flex flex--col gap--05">
-                <div className='flex flex--align--between'>
-                    <div className='flex flex--align gap--05'>
+                <div className='head__part flex flex--align--between'>
+                    <div className='head__info flex flex--align gap--05'>
                         <div className="user__profile">
                             <img src={API_URL + 'users/profiles/' + user.id} alt="" />
                         </div>

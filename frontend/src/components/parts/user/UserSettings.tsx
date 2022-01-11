@@ -5,6 +5,7 @@ import { API_URL } from '../../../misc/consts';
 import { validateInputs } from '../../../misc/formHandler';
 import { User } from '../../../misc/interfaces';
 import { areObjectsEqual, constructFormData, fullReload, isImage, popup } from '../../../misc/utils';
+import Loader from '../../layout/Loader';
 
 const UserSettings = () => {
     const { user, changesMade, doSave } = useAppSelector(state => state.user);
@@ -78,7 +79,7 @@ const UserSettings = () => {
         }
     }
 
-    if(user)
+    if(user && editableUser)
         return (
             <div className='user__settings flex flex--col gap--1'>
                 <div className="setting__part flex flex--col flex--align flex--center">
@@ -108,6 +109,7 @@ const UserSettings = () => {
                         <div className="form__part">
                             <input onInput={(e: React.FormEvent<HTMLInputElement>) => handleInput(e)} 
                             type="text" name='first_name' placeholder='Change first name'
+                            value={editableUser.first_name}
                             className=" form__inpt" data-realtype='text' />
                             <p className="form__helptext"></p>
                         </div>
@@ -117,7 +119,8 @@ const UserSettings = () => {
                         <label className="part__label">Last name</label>
                         <div className="form__part">
                             <input onInput={(e: React.FormEvent<HTMLInputElement>) => handleInput(e)} 
-                            type="text" name='last_name' placeholder='Change last name'
+                            type="text" name='last_name' placeholder='Change last name' 
+                            value={editableUser.last_name}
                             className=" form__inpt" data-realtype='text' />
                             <p className="form__helptext"></p>
                         </div>
@@ -130,7 +133,7 @@ const UserSettings = () => {
             </div>
         )
     else
-        return(<></>)
+        return(<Loader text='Loading your settings...'/>)
 }
 
 export default UserSettings
