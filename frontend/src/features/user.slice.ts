@@ -34,9 +34,9 @@ export const login = createAsyncThunk(
 
 export const save = createAsyncThunk(
     'users/save-changes',
-    async(updatedUser: User, { rejectWithValue }) => {
+    async(updatedUser: FormData, { rejectWithValue }) => {
         try {
-            const res: any = await axios.post(POST_SAVE + updatedUser.id, updatedUser, {
+            const res: any = await axios.post(POST_SAVE, updatedUser, {
                 headers: { ...HEADERS_FILE }
             }) 
         }
@@ -110,6 +110,7 @@ export const userSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        // Login
         builder.addCase(login.fulfilled, (state, action) => {
             state.user = action.payload['user'];
             localStorage.setItem('tok', action.payload['tok']);
@@ -121,16 +122,23 @@ export const userSlice = createSlice({
             
         })
 
+        // Retrieve token 
         builder.addCase(getUserByToken.fulfilled, (state, action) => {
             state.user = action.payload['user'];
         })
-
+        
+        // Signup
         builder.addCase(signUp.fulfilled, (state, action) => {
             state.isSignedUp = true;
         })
 
         builder.addCase(signUp.rejected, (state, action) => {
             state.isSignedUp = false;
+        })
+
+        // Update
+        builder.addCase(save.fulfilled, (state, action) => {
+            
         })
     }
 })

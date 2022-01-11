@@ -8,7 +8,7 @@ urlpatterns = [
     path('users/signup', views.SignUp.as_view(), name='post-user-signup'),
 
     path('users/tok/<str:tok>', views.UserWithToken().as_view(), name='get-user-by-token'),
-    path('users/update/<int:user_id>', views.UpdateUser.as_view(), name='post-update-user'),
+    path('users/update', views.UpdateUser.as_view(), name='post-update-user'),
 
     path('users/profiles/<int:user_id>', views.UserProfile.as_view(), name='get-user-profile'),
 ]

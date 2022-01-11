@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { setChangesMade } from '../../../features/user.slice'
+import { save, setChangesMade } from '../../../features/user.slice'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { API_URL } from '../../../misc/consts'
 import { User } from '../../../misc/interfaces'
-import { areObjectsEqual } from '../../../misc/utils'
+import { areObjectsEqual, constructFormData } from '../../../misc/utils'
 
 const UserSettings = () => {
     const { user, changesMade, doSave } = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
 
-    const [editableUser, setEditableUser] = useState<User>({ ...user! })
-    const profilePreview = document.getElementById('profile-preview') as HTMLImageElement;
+    const [editableUser, setEditableUser] = useState<User>(user!)
+
+    useEffect(() => {
+        setEditableUser(user!)
+    }, [user])
 
     useEffect(() => {
         if(user) {
@@ -22,14 +25,22 @@ const UserSettings = () => {
                 dispatch(setChangesMade(false));
             }
         }
+
+        return(() => {
+            dispatch(setChangesMade(false));
+        })
     }, [editableUser])
 
     useEffect(() => {
-        
+        const formData = constructFormData(editableUser);
+        if(formData !== null) {
+            dispatch(save(formData));
+        }
     }, [doSave])
 
     const handleProfileInput = (e: React.FormEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
+        console.log(editableUser)
         if(target.files) {
             setEditableUser({ ...editableUser, [target.name]: target.files[0] });
         }

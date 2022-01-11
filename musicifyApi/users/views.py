@@ -64,18 +64,22 @@ class Login(APIView):
         return Response({'err': f'Invalid email or password.'}, ERR)
 
 class UpdateUser(APIView):
-    def post(self, req, user_id):
+    def post(self, req):
         data = req.data
 
-        if data:
-            user = cUser.objects.get(id=user_id)
-            user.first_name = data['firstName']
-            user.last_name = data['lastName']
-            user.producer_name = data['producerName']
+        try:
+            if data:
+                user = cUser.objects.get(id=data['id'])
+                user.first_name = data['first_name']
+                user.last_name = data['last_name']
+                user.producer_name = data['producer_name']
 
-            update_profile(user, data['profilePicture'])
+                update_profile(user, data['profile'])
 
-        return Response({'detail': 'Account updated'}, OK)
+                return Response({'detail': 'Account updated'}, OK)
+
+        except Exception as e:
+            return Response({'err': 'Something went wrong'}, ERR)
 
 class UserProfile(APIView):
     def get(self, req, user_id):
