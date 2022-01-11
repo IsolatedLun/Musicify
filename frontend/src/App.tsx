@@ -13,6 +13,7 @@ import { getUserByToken, setIsLogged } from "./features/user.slice";
 import Logout from "./components/auth/Logout";
 import UserRouter from "./components/parts/user/UserRouter";
 import Popup from "./components/layout/Popup";
+import DropUp from "./components/DropUp";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -56,6 +57,7 @@ function App() {
 
           <MusicPlayer user={user} />
           
+          <DropUp />
           <Popup />
         </div>
 

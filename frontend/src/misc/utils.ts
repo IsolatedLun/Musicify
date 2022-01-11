@@ -48,6 +48,28 @@ export const toggleMusicPlayer = (ignore: boolean=false): void => {
     }
 }
 
+export const toggleElement = (id: string, offVal: string, onVal: string, togglerClsName: string,
+    ignore: boolean=false): void => {
+    const el: HTMLElement | null = document.getElementById(id) ?? null;
+
+    if(el !== null && !ignore) {
+        if(!el.style.transform) {
+            el.style.transform = `translateY(${offVal})`
+            el.classList.remove(togglerClsName);
+        }
+
+        if(el.style.transform === `translateY(${offVal})`) {
+            el.classList.add(togglerClsName);
+            el.style.transform = `translateY(${onVal})`;
+        }
+            
+        else {
+            el.style.transform = `translateY(${offVal})`;
+            el.classList.remove(togglerClsName);
+        }
+    }
+}
+
 export const getSongEl = (num: number | string): HTMLButtonElement => {
     return document.getElementById('song-' + (num) + '-queue') as HTMLButtonElement;
 }

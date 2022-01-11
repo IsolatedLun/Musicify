@@ -3,7 +3,7 @@ import { postRecentSong, setIndex, setSongsToPlay } from "../features/music-slic
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { API_URL } from "../misc/consts";
 import { INF_Song, User } from "../misc/interfaces";
-import { getSongEl, toggleMusicPlayer } from "../misc/utils";
+import { getSongEl, toggleElement, toggleMusicPlayer } from "../misc/utils";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
@@ -82,7 +82,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
             nextSong = getSongEl(songsToPlay[idx + 1].id!)
         }
 
-        else if(songsToPlay[currIdx + -idx] && (action === 'any' || action === '-1')) {
+        else if(songsToPlay[currIdx - idx] && (action === 'any' || action === '-1')) {
             nextSong = getSongEl(songsToPlay[idx - 1].id!);
         }
 
@@ -98,7 +98,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     return (
         <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
         className='music-player flex flex--align text--center gap--1' id='music-player'>
-            <div onClick={() => toggleMusicPlayer()} 
+            <div onClick={() => toggleElement('music-player', '96%', '2%', 'active')} 
             className="player__handle round" id='player-handle'></div>
 
                 <div className="music__reprs">
@@ -133,6 +133,9 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
             </div>
             
             <p className="music__time" id='audio-time'>00:00:00 / 00:00:00</p>
+
+            <button onClick={() => toggleElement('main-dropup', '105%', '70%', 'active')}
+            className="fa btn--def music__dropdown-btn">&#xf142;</button>
 
         </div>
         

@@ -1,0 +1,25 @@
+.main-dropup {
+    position: fixed;
+    inset: 0;
+    font-size: var(--fs-450);
+    padding: 1em;
+    background-color: var(--bg-hov);
+    transform: translateY(105%);
+    border-radius: 1rem;
+    transition: transform 100ms ease-out;
+}
+
+.main-dropup .dropup__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+}
+
+.main-dropup .list__item {
+    display: flex;
+    align-items: center;
+    padding: 0.25em 0.5em;
+    gap: 0.5em;
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+}
