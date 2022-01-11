@@ -110,3 +110,17 @@ export function constructFormData(obj: object): FormData | null {
 
     return null;
 }
+
+export function isImage(file: File): boolean {
+    const pattern = /image-*/;
+
+    if(file.type.match(pattern))
+        return true;
+    return false;
+}
+
+export function fullReload() {
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000)
+}

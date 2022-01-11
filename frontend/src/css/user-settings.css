@@ -1,5 +1,7 @@
 .user__settings {
-    margin-block: 1.5em;
+    padding: 1em;
+    margin-block: 1.25em;
+    background-color: var(--bg-hov);
 }
 
 .setting__part .part__label {

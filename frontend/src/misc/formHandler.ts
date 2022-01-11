@@ -1,3 +1,5 @@
+import { isImage } from "./utils";
+
 export function validateInputs(inputs: NodeListOf<HTMLInputElement>): boolean {
     let validAmt = 0;
 
@@ -23,6 +25,8 @@ function validateInput(input: HTMLInputElement): boolean {
     const val: string | number = input.value;
     const type: string = input.type;
     const realType: string | null = input.getAttribute('data-realtype') ?? null;
+    const fileType: string | null = input.getAttribute('data-file-type') ?? null;
+    const canBeNull: boolean = input.getAttribute('data-null') === 'true' ? true : false;
 
     clearHelpText(input);
     if(realType === 'ignore') {
@@ -38,6 +42,10 @@ function validateInput(input: HTMLInputElement): boolean {
     }
 
     else if(realType === 'email' && isValidText(input, val)) {
+        return true
+    }
+
+    else if(realType === 'file' && input.files && (canBeNull || isValidFile(input, input.files[0], fileType))) {
         return true
     }
 
@@ -98,6 +106,20 @@ function isValidText(input: HTMLInputElement, str: string) {
     }
 
     return false;
+}
+
+function isValidFile(input: HTMLInputElement, val: File, fType: string | null) {
+    if(val) {
+        if(fType === 'img' && isImage(val)) {
+            return true;
+         }
+     
+         else {
+             addHelpText(input, 'An image is required.');
+         }
+     
+         return false;
+    }
 }
 
 /* Misc */
