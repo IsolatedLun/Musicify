@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
 import { INF_Song, MusicState, UserState, User, UserForm, UserLogin } from '../misc/interfaces';
 import axios from 'axios';
-import { API_URL } from '../misc/consts';
+import { API_URL, GET_TOKEN, HEADERS_FILE, POST_LOGIN, POST_SAVE, POST_SIGNUP } from '../misc/consts';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
@@ -12,13 +12,15 @@ const initialState: UserState = {
 
     isLogged: false,
     isSignedUp: false,
+    changesMade: false,
+    doSave: false
 }
 
 export const login = createAsyncThunk(
     'user/auth-login',
     async(loginData: UserLogin, { rejectWithValue }) => {
         try {
-            const res: any = await axios.post(API_URL + 'users/login', { 
+            const res: any = await axios.post(POST_LOGIN, { 
                 email: loginData.email, password: loginData.password });
             return res.data;
         }
@@ -30,10 +32,25 @@ export const login = createAsyncThunk(
     }
 )
 
+export const save = createAsyncThunk(
+    'users/save-changes',
+    async(updatedUser: User, { rejectWithValue }) => {
+        try {
+            const res: any = await axios.post(POST_SAVE + updatedUser.id, updatedUser, {
+                headers: { ...HEADERS_FILE }
+            }) 
+        }
+
+        catch(err: any) {
+            return rejectWithValue(err.response.data['err'])
+        }
+    }
+)
+
 export const getUserByToken = createAsyncThunk(
     'user/auth-loginWithTok',
     async(thunk) => {
-        const res: any = await axios.get(API_URL + 'users/tok/' + localStorage.getItem('tok'));
+        const res: any = await axios.get(GET_TOKEN + localStorage.getItem('tok'));
         return res.data;
     }
 )
@@ -42,13 +59,13 @@ export const signUp = createAsyncThunk(
     'user/auth-signup',
     async(newUserData: FormData, { rejectWithValue }) => {
         try {
-            const res: any = await axios.post(API_URL + 'users/signup', newUserData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            });
+            const res: any = await axios.post(POST_SIGNUP, newUserData, {
+                headers: { ...HEADERS_FILE }
+            })
+            
             return res.data
         }
+
 
         catch(err: any) {
             popup(err.response.data['err'], 'err');
@@ -77,6 +94,19 @@ export const userSlice = createSlice({
             state.isLogged = false;
             state.isSignedUp = false;
             state.user = null;
+        },
+
+        setChangesMade(state, action) {
+            state.changesMade = action.payload;
+        },
+
+        setDoSave(state, action) {
+            state.doSave = action.payload;
+        },
+        
+        saveChanges(state, action) {
+            state.doSave = false;
+            state.changesMade = false;
         }
     },
     extraReducers: (builder) => {
@@ -98,8 +128,12 @@ export const userSlice = createSlice({
         builder.addCase(signUp.fulfilled, (state, action) => {
             state.isSignedUp = true;
         })
+
+        builder.addCase(signUp.rejected, (state, action) => {
+            state.isSignedUp = false;
+        })
     }
 })
 
-export const { setIsLogged, logout } = userSlice.actions;
+export const { setIsLogged, logout, setChangesMade, setDoSave } = userSlice.actions;
 export default userSlice.reducer;

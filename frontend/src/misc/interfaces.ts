@@ -49,6 +49,8 @@ export interface UserState {
     user: User | null;
     isLogged: boolean;
     isSignedUp: boolean;
+    changesMade: boolean;
+    doSave: boolean;
 }
 
 export interface User {
@@ -58,6 +60,7 @@ export interface User {
     email: string;
     producer_name: string;
     is_super_user: boolean;
+    profile: File | Blob;
 }
 
 export interface UtilsState {

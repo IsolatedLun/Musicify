@@ -6,7 +6,7 @@ from . import models
 class cUserSerializer(ModelSerializer):
     class Meta:
         model = models.cUser
-        fields = '__all__'
+        fields = ['id', 'email', 'first_name', 'last_name', 'producer_name', 'profile']
 
         password = CharField(min_length=7, write_only=True, required=True)
     

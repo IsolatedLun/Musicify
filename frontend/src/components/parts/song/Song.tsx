@@ -1,7 +1,7 @@
 import React from 'react';
 import { fetchAudio, setCurrSong, setSongsToPlay, setSongType } from '../../../features/music-slice';
 import { useAppDispatch } from '../../../hooks';
-import { API_URL } from '../../../misc/consts';
+import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';
 import { toggleMusicPlayer } from '../../../misc/utils';
 
@@ -28,7 +28,7 @@ const Song = ({ song, idx, ignore, queueType, referBy } :
             <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'
-                src={API_URL + 'songs/thumb/' + song.id} alt={song.title + ' thumbnail'} />
+                src={GET_THUMBNAIL + song.id} alt={song.title + ' thumbnail'} />
             </div>
             <h1 className="song__title capitalize elliptic">{ song.title }</h1>
             <p className="song__author capitalize">{ song.author }</p>

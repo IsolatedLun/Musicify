@@ -13,6 +13,11 @@ from django.contrib.auth.hashers import make_password, check_password
 ERR = status.HTTP_400_BAD_REQUEST
 OK = status.HTTP_200_OK
 
+def update_profile(user, profile):
+    if isinstance(profile, InMemoryUploadedFile):
+            user.profile = profile
+            user.save()
+
 # Create your views here.
 class SignUp(APIView):
     def post(self, req):
@@ -26,9 +31,7 @@ class SignUp(APIView):
             user = cUser.objects.create(email=data['email'], password=make_password(data['password']), 
                 first_name=data['firstName'], last_name=data['lastName'], producer_name=data['producerName'])
             
-            if isinstance(data['profilePicture'], InMemoryUploadedFile):
-                user.profile = data['profilePicture']
-                user.save()
+            update_profile(user, data['profilePicture'])
 
             Token.objects.create(user=user)
 
@@ -59,6 +62,20 @@ class Login(APIView):
             except ObjectDoesNotExist:
                 return Response({'err': 'Invalid email.'}, ERR)
         return Response({'err': f'Invalid email or password.'}, ERR)
+
+class UpdateUser(APIView):
+    def post(self, req, user_id):
+        data = req.data
+
+        if data:
+            user = cUser.objects.get(id=user_id)
+            user.first_name = data['firstName']
+            user.last_name = data['lastName']
+            user.producer_name = data['producerName']
+
+            update_profile(user, data['profilePicture'])
+
+        return Response({'detail': 'Account updated'}, OK)
 
 class UserProfile(APIView):
     def get(self, req, user_id):

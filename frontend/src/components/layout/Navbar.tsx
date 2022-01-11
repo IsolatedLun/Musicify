@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { toggleEl } from '../../misc/utils';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { API_URL } from '../../misc/consts';
+import { API_URL, GET_PROFILE } from '../../misc/consts';
 import { setLocation } from '../../features/utils-slice';
 
 const Navbar = () => {
@@ -40,7 +40,7 @@ const Navbar = () => {
                             <li className='nav__link'>
                                 <Link to={'/user'}>
                                     <div className='nav__user'>
-                                        <img src={API_URL + 'users/profiles/' + user.id} />
+                                        <img src={GET_PROFILE + user.id} />
                                     </div>
                                 </Link>
                             </li>

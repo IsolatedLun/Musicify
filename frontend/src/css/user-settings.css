@@ -1,0 +1,17 @@
+.user__settings {
+    margin-block: 1.5em;
+}
+
+.setting__part .part__label {
+    font-size: var(--fs-450);
+    font-weight: bold;
+}
+
+.setting__part .part__profile-preview {
+    width: 8em;
+    margin-block: 0.65em;
+    aspect-ratio: 1;
+    align-self: center;
+    background-color: black;
+    border-radius: 6px;
+}

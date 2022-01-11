@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_URL } from '../../../misc/consts';
+import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';
 
 const SongPreview = ({ song, currId, isQueue } : { song: INF_Song, currId: number | null, isQueue: boolean }) => {
@@ -30,7 +30,7 @@ const SongPreview = ({ song, currId, isQueue } : { song: INF_Song, currId: numbe
                 }
             </div>
             <div className="music__thumbnail">
-                <img src={ song ? API_URL + 'songs/thumb/' + song.id : '' } 
+                <img src={ song ? GET_THUMBNAIL + song.id : '' } 
                     alt={song.title + ' thumbnail'} />
             </div>
         </div>

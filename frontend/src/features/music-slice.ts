@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { INF_Song, MusicState } from '../misc/interfaces';
 import axios from 'axios';
-import { API_URL } from '../misc/consts';
+import { API_URL, GET_RECENTS, GET_SONG, GET_SONGS } from '../misc/consts';
 
 const initialState: MusicState = {
     browseSongs: [],
@@ -26,7 +26,7 @@ const initialState: MusicState = {
 export const fetchSongs = createAsyncThunk(
     'music/fetch-songs',
     async(thunk) => {
-        const res: any = await axios.get(API_URL + 'songs');
+        const res: any = await axios.get(GET_SONGS);
         return res.data
     }
 )
@@ -34,7 +34,7 @@ export const fetchSongs = createAsyncThunk(
 export const fetchRecentSongs = createAsyncThunk(
     'music/fetch-recent-songs',
     async(user_id: number, thunk) => {
-        const res: any = await axios.get(API_URL + 'songs/recents/get/' + user_id);
+        const res: any = await axios.get(GET_RECENTS + user_id);
         return res.data
     }
 )
@@ -50,7 +50,7 @@ export const postRecentSong = createAsyncThunk(
 export const fetchAudio = createAsyncThunk(
     'music/fetch-audio',
     async(id: number, thunk) => {
-        const res: any = await axios.get(API_URL + 'songs/audio/' + id);
+        const res: any = await axios.get(GET_SONG + id);
         return res.data
     }
 )

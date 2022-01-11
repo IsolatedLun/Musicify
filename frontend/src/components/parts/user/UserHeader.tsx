@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../../hooks'
+import { setDoSave } from '../../../features/user.slice'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { API_URL } from '../../../misc/consts'
 import { User } from '../../../misc/interfaces'
 
 const UserHeader = () => {
-    const user = useAppSelector(state => state.user.user)
+    const { user , changesMade } = useAppSelector(state => state.user)
+    const dispatch = useAppDispatch();
     let path = location.pathname.split('/').pop();
 
     useEffect(() => {
@@ -29,7 +31,16 @@ const UserHeader = () => {
                         </div>
                         <h1 className="user__title">{ user.producer_name }</h1>
                     </div>
-                    <Link to='settings' className='btn--def btn--primary'>Settings</Link>
+                    <div className="btn--group gap--1">
+                        <Link to='settings' className='btn--def btn--primary'>Settings</Link>
+                        {
+                            changesMade
+                            ?
+                            <button onClick={() => dispatch(setDoSave(true))}
+                                className='btn--def btn--primary'>Save changes</button>
+                            : null
+                        }
+                    </div>
                 </div>
             
                 <ul className="user__nav flex flex--align flex--center gap--05">

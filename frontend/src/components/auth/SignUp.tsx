@@ -4,6 +4,7 @@ import { signUp } from '../../features/user.slice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserForm } from '../../misc/interfaces';
+import { constructFormData } from '../../misc/utils';
 
 const SignUp = () => {
     const { isSignedUp, isLogged } = useAppSelector(state => state.user)
@@ -36,18 +37,10 @@ const SignUp = () => {
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
         if(validateInputs(inputs)) {
-            const formData = new FormData()
-
-            formData.append('email', newUser.email as string);
-            formData.append('password', newUser.password as string);
-            formData.append('firstName', newUser.firstName as string);
-            formData.append('lastName', newUser.lastName as string);
-            formData.append('producerName', newUser.producerName as string);
-            formData.append('profilePicture', newUser.profilePicture as File);
-
-            console.log(formData.get('email'))
+            const formData = constructFormData(newUser);
             
-            dispatch(signUp(formData));
+            if(formData !== null)
+                dispatch(signUp(formData));
         }
     }
 
