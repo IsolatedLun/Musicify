@@ -3,9 +3,8 @@
 }
 
 .user__home .home__part {
-    width: 100vw;
+    max-width: 96vw;
     max-height: 16em;
-    margin-block: 0.5em;
 }
 
 .user__home .part__items {
@@ -17,4 +16,14 @@
 .user__home .part__items > * {
     max-width: 12em;
     height: 100%;
+}
+
+@media(max-width: 768px) {
+    .user__home {
+        margin-inline: 0.5em;
+    }
+    
+    .user__home .home__part {
+        margin-block: 1em;
+    }
 }

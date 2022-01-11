@@ -76,14 +76,13 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
     const playBetween = (action: string='any') => {
         let nextSong: HTMLButtonElement | null = null;
-        let idx = songsToPlay.indexOf(songsToPlay.filter(song => song.id === currSong.id)[0])
 
-        if(songsToPlay[currIdx + idx] && (action === 'any' || action === '1')) {
-            nextSong = getSongEl(songsToPlay[idx + 1].id!)
+        if(songsToPlay[currIdx + 1] && (action === 'any' || action === '1')) {
+            nextSong = getSongEl(songsToPlay[currIdx + 1].id!)
         }
 
-        else if(songsToPlay[currIdx - idx] && (action === 'any' || action === '-1')) {
-            nextSong = getSongEl(songsToPlay[idx - 1].id!);
+        else if(songsToPlay[currIdx - 1] && (action === 'any' || action === '-1')) {
+            nextSong = getSongEl(songsToPlay[currIdx - 1].id!);
         }
 
         if(nextSong)
