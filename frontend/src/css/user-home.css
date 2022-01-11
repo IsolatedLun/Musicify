@@ -5,6 +5,7 @@
 .user__home .home__part {
     max-width: 96vw;
     max-height: 16em;
+    margin-block: 0.75em;
 }
 
 .user__home .part__items {
