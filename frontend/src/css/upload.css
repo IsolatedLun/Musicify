@@ -1,0 +1,25 @@
+.upload {
+    display: grid;
+    place-items: center;
+    gap: 2em;
+    margin-block: 0.95em 0.25em;
+}
+
+.upload .upload__choice {
+    padding: 1em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 100ms ease-out;
+}
+
+.upload .upload__choice > * {
+    pointer-events: none;
+}
+
+.upload .upload__choice:hover {
+    background-color: var(--bg-hov);
+}
+
+.upload .choice__content .choice__desc {
+    color: var(--txt-muted);
+}

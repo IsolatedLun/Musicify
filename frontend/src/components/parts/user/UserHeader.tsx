@@ -32,6 +32,7 @@ const UserHeader = () => {
                         <h1 className="user__title">{ user.producer_name }</h1>
                     </div>
                     <div className="btn--group gap--1">
+                        <Link to='upload' className='btn--def btn--primary'>Upload</Link>
                         <Link to='settings' className='btn--def btn--primary'>Settings</Link>
                         {
                             changesMade

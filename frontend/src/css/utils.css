@@ -74,7 +74,6 @@
 
 .btn--group {
     display: flex;
-    align-items: center;
     justify-content: space-between;
 }
 
@@ -112,6 +111,35 @@
     text-transform: capitalize;
     color: var(--txt);
     background-color: var(--bg);
+}
+
+input[type="radio"] {
+    accent-color: var(--clr-primary);
+}
+
+input[type="radio"] + *::after {
+    content: '';
+    position: absolute;
+    visibility: hidden;
+    inset: 0;
+    background-color: var(--clr-primary);
+    width: 1.5em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -47%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    isolation: isolate;
+    z-index: -1;
+}
+
+input[type="radio"]:checked + *::after {
+    visibility: visible;
+}
+
+/* Positions */
+.pos--relative {
+    position: relative;
 }
 
 /* Backgrounds */

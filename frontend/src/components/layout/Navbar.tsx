@@ -58,9 +58,28 @@ const Navbar = () => {
         
             <div className="side-nav absolute--open" id='side-nav'>
                 <h2 className="side__title">Musicify</h2>
-                <ul className="side__links flex--align flex--col gap--05">
+                <ul className="side__links flex--align flex--col gap--1">
                     <li className="side__link"><Link to={'/'}>Home</Link></li>
                     <li className="side__link"><Link to={'/browse'}>Browse</Link></li>
+                    {
+                        !isLogged
+                        ?
+                        <>
+                        <li className='side__link'><Link to={'/login'}>Log in</Link></li>
+                        <li className="side__link"><Link to={'/signup'}>Sign up</Link></li>
+                        </>
+                        : user !== null && user.id > -1 
+                        ?
+                        <>
+                            <li className='side__link'>
+                                <Link to={'/user'}>My profile</Link>
+                            </li>
+                            <li className="side__link">
+                                <Link to='/logout' className='btn--def btn--primary'>Logout</Link>
+                            </li>
+                        </>
+                        : null
+                    }
                     <button onClick={() => toggleEl('side-nav', 'active')}
                         className='fa btn--def'>&#xf00d;</button>
                 </ul>
