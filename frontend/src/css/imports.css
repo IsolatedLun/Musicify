@@ -13,7 +13,10 @@
 @import url('footer.css');
 
 @import url('forms.css');
+
 @import url('upload.css');
+@import url('upload-song.css');
+
 @import url('logout.css');
 @import url('loader.css');
 @import url('popup.css');

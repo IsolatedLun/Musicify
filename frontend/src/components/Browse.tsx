@@ -1,8 +1,10 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react';
 import { fetchSongs, setSongsToPlay } from '../features/music-slice';
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useAppDispatch, useAppSelector } from '../hooks';
 import Loader from './layout/Loader';
 import Songs from './parts/song/Songs';
+import Option from './parts/utils/Option';
+import songGenres from './json/genres.json';
 
 const Browse = () => {
     const { browseSongs, status } = useAppSelector(state => state.music);
@@ -39,12 +41,11 @@ const Browse = () => {
 
                 <select id='genres-input' onChange={(e: FormEvent<HTMLSelectElement>) => handleSelect(e)}
                     className='input--select' name='Genres'>
-                    <option value="all">All</option>
-                    <option value="pop">Pop</option>
-                    <option value="intrumental">Instrumental</option>
-                    <option value="metal">Metal</option>
-                    <option value="rap">Rap</option>
-                    <option value="rock">Rock</option>
+                    {
+                    songGenres.map(genre => (
+                        <Option val={genre}/>
+                    ))
+                    }
                 </select>
             </div>
 

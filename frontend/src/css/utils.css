@@ -27,6 +27,10 @@
     justify-content: space-around;
 }
 
+.flex--align--end {
+    align-items: flex-end;
+}
+
 .flex {
     display: flex;
 }
@@ -140,6 +144,10 @@ input[type="radio"]:checked + *::after {
 /* Positions */
 .pos--relative {
     position: relative;
+}
+
+.self--center {
+    margin-inline: auto;
 }
 
 /* Backgrounds */

@@ -1,0 +1,15 @@
+.upload-song-container {
+   width: 80%;
+   margin-inline: auto;
+}
+
+.upload-song__form {
+    padding: 1em;
+    margin-block: 1.5em;
+    width: 100%;
+    background-color: var(--bg-hov);
+}
+
+.upload-song__form .form__btn {
+    margin-top: 1.5em;
+}
