@@ -13,7 +13,7 @@ const DropUp = () => {
 
     if(currSong)
         return (
-            <div className="main-dropup absolute--open" id='main-dropup'>
+            <div className="main-dropup absolute--open" id='main-dropup' tabIndex={-1}>
                 <ul className="dropup__list">
                     <li className="list__item" onClick={() => downloadSong(currSong.id, currSong.title)}>
                         <i className='fa item__icon'>&#xf019;</i>

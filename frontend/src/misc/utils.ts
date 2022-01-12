@@ -70,6 +70,10 @@ export const toggleElement = (id: string, offVal: string, onVal: string, toggler
     }
 }
 
+export const focusElement = (id: string) => {
+    document.getElementById(id)?.focus();
+}
+
 export const getSongEl = (num: number | string): HTMLButtonElement => {
     return document.getElementById('song-' + (num) + '-queue') as HTMLButtonElement;
 }

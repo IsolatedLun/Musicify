@@ -9,6 +9,10 @@
     transition: transform 100ms ease-out;
 }
 
+.main-dropup:focus {
+    transform: translateY(70%);
+}
+
 .main-dropup .dropup__list {
     display: flex;
     flex-direction: column;

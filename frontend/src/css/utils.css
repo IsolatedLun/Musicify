@@ -177,7 +177,7 @@
 }
 
 /* Accessibility */
-.absolute--open > * {
+.absolute--open:not(:focus) > * {
     visibility: hidden;
 }
 

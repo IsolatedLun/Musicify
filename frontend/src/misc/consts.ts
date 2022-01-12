@@ -12,3 +12,7 @@ export const GET_TOKEN = API_URL + 'users/tok/';
 export const HEADERS_FILE = {
     'content-type': 'multipart/form-data'
 }
+
+// For toggling
+export const DROPUP_ON = '70%';
+export const DROPUP_OFF = '105%';

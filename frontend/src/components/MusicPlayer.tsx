@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { postRecentSong, setIndex, setSongsToPlay } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { API_URL } from "../misc/consts";
+import { API_URL, DROPUP_OFF, DROPUP_ON } from "../misc/consts";
 import { INF_Song, User } from "../misc/interfaces";
-import { getSongEl, toggleElement, toggleMusicPlayer } from "../misc/utils";
+import { focusElement, getSongEl, toggleElement, toggleMusicPlayer } from "../misc/utils";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
@@ -94,51 +94,54 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         audioTime.innerText = currTime + ' / ' + audioDuration;
     }
 
-    return (
-        <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
-        className='music-player flex flex--align text--center gap--1' id='music-player'>
-            <div onClick={() => toggleElement('music-player', '96%', '2%', 'active')} 
-            className="player__handle round" id='player-handle'></div>
+    if(currSong.id !== null)
+        return (
+            <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
+            className='music-player flex flex--align text--center gap--1' id='music-player'>
+                <div onClick={() => toggleElement('music-player', '96%', '2%', 'active')} 
+                className="player__handle round" id='player-handle'></div>
 
-                <div className="music__reprs">
+                    <div className="music__reprs">
 
-                    <Song song={songsToPlay[currIdx - 1]} idx={songsToPlay.length + 1} ignore={true} 
-                        queueType='previous' referBy="ref-player" />
-                    <SongPreview song={currSong} currId={null} isQueue={false} />
-                    <Song song={songsToPlay[currIdx + 1]} idx={songsToPlay.length + 2} ignore={true} 
-                        queueType='next' referBy="ref-player" />
+                        <Song song={songsToPlay[currIdx - 1]} idx={songsToPlay.length + 1} ignore={true} 
+                            queueType='previous' referBy="ref-player" />
+                        <SongPreview song={currSong} currId={null} isQueue={false} />
+                        <Song song={songsToPlay[currIdx + 1]} idx={songsToPlay.length + 2} ignore={true} 
+                            queueType='next' referBy="ref-player" />
 
+                    </div>
+
+
+                <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
+                autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playBetween()}
+                id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
+
+                <div className="music__controls flex gap--2">
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
+                    className='fa reverse btn--def music__control' name='change-song' data-num='-1'>&#xf050;</button>
+                    
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
+                    className='fa btn--def music__control' id='music-toggler' name='toggle-song'>&#xf04c;</button>
+
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
+                    className='fa btn--def music__control' name='change-song' data-num='1'>&#xf050;</button>
                 </div>
 
-
-            <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
-            autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playBetween()}
-            id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
-
-            <div className="music__controls flex gap--2">
-                <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
-                className='fa reverse btn--def music__control' name='change-song' data-num='-1'>&#xf050;</button>
+                <div onMouseMove={(e) => dragAudioBar(e)}
+                className="music__bar" id='audio-bar' onClick={(e: React.MouseEvent<HTMLDivElement>) => changeTime(e)}>
+                    <div className="music__progress" id='audio-bar-progress'></div>
+                </div>
                 
-                <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
-                className='fa btn--def music__control' id='music-toggler' name='toggle-song'>&#xf04c;</button>
+                <p className="music__time" id='audio-time'>00:00:00 / 00:00:00</p>
 
-                <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
-                className='fa btn--def music__control' name='change-song' data-num='1'>&#xf050;</button>
+                <button onClick={() => focusElement('main-dropup')}
+                className="fa btn--def music__dropdown-btn" id='dropup-btn'>&#xf142;</button>
+
             </div>
-
-            <div onMouseMove={(e) => dragAudioBar(e)}
-            className="music__bar" id='audio-bar' onClick={(e: React.MouseEvent<HTMLDivElement>) => changeTime(e)}>
-                <div className="music__progress" id='audio-bar-progress'></div>
-            </div>
-            
-            <p className="music__time" id='audio-time'>00:00:00 / 00:00:00</p>
-
-            <button onClick={() => toggleElement('main-dropup', '105%', '70%', 'active')}
-            className="fa btn--def music__dropdown-btn">&#xf142;</button>
-
-        </div>
         
-    )
+        )
+    else
+        return (<></>)
 }
 
 export default MusicPlayer
