@@ -1,4 +1,3 @@
-import { isImage } from "./utils";
 
 export function validateInputs(inputs: NodeListOf<HTMLInputElement>): boolean {
     let validAmt = 0;
@@ -27,6 +26,9 @@ function validateInput(input: HTMLInputElement): boolean {
     const realType: string | null = input.getAttribute('data-realtype') ?? null;
     const fileType: string | null = input.getAttribute('data-file-type') ?? null;
     const canBeNull: boolean = input.getAttribute('data-null') === 'true' ? true : false;
+    let isNested: boolean = false;
+
+
 
     clearHelpText(input);
     if(realType === 'ignore') {
@@ -68,13 +70,22 @@ function highlightInput(input: HTMLInputElement, type: 'err' | 'ok' | 'warn') {
 }
 
 function addHelpText(input: HTMLInputElement, text: string) {
-    const p = input.parentElement?.lastChild!;
-    p.textContent = text;
+    if(input.parentElement!.classList.contains('form__part')) {
+        const p = input.parentElement?.lastChild!;
+        p.textContent = text;
+    }
 }
 
 function clearHelpText(input: HTMLInputElement) {
-    const p = input.parentElement?.lastChild!;
-    p.textContent = '';
+    let p: ChildNode | null = null;
+
+    if(input.parentElement?.classList.contains('form__part')) {
+        p = input.parentElement?.lastChild!;
+    }
+
+    if(p) {
+        p.textContent = '';
+    }
 }
 
 /* Validators */
@@ -120,6 +131,15 @@ function isValidFile(input: HTMLInputElement, val: File, fType: string | null) {
      
          return false;
     }
+}
+
+/* Regex */
+export function isImage(file: File): boolean {
+    const pattern = /image-*/;
+
+    if(file.type.match(pattern))
+        return true;
+    return false;
 }
 
 /* Misc */

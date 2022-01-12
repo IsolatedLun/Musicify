@@ -26,28 +26,6 @@ export function animateMixerBars(id: string): void {
     }
 }
 
-export const toggleMusicPlayer = (ignore: boolean=false): void => {
-    if(!ignore) {
-        const musicPlayer = document.getElementById('music-player')!
-
-        if(!musicPlayer.style.transform) {
-            musicPlayer.style.transform = 'translateY(96%)';
-            musicPlayer.classList.remove('active');
-            musicPlayer.focus();
-        }
-
-        if(musicPlayer.style.transform === 'translateY(96%)') {
-            musicPlayer.classList.add('active');
-            musicPlayer.style.transform = `translateY(2%)`;
-        }
-            
-        else {
-            musicPlayer.style.transform = 'translateY(96%)';
-            musicPlayer.classList.remove('active');
-        }
-    }
-}
-
 export const toggleElement = (id: string, offVal: string, onVal: string, togglerClsName: string,
     ignore: boolean=false): void => {
     const el: HTMLElement | null = document.getElementById(id) ?? null;
@@ -137,16 +115,25 @@ export function constructFormData(obj: object): FormData | null {
     return null;
 }
 
-export function isImage(file: File): boolean {
-    const pattern = /image-*/;
-
-    if(file.type.match(pattern))
-        return true;
-    return false;
-}
-
 export function fullReload() {
     setTimeout(() => {
         window.location.reload();
     }, 1000)
+}
+
+export function previewImage(id: string, imgFile: File, def: string | null) {
+    const imgEl = document.getElementById(id) as HTMLImageElement;
+
+    if(imgFile instanceof File) {
+        const url: string = window.URL.createObjectURL(imgFile);
+        imgEl.src = url;
+    }
+
+    else if(def !== null) {
+        imgEl.src = def;
+    }
+
+    else {
+        imgEl.src = '';
+    }
 }

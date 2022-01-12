@@ -5,7 +5,6 @@ import Navbar from "./components/layout/Navbar";
 import React, { useEffect } from "react";
 import MusicPlayer from "./components/MusicPlayer";
 import Browse from "./components/Browse";
-import { toggleMusicPlayer } from "./misc/utils";
 import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
 import { useAppDispatch, useAppSelector } from "./hooks";
@@ -27,7 +26,7 @@ function App() {
       const key = e.code;
 
       if( e.shiftKey && key === 'KeyE') {
-        toggleMusicPlayer();
+        
       }
     })
 

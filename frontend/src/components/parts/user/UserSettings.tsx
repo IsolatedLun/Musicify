@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { save, setChangesMade } from '../../../features/user.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { API_URL } from '../../../misc/consts';
-import { validateInputs } from '../../../misc/formHandler';
+import { isImage, validateInputs } from '../../../misc/formHandler';
 import { User } from '../../../misc/interfaces';
-import { areObjectsEqual, constructFormData, fullReload, isImage, popup } from '../../../misc/utils';
+import { areObjectsEqual, constructFormData, fullReload, popup } from '../../../misc/utils';
 import Loader from '../../layout/Loader';
 
 const UserSettings = () => {

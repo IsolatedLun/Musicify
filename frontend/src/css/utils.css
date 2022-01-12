@@ -178,6 +178,10 @@ input[type="radio"]:checked + *::after {
     display: none;
 }
 
+.vis--hidden {
+    visibility: hidden;
+}
+
 .round {
     border-radius: 100vw;
 }

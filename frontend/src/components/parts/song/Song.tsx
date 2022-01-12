@@ -3,7 +3,7 @@ import { fetchAudio, setCurrSong, setSongsToPlay, setSongType } from '../../../f
 import { useAppDispatch } from '../../../hooks';
 import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';
-import { toggleMusicPlayer } from '../../../misc/utils';
+import { toggleElement } from '../../../misc/utils';
 
 const Song = ({ song, idx, ignore, queueType, referBy } : 
     { song: INF_Song, idx: number, ignore: boolean, queueType: string | null, referBy: string }) => {
@@ -12,7 +12,7 @@ const Song = ({ song, idx, ignore, queueType, referBy } :
     const selectSong = (id: number | null, referBy: string) => {
         dispatch(setSongType(referBy));
         dispatch(setCurrSong({ id, referBy }));
-        toggleMusicPlayer(ignore);
+        toggleElement('music-player', '96%', '2%', 'active', ignore);
     }
 
     if(!song) {

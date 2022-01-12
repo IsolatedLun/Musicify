@@ -111,7 +111,7 @@ const SignUp = () => {
                     <label className="form__label">Profile<span className='txt--muted'>*</span></label>
                     <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => handleProfileInput(e)}
                         placeholder='Upload profie pciture' className='form__inpt' 
-                        data-realtype='ignore' name='profilePicture' />
+                        data-realtype='ignore' data-file-type='img' name='profilePicture' />
                     <p className="form__helptext"></p>
                 </div>
 

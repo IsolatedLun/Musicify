@@ -81,6 +81,7 @@
 }
 
 .form__part .form__label-drop-inpt {
+    position: relative;
     font-size: calc(var(--fs-600) * 2);
     padding: 1em;
     text-align: center;
@@ -90,9 +91,35 @@
     cursor: pointer;
 }
 
-.form__part .form__label-drop-inpt:hover {
+.form__part .form__label-drop-inpt:is(:hover , :focus-within) {
     color: white;
     border-color: white;
+}
+
+.form__part .form__label-drop-inpt > input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form__part .form__label-drop-inpt::after {
+    content: attr(data-fname);
+    position: absolute;
+    font-size: var(--fs-450);
+    font-family: 'Ubuntu';
+    top: 76%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form__part .select__inpt {
+    font-size: var(--fs-450);
+    padding: 0.25em 0.65em;
+    color: var(--txt);
+    background-color: var(--bg);
+    border: 0;
 }
 
 .form__part .form__helptext::first-letter {
