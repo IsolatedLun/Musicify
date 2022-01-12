@@ -1,17 +1,14 @@
-import React from 'react'
-import { useAppSelector } from '../hooks'
-import { GET_SONG } from '../misc/consts'
+import axios from 'axios';
+import React from 'react';
+import { useAppSelector } from '../hooks';
+import { GET_SONG } from '../misc/consts';
+import { saveAs } from 'file-saver';
 
 const DropUp = () => {
     const { currSong } = useAppSelector(state => state.music)
 
     const downloadSong = (songId: number | null, songName: string) => {
-        const a = document.createElement('a') as HTMLAnchorElement;
-        a.href = GET_SONG + songId;
-        a.download = songName;
-
-        a.click();
-        a.remove();
+        saveAs(GET_SONG + songId, songName + '.mp3');
     }
 
     if(currSong)
@@ -29,6 +26,8 @@ const DropUp = () => {
                 </ul>
             </div>
         )
+    else
+        return(<></>)
 }
 
 export default DropUp
