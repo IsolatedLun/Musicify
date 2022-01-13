@@ -1,15 +1,15 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signUp } from '../../features/user.slice';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserForm } from '../../misc/interfaces';
-import { constructFormData } from '../../misc/utils';
+import { constructFormData, popup } from '../../misc/utils';
+import { useSignUpMutation } from '../../services/userServices';
 
 const SignUp = () => {
-    const { isSignedUp, isLogged } = useAppSelector(state => state.user)
-    const dispatch = useAppDispatch();
+    const { isLogged } = useAppSelector(state => state.user)
     const navigate = useNavigate();
+    const [signup, { isLoading }] = useSignUpMutation();
     
     const [newUser, setNewUser] = useState<UserForm>({
         firstName: '',
@@ -21,26 +21,28 @@ const SignUp = () => {
     });
 
     useEffect(() => {
-        if(isSignedUp) {
-            navigate('/login')
-        }
-    }, [isSignedUp])
-
-    useEffect(() => {
         if(isLogged) {
             navigate(-1);
         }
     }, [])
 
-    const handleForm = (e: FormEvent) => {
+    const handleForm = async(e: FormEvent) => {
         e.preventDefault();
 
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
         if(validateInputs(inputs)) {
-            const formData = constructFormData(newUser);
+            const formData: FormData | null = constructFormData(newUser);
             
-            if(formData !== null)
-                dispatch(signUp(formData));
+            if(formData !== null) {
+                try {
+                    await signup(formData).unwrap();
+                    navigate('/login');
+                }
+
+                catch(err: any) {
+                    popup(err.data['err'], 'err');
+                }
+            }
         }
     }
 

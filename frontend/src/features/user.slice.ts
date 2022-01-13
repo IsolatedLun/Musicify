@@ -14,21 +14,6 @@ const initialState: UserState = {
     doSave: false
 }
 
-export const login = createAsyncThunk(
-    'user/auth-login',
-    async(loginData: UserLogin, { rejectWithValue }) => {
-        try {
-            const res: any = await axios.post(POST_LOGIN, { 
-                email: loginData.email, password: loginData.password });
-            return res.data;
-        }
-
-        catch(err: any) {
-            popup(err.response.data['err'], 'err');
-        }
-    }
-)
-
 export const save = createAsyncThunk(
     'users/save-changes',
     async(updatedUser: FormData, { rejectWithValue }) => {
@@ -51,25 +36,6 @@ export const getUserByToken = createAsyncThunk(
         return res.data;
     }
 )
-
-export const signUp = createAsyncThunk(
-    'user/auth-signup',
-    async(newUserData: FormData, { rejectWithValue }) => {
-        try {
-            const res: any = await axios.post(POST_SIGNUP, newUserData, {
-                headers: { ...HEADERS_FILE }
-            })
-            
-            return res.data;
-        }
-
-
-        catch(err: any) {
-            popup(err.response.data['err'], 'err');
-            return rejectWithValue(err.response.data['err']);
-        }
-    }
-) 
 
 export const userSlice = createSlice({
     name: 'user',
@@ -104,16 +70,17 @@ export const userSlice = createSlice({
         saveChanges(state, action) {
             state.doSave = false;
             state.changesMade = false;
-        }
-    },
-    extraReducers: (builder) => {
-        // Login
-        builder.addCase(login.fulfilled, (state, action) => {
+        },
+
+        setCredentails(state, action) {
             state.user = action.payload['user'];
             localStorage.setItem('tok', action.payload['tok']);
             state.isLogged = true;
             state.isSignedUp = false;
-        })
+        }
+    },
+    extraReducers: (builder) => {
+        // Login
 
         // Retrieve token 
         builder.addCase(getUserByToken.fulfilled, (state, action) => {
@@ -121,17 +88,10 @@ export const userSlice = createSlice({
         })
         
         // Signup
-        builder.addCase(signUp.fulfilled, (state, action) => {
-            state.isSignedUp = true;
-        })
-
-        builder.addCase(signUp.rejected, (state, action) => {
-            state.isSignedUp = false;
-        })
 
         // Update
     }
 })
 
-export const { setIsLogged, logout, setChangesMade, setDoSave } = userSlice.actions;
+export const { setIsLogged, logout, setChangesMade, setDoSave, setCredentails } = userSlice.actions;
 export default userSlice.reducer;
