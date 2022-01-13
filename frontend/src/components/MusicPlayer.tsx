@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
-import { postRecentSong, setIndex, setSongsToPlay } from "../features/music-slice";
+import { useEffect } from "react";
+import { postRecentSong, setIndex } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { API_URL, DROPUP_OFF, DROPUP_ON } from "../misc/consts";
-import { INF_Song, User } from "../misc/interfaces";
+import { API_URL } from "../misc/consts";
+import { User } from "../misc/interfaces";
 import { focusElement, getSongEl, toggleElement } from "../misc/utils";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
 const MusicPlayer = ({ user } : { user: User | null }) => {
-    const { currSong, browseSongs, recentSongs, favoriteSongs, songsToPlay,
-        currIdx, currSongType } = useAppSelector(state => state.music);
-    const { loc } = useAppSelector(state => state.utils)
+    const { currSong, songsToPlay, currIdx } = useAppSelector(state => state.music);
     const dispatch = useAppDispatch();
 
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
@@ -28,7 +26,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
     useEffect(() => {
         dispatch(setIndex(songsToPlay.map(song => song.id).indexOf(currSong.id)))
-        if(user && currSong) {
+        if(user) {
             dispatch(postRecentSong({ userId: user.id, songId: currSong.id }))
         }
     }, [songsToPlay, currSong.id])

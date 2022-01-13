@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { INF_Song, MusicState, NewSong } from '../misc/interfaces';
+import { INF_Song, MusicState, } from '../misc/interfaces';
 import axios from 'axios';
-import { API_URL, GET_RECENTS, GET_SONG, GET_SONGS, HEADERS_FILE } from '../misc/consts';
+import { GET_RECENTS, GET_SONG, GET_SONGS, POST_RECENTS, POST_UPLOAD } from '../misc/consts';
 import { constructHeaders, popup } from '../misc/utils';
 
 const initialState: MusicState = {
@@ -28,7 +28,7 @@ export const fetchSongs = createAsyncThunk(
     'music/fetch-songs',
     async(thunk) => {
         const res: any = await axios.get(GET_SONGS);
-        return res.data
+        return res.data;
     }
 )
 
@@ -36,15 +36,18 @@ export const fetchRecentSongs = createAsyncThunk(
     'music/fetch-recent-songs',
     async(user_id: number, thunk) => {
         const res: any = await axios.get(GET_RECENTS + user_id);
-        return res.data
+        return res.data;
     }
 )
 
 export const postRecentSong = createAsyncThunk(
     'music/post-recent-song',
     async(data: any, thunk) => {
-        const res: any = await axios.post(API_URL + 'songs/recents/post/' + data.userId + '/' + data.songId);
-        return res.data
+        const res: any = await axios.post(POST_RECENTS + data.songId, {}, {
+            headers: { ...constructHeaders(false, true) }
+        });
+
+        return res.data;
     }
 )
 
@@ -52,7 +55,7 @@ export const postUploadSong = createAsyncThunk(
     'music/upload-song',
     async(data: FormData, { rejectWithValue }) => {
         try {
-            const res: any = await axios.post(API_URL + 'songs/upload', data, {
+            const res: any = await axios.post(POST_UPLOAD, data, {
                 headers: { ...constructHeaders(true, true) }
             })
     
@@ -60,7 +63,6 @@ export const postUploadSong = createAsyncThunk(
         }
 
         catch(err: any) {
-            console.log(err.response)
             popup(err.response.data['err'], 'err');
         }
     }
@@ -111,11 +113,6 @@ export const musicSlice = createSlice({
         builder.addCase(fetchSongs.fulfilled, (state, action) => {
             state.browseSongs = action.payload;
             state.status = 'fulfilled';
-        })
-
-
-        builder.addCase(fetchSongs.rejected, (state, action) => {
-            
         })
 
         builder.addCase(fetchRecentSongs.fulfilled, (state, action) => {

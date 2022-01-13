@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { save, setChangesMade } from '../../../features/user.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { API_URL } from '../../../misc/consts';
+import { API_URL, GET_PROFILE } from '../../../misc/consts';
 import { isImage, validateInputs } from '../../../misc/formHandler';
 import { User } from '../../../misc/interfaces';
-import { areObjectsEqual, constructFormData, fullReload, popup } from '../../../misc/utils';
+import { areObjectsEqual, constructFormData, fullReload, popup, previewImage } from '../../../misc/utils';
 import Loader from '../../layout/Loader';
 
 const UserSettings = () => {
@@ -52,6 +52,7 @@ const UserSettings = () => {
 
         if(target.files && isImage(target.files[0])) {
             setEditableUser({ ...editableUser, [target.name]: target.files[0] });
+            previewImage('user-settings-profile-preview', target.files[0], GET_PROFILE + user!.id)
         }
 
         else {
@@ -87,12 +88,7 @@ const UserSettings = () => {
                     <div className='part__content'>
                         <div className="form__part">
                             <div className="part__profile-preview">
-                                <img id='profile-preview' src={!changesMade 
-                                ?
-                                API_URL + 'users/profiles/' + user.id
-                                : editableUser.profile instanceof File
-                                ? window.URL.createObjectURL(editableUser.profile)
-                                : API_URL + 'users/profiles/' + user.id} />
+                                <img id='user-settings-profile-preview' src={GET_PROFILE + user!.id}/>
                             </div>
                             <input type="file" onInput={(e: React.FormEvent<HTMLInputElement>) => 
                                 handleProfileInput(e)} accept='images/*'

@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.uploadedfile import TemporaryUploadedFile, InMemoryUploadedFile
 from django.db.utils import IntegrityError
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render
@@ -16,7 +16,7 @@ ERR = status.HTTP_400_BAD_REQUEST
 OK = status.HTTP_200_OK
 
 def update_profile(user, profile):
-    if isinstance(profile, InMemoryUploadedFile):
+    if isinstance(profile, (InMemoryUploadedFile, TemporaryUploadedFile)):
             user.profile = profile
             user.save()
 

@@ -8,7 +8,7 @@ urlpatterns = [
     path('songs/audio/<int:song_id>', SongAudio.as_view(), name='get-song-audio'),
 
     path('songs/recents/get/<int:user_id>', RecentSongs.as_view(), name='get-recent-songs'),
-    path('songs/recents/post/<int:user_id>/<int:song_id>', RecentSongs.as_view(), name='post-recent-songs'),
+    path('songs/recents/post/<int:song_id>', RecentSongs.as_view(), name='post-recent-songs'),
 
     path('songs/upload', UploadSong.as_view(), name='post-upload-song')
 ]

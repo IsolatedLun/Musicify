@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
-import { INF_Song, MusicState, UserState, User, UserForm, UserLogin } from '../misc/interfaces';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { UserState, UserLogin } from '../misc/interfaces';
 import axios from 'axios';
-import { API_URL, GET_TOKEN, HEADERS_FILE, POST_LOGIN, POST_SAVE, POST_SIGNUP } from '../misc/consts';
+import { GET_TOKEN, HEADERS_FILE, POST_LOGIN, POST_SAVE, POST_SIGNUP } from '../misc/consts';
 import { constructHeaders } from '../misc/utils';
 import { popup } from '../misc/utils';
 
@@ -25,7 +25,6 @@ export const login = createAsyncThunk(
 
         catch(err: any) {
             popup(err.response.data['err'], 'err');
-            return rejectWithValue(err.response.data['err'])
         }
     }
 )
@@ -40,7 +39,7 @@ export const save = createAsyncThunk(
         }
 
         catch(err: any) {
-            return rejectWithValue(err.response.data['err'])
+            popup(err.response.data['err'], 'err');
         }
     }
 )
@@ -61,13 +60,13 @@ export const signUp = createAsyncThunk(
                 headers: { ...HEADERS_FILE }
             })
             
-            return res.data
+            return res.data;
         }
 
 
         catch(err: any) {
             popup(err.response.data['err'], 'err');
-            return rejectWithValue(err.response.data['err'])
+            return rejectWithValue(err.response.data['err']);
         }
     }
 ) 
@@ -115,11 +114,6 @@ export const userSlice = createSlice({
             state.isLogged = true;
             state.isSignedUp = false;
         })
-        
-
-        builder.addCase(login.rejected, (state, action) => {
-            
-        })
 
         // Retrieve token 
         builder.addCase(getUserByToken.fulfilled, (state, action) => {
@@ -136,9 +130,6 @@ export const userSlice = createSlice({
         })
 
         // Update
-        builder.addCase(save.fulfilled, (state, action) => {
-            
-        })
     }
 })
 

@@ -60,16 +60,16 @@ class RecentSongs(APIView):
         except cUser.DoesNotExist:
             return Response({'err': 'User does not exist.'}, ERR)
 
-    def post(self, req, user_id, song_id):
-        user = cUser.objects.get(id=user_id)
+    def post(self, req, song_id):
+        user = get_user_by_tok(req.headers['authorization'])
 
         obj, created = RecentSong.objects.update_or_create(user=user, song_id=song_id, 
             defaults={'listened_at': datetime.now()})
 
         if created:
-            return Response({'detail': f'Created song id="{song_id}" for user id="{user_id}"'}, OK)
+            return Response({'detail': f'Created song id="{song_id}" for user id="{user.id}"'}, OK)
         else:
-            return Response({'detail': f'Updated song id="{song_id}" for user id="{user_id}"'}, OK)
+            return Response({'detail': f'Updated song id="{song_id}" for user id="{user.id}"'}, OK)
 
 
 
@@ -87,8 +87,8 @@ class UploadSong(APIView):
 
             return Response({'detail': 'Song uploaded.'}, OK)
 
-        except IntegrityError as e:
-            return Response({'err': 'Song already exists.'}, ERR)
-        except Exception as e:
+        except KeyError as e:
             return Response({'err': f'A {prettify(e, True)} is required.'}, ERR)
+        except Exception as e:
+            return Response({'err': f'Someting went wrong.'}, ERR)
 
