@@ -19,7 +19,7 @@ const Browse = () => {
         }
 
         dispatch(setSongsToPlay(browseSongs));
-    }, [browseSongs])
+    }, [status])
 
     const handleInput = (e: FormEvent<HTMLInputElement>) => {
         setSearch((e.target as HTMLInputElement).value.toLowerCase());

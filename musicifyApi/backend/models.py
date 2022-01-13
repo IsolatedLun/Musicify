@@ -25,9 +25,10 @@ genres_choices = [
 ]
 
 class Song(models.Model):
+    user = models.ForeignKey(cUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, unique=True)
-    author = models.CharField(max_length=64, unique=True)
     genre = models.CharField(max_length=32, choices=genres_choices, default='All')
+    author = models.CharField(max_length=64, unique=True)
 
     views = models.PositiveBigIntegerField(default=0)
     rating = models.PositiveIntegerField(default=1)

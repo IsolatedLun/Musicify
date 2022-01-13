@@ -30,6 +30,13 @@ export interface MusicState {
     currSongType: string;
 }
 
+export interface NewSong {
+    title: string;
+    genre: string;
+    profile: File | null;
+    audio: File | null;
+}
+
 // User related 
 export interface UserForm {
     firstName?: string;

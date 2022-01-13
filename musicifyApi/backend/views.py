@@ -2,6 +2,12 @@ from django.http.response import FileResponse
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from rest_framework import status
+from django.db.utils import IntegrityError
+
+from users.utils import get_user_by_tok
+
+from .utils import prettify
+
 from .models import Song, RecentSong
 from .serializers import SongSerializer
 from users.models import cUser
@@ -64,4 +70,25 @@ class RecentSongs(APIView):
             return Response({'detail': f'Created song id="{song_id}" for user id="{user_id}"'}, OK)
         else:
             return Response({'detail': f'Updated song id="{song_id}" for user id="{user_id}"'}, OK)
+
+
+
+class UploadSong(APIView):
+    def post(self, req):
+        data = req.data
+        user = get_user_by_tok(req.headers['authorization'])
+
+        try:
+            new_song, created = Song.objects.get_or_create(title=data['title'], user=user,
+                thumbnail=data['profile'], genre=data['genre'], author=user.producer_name, audio=data['audio'])
+            
+            if not created:
+                return Response({'err': 'Song already exists.'}, ERR)
+
+            return Response({'detail': 'Song uploaded.'}, OK)
+
+        except IntegrityError as e:
+            return Response({'err': 'Song already exists.'}, ERR)
+        except Exception as e:
+            return Response({'err': f'A {prettify(e, True)} is required.'}, ERR)
 

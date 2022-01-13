@@ -167,6 +167,10 @@
         margin-bottom: 0.5em;
     }
 
+    .form__divider {
+        grid-template-columns: 1fr;
+    }
+
     .part__btn {
         top: 45.2%;
         right: 3%;

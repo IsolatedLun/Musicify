@@ -2,9 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue } fro
 import { INF_Song, MusicState, UserState, User, UserForm, UserLogin } from '../misc/interfaces';
 import axios from 'axios';
 import { API_URL, GET_TOKEN, HEADERS_FILE, POST_LOGIN, POST_SAVE, POST_SIGNUP } from '../misc/consts';
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../hooks';
+import { constructHeaders } from '../misc/utils';
 import { popup } from '../misc/utils';
 
 const initialState: UserState = {
@@ -37,7 +35,7 @@ export const save = createAsyncThunk(
     async(updatedUser: FormData, { rejectWithValue }) => {
         try {
             const res: any = await axios.post(POST_SAVE, updatedUser, {
-                headers: { ...HEADERS_FILE }
+                headers: { ...constructHeaders(true, true) }
             }) 
         }
 
@@ -117,6 +115,7 @@ export const userSlice = createSlice({
             state.isLogged = true;
             state.isSignedUp = false;
         })
+        
 
         builder.addCase(login.rejected, (state, action) => {
             

@@ -6,6 +6,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+
+from backend.utils import prettify
 from .models import cUser
 from .serializers import cUserSerializer
 from django.contrib.auth.hashers import make_password, check_password
@@ -36,7 +38,7 @@ class SignUp(APIView):
             Token.objects.create(user=user)
 
         except IntegrityError as e:
-            field = str(e).split('.')[1].replace('_', ' ')
+            field = prettify(e)
             return Response({'err': f'An account with this {field} already exists.'}, ERR)
         return Response({'detail': 'Account created'}, OK)
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RecentSongs, SongAudio, SongThumbnail, Songs
+from .views import RecentSongs, SongAudio, SongThumbnail, Songs, UploadSong
 
 urlpatterns = [
     path('songs', Songs.as_view(), name='songs'),
@@ -8,5 +8,7 @@ urlpatterns = [
     path('songs/audio/<int:song_id>', SongAudio.as_view(), name='get-song-audio'),
 
     path('songs/recents/get/<int:user_id>', RecentSongs.as_view(), name='get-recent-songs'),
-    path('songs/recents/post/<int:user_id>/<int:song_id>', RecentSongs.as_view(), name='post-recent-songs')
+    path('songs/recents/post/<int:user_id>/<int:song_id>', RecentSongs.as_view(), name='post-recent-songs'),
+
+    path('songs/upload', UploadSong.as_view(), name='post-upload-song')
 ]

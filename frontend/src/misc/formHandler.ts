@@ -121,13 +121,19 @@ function isValidText(input: HTMLInputElement, str: string) {
 
 function isValidFile(input: HTMLInputElement, val: File, fType: string | null) {
     if(val) {
-        if(fType === 'img' && isImage(val)) {
-            return true;
+        if(fType === 'img') {
+            if(isImage(val))
+                return true;
+
+            addHelpText(input, 'An image is required.');
          }
      
-         else {
-             addHelpText(input, 'An image is required.');
-         }
+        else if(fType === 'audio') {
+            if(isAudio(val))
+                return true
+            
+            addHelpText(input, 'An auido file is required.')
+        }
      
          return false;
     }
@@ -136,6 +142,14 @@ function isValidFile(input: HTMLInputElement, val: File, fType: string | null) {
 /* Regex */
 export function isImage(file: File): boolean {
     const pattern = /image-*/;
+
+    if(file.type.match(pattern))
+        return true;
+    return false;
+}
+
+export function isAudio(file: File): boolean {
+    const pattern = /audio-*/;
 
     if(file.type.match(pattern))
         return true;

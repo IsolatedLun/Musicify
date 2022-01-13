@@ -137,3 +137,22 @@ export function previewImage(id: string, imgFile: File, def: string | null) {
         imgEl.src = '';
     }
 }
+
+export function constructHeaders(hasFiles: boolean, requiresAuth: boolean): object {
+    let headers: any = {};
+
+    if(hasFiles) {
+        headers['content-type'] = 'multipart/form-data';
+    }
+
+    else {
+        headers['content-type'] = 'application/json';
+    }
+
+    if(requiresAuth) {
+        headers['user-agent'] = getUserAgent();
+        headers['authorization'] = 'Token ' + localStorage.getItem('tok');
+    }
+
+    return headers;
+}

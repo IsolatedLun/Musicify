@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { INF_Song, MusicState } from '../misc/interfaces';
+import { INF_Song, MusicState, NewSong } from '../misc/interfaces';
 import axios from 'axios';
-import { API_URL, GET_RECENTS, GET_SONG, GET_SONGS } from '../misc/consts';
+import { API_URL, GET_RECENTS, GET_SONG, GET_SONGS, HEADERS_FILE } from '../misc/consts';
+import { constructHeaders, popup } from '../misc/utils';
 
 const initialState: MusicState = {
     browseSongs: [],
@@ -44,6 +45,24 @@ export const postRecentSong = createAsyncThunk(
     async(data: any, thunk) => {
         const res: any = await axios.post(API_URL + 'songs/recents/post/' + data.userId + '/' + data.songId);
         return res.data
+    }
+)
+
+export const postUploadSong = createAsyncThunk(
+    'music/upload-song',
+    async(data: FormData, { rejectWithValue }) => {
+        try {
+            const res: any = await axios.post(API_URL + 'songs/upload', data, {
+                headers: { ...constructHeaders(true, true) }
+            })
+    
+            return res.data;
+        }
+
+        catch(err: any) {
+            console.log(err.response)
+            popup(err.response.data['err'], 'err');
+        }
     }
 )
 
