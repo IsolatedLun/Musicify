@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { save, setChangesMade } from '../../../features/user.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { API_URL, GET_PROFILE } from '../../../misc/consts';
+import { GET_PROFILE } from '../../../misc/consts';
 import { isImage, validateInputs } from '../../../misc/formHandler';
 import { User } from '../../../misc/interfaces';
 import { areObjectsEqual, constructFormData, fullReload, popup, previewImage } from '../../../misc/utils';
+import { useUpdateUserInfoMutation } from '../../../services/userServices';
 import Loader from '../../layout/Loader';
 
-const UserSettings = () => {
-    const { user, changesMade, doSave } = useAppSelector(state => state.user);
+const UserSettings = ({ user }: { user: User | null }) => {
+    const { doSave } = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
+    const [updateUser, { isLoading }] = useUpdateUserInfoMutation();
 
     const [editableUser, setEditableUser] = useState<User>(user!);
     const [isVerified, setIsVerified] = useState<boolean>(true);
@@ -36,10 +38,21 @@ const UserSettings = () => {
     }, [editableUser])
 
     useEffect(() => {
+        
         const formData = constructFormData(editableUser);
         if(formData !== null && doSave && isVerified) {
-            dispatch(save(formData));
-            fullReload();
+            const update = async() => {
+                await updateUser(formData).unwrap();
+                fullReload();
+            }
+            
+            try {
+                update();
+            }
+
+            catch(err) {
+                console.log(err)
+            }
         }
 
         else if(!isVerified) {

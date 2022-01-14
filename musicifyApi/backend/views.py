@@ -46,9 +46,9 @@ class SongAudio(APIView):
         return Response({'err': f'Song id is None'}, ERR)
 
 class RecentSongs(APIView):
-    def get(self, req, user_id):
+    def get(self, req):
         try:
-            user = cUser.objects.get(id=user_id)
+            user = get_user_by_tok(req.headers['authorization'])
             recent_songs = RecentSong.objects.filter(user=user).order_by('-listened_at')
             songs = [Song.objects.get(id=x.song_id) for x in recent_songs]
 

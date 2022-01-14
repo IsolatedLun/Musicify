@@ -1,19 +1,14 @@
 import { useEffect } from 'react'
 import { fetchRecentSongs } from '../../../features/music-slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import { User } from '../../../misc/interfaces';
+import { useGetRecentSongsQuery } from '../../../services/musicService';
 import Songs from '../song/Songs';
-import UserHeader from './UserHeader'
 
-const UserHome = () => {
+const UserHome = ({ user }: { user: User | null }) => {
     const dispatch = useAppDispatch();
     const { recentSongs, favoriteSongs } = useAppSelector(state => state.music)
-    const user = useAppSelector(state => state.user.user);
-
-    useEffect(() => {
-        if(user !== null) {
-            dispatch(fetchRecentSongs(user.id))
-        }
-    }, [user])
+    useGetRecentSongsQuery();
 
     return (
         <div className='user__home flex flex--col gap--1'>

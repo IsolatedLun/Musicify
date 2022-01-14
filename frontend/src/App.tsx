@@ -26,13 +26,13 @@ function App() {
     }
 
     catch(err: any) {
-      popup(err.data['err'], 'err');
+      popup('User does not exist.', 'err');
       localStorage.removeItem('tok');
     }
   }
 
   useEffect(() => {
-    if(user === null) {
+    if(user === null && localStorage.getItem('tok')) {
       fetchUser()
     }
   }, [authedUser])

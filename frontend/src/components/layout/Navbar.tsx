@@ -19,7 +19,7 @@ const Navbar = () => {
             <nav className='primary-nav flex--align--between'>
                 <a href='#main-content' className='nav__skip round'>Skip navigation</a>
                 <div className="nav__head flex--align gap--1">
-                    <div className="nav__icon"><img src="./src/images/logo_small_v2.png" /></div>
+                    <div className="nav__icon"><img src="../src/images/logo_small_v2.png" /></div>
                     <h1 className="nav__title">Musicify</h1>
                 </div>
 

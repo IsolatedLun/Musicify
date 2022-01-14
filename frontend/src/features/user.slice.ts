@@ -4,6 +4,7 @@ import axios from 'axios';
 import { constructHeaders } from '../misc/utils';
 import { popup } from '../misc/utils';
 import { UserApi } from '../services/userServices';
+import { POST_SAVE } from '../misc/consts';
 
 const initialState: UserState = {
     user: null,

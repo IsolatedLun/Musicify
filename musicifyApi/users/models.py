@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.hashers import make_password
 
 class cUserManager(BaseUserManager):
     def create_user(self, email, password, **others):
         email = self.normalize_email(email)
         user = self.model(email=email, **others)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
 
         return user
     
@@ -18,7 +19,7 @@ class cUserManager(BaseUserManager):
         return self.create_user(email, password, **others)
 
 class cUser(AbstractUser):
-    username = None;
+    username = None
     email = models.EmailField(max_length=128, unique=True)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
@@ -35,8 +36,8 @@ class cUser(AbstractUser):
 
     objects = cUserManager()
 
-    def check_password(self, raw_password):
-        if self.password == raw_password:
-            return True
-        else:
-            return False
+    # def check_password(self, raw_password):
+    #     if self.password == raw_password:
+    #         return True
+    #     else:
+    #         return False

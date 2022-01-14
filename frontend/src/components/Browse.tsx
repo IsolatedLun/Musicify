@@ -1,10 +1,11 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { fetchSongs, setSongsToPlay } from '../features/music-slice';
+import { setSongsToPlay } from '../features/music-slice';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import Loader from './layout/Loader';
 import Songs from './parts/song/Songs';
 import Option from './parts/utils/Option';
 import songGenres from './json/genres.json';
+import { useGetSongsQuery } from '../services/musicService';
 
 const Browse = () => {
     const { browseSongs, status } = useAppSelector(state => state.music);
@@ -14,12 +15,10 @@ const Browse = () => {
     const [genre, setGenre] = useState('all');
 
     useEffect(() => {
-        if(browseSongs.length < 1) {
-            dispatch(fetchSongs());
-        }
-
         dispatch(setSongsToPlay(browseSongs));
     }, [status])
+
+    useGetSongsQuery();
 
     const handleInput = (e: FormEvent<HTMLInputElement>) => {
         setSearch((e.target as HTMLInputElement).value.toLowerCase());

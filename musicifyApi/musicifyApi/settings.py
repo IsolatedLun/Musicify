@@ -58,6 +58,8 @@ MEDIA_URL = '/media/'
 CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = 'users.cUser'
 
+SESSION_COOKIE_SECURE = False
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -31,11 +31,12 @@ const LogIn = () => {
         const inputs = (document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>)!;
         if(validateInputs(inputs) && !isLogged) {
                 try {
-                    const loggingUser = await login(user).unwrap()
+                    const loggingUser = await login(user).unwrap();
                     dispatch(setCredentails(loggingUser));
                 }
 
                 catch(err: any) {
+                    console.log(err.data)
                     popup(err.data['err'], 'err');
                 }
         }

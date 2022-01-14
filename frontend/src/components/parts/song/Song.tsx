@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchAudio, setCurrSong, setSongsToPlay, setSongType } from '../../../features/music-slice';
+import { setCurrSong, setSongsToPlay, setSongType } from '../../../features/music-slice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';

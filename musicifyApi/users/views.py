@@ -69,7 +69,7 @@ class Login(APIView):
 class UpdateUser(APIView):
     def post(self, req):
         data = req.data
-        print(data)
+
         try:
             if data:
                 user = cUser.objects.get(id=data['id'])

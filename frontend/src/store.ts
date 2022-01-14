@@ -1,7 +1,8 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";;
+import { configureStore } from "@reduxjs/toolkit";;
 import musicSlice from "./features/music-slice";
 import userSlice from "./features/user.slice";
 import utilsSlice from "./features/utils-slice";
+import { MusicApi } from "./services/musicService";
 import { UserApi } from "./services/userServices";
 
 export const store = configureStore({
@@ -9,9 +10,10 @@ export const store = configureStore({
         music: musicSlice,
         user: userSlice,
         utils: utilsSlice,
-        [UserApi.reducerPath]: UserApi.reducer
+        [UserApi.reducerPath]: UserApi.reducer,
+        [MusicApi.reducerPath]: MusicApi.reducer
     },
-    middleware: getDefaultMiddleware =>
+    middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
