@@ -7,41 +7,35 @@ import MusicPlayer from "./components/MusicPlayer";
 import Browse from "./components/Browse";
 import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
-import { useAppDispatch, useAppSelector } from "./hooks";
-import { getUserByToken, setIsLogged } from "./features/user.slice";
+import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import Logout from "./components/auth/Logout";
 import UserRouter from "./components/parts/user/UserRouter";
 import Popup from "./components/layout/Popup";
 import DropUp from "./components/DropUp";
-import { DROPUP_OFF, DROPUP_ON } from "./misc/consts";
+import { useGetUserByTokMutation } from "./services/userServices";
+import { useAuth } from "./hooks/useAuth";
+import { popup } from "./misc/utils";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user.user)
+  const { user } = useAuth();
+  const [authedUser] = useGetUserByTokMutation();
+
+  const fetchUser = async() => {
+    try {
+      await authedUser().unwrap();
+    }
+
+    catch(err: any) {
+      popup(err.data['err'], 'err');
+      localStorage.removeItem('tok');
+    }
+  }
 
   useEffect(() => {
-    const dropup = document.getElementById('main-dropup') as HTMLElement;
-
-    window.addEventListener('keydown', (e) => {
-      const key = e.code;
-
-      if( e.shiftKey && key === 'KeyE') {
-        
-      }
-    })
-
-    window.addEventListener('mousedown', (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      
-
-    })
-
-    dispatch(setIsLogged());
-  }, [])
-
-  useEffect(() => {
-    dispatch(getUserByToken())
-  }, [])
+    if(user === null) {
+      fetchUser()
+    }
+  }, [authedUser])
 
   return (
     <Router>

@@ -24,8 +24,18 @@ export const UserApi = createApi({
                 method: 'POST',
                 body: signUpData
             })
+        }),
+
+        getUserByTok: builder.mutation<User, void>({
+            query: () => ({
+                url: 'token',
+                method: 'GET',
+                headers: {
+                    'authorization': 'Token ' + localStorage.getItem('tok')!
+                }
+            })
         })
      })
 })
 
-export const { useLoginMutation, useSignUpMutation } = UserApi;
+export const { useLoginMutation, useSignUpMutation, useGetUserByTokMutation } = UserApi;

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { fetchRecentSongs } from '../../../features/music-slice';
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import Songs from '../song/Songs';
 import UserHeader from './UserHeader'
 

@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { fetchSongs, setSongsToPlay } from '../features/music-slice';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import Loader from './layout/Loader';
 import Songs from './parts/song/Songs';
 import Option from './parts/utils/Option';

@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { postUploadSong } from '../../../features/music-slice';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch } from '../../../hooks/hooks';
 import { validateInputs } from '../../../misc/formHandler';
 import { NewSong } from '../../../misc/interfaces';
 import { constructFormData, previewImage } from '../../../misc/utils';

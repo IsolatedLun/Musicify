@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from backend.utils import prettify
+from .utils import get_user_by_tok
 from .models import cUser
 from .serializers import cUserSerializer
 from django.contrib.auth.hashers import make_password, check_password
@@ -89,9 +90,9 @@ class UserProfile(APIView):
         return FileResponse(profile)
 
 class UserWithToken(APIView):
-    def get(self, req, tok):
+    def get(self, req):
         try:
-            user = Token.objects.get(key=tok).user
+            user = get_user_by_tok(req.headers['authorization'])
             serializer = cUserSerializer(user).data
 
             return Response({'user': serializer}, OK)

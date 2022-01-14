@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { toggleEl } from '../../misc/utils';
 import { Link, useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { API_URL, GET_PROFILE } from '../../misc/consts';
 import { setLocation } from '../../features/utils-slice';
 

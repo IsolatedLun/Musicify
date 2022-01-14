@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../hooks/hooks';
 import { GET_SONG } from '../misc/consts';
 import { saveAs } from 'file-saver';
 

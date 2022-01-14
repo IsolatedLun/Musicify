@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { postRecentSong, setIndex } from "../features/music-slice";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { API_URL } from "../misc/consts";
 import { User } from "../misc/interfaces";
 import { focusElement, getSongEl, toggleElement } from "../misc/utils";

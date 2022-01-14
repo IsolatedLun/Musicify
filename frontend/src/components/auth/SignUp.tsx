@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks/hooks';
 import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserForm } from '../../misc/interfaces';
 import { constructFormData, popup } from '../../misc/utils';

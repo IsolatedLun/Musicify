@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { save, setChangesMade } from '../../../features/user.slice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { API_URL, GET_PROFILE } from '../../../misc/consts';
 import { isImage, validateInputs } from '../../../misc/formHandler';
 import { User } from '../../../misc/interfaces';

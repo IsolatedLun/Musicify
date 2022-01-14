@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { setDoSave } from '../../../features/user.slice'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { API_URL } from '../../../misc/consts'
 import { User } from '../../../misc/interfaces'
 

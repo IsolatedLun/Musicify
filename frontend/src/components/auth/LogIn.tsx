@@ -2,7 +2,7 @@ import React, { FormEvent, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { setCredentails } from '../../features/user.slice';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { validateInputs } from '../../misc/formHandler';
 import { UserLogin } from '../../misc/interfaces';
 import { popup } from '../../misc/utils';

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { UserState, UserLogin } from '../misc/interfaces';
+import { UserState } from '../misc/interfaces';
 import axios from 'axios';
-import { GET_TOKEN, HEADERS_FILE, POST_LOGIN, POST_SAVE, POST_SIGNUP } from '../misc/consts';
 import { constructHeaders } from '../misc/utils';
 import { popup } from '../misc/utils';
+import { UserApi } from '../services/userServices';
 
 const initialState: UserState = {
     user: null,
@@ -26,14 +26,6 @@ export const save = createAsyncThunk(
         catch(err: any) {
             popup(err.response.data['err'], 'err');
         }
-    }
-)
-
-export const getUserByToken = createAsyncThunk(
-    'user/auth-loginWithTok',
-    async(thunk) => {
-        const res: any = await axios.get(GET_TOKEN + localStorage.getItem('tok'));
-        return res.data;
     }
 )
 
@@ -77,14 +69,15 @@ export const userSlice = createSlice({
             localStorage.setItem('tok', action.payload['tok']);
             state.isLogged = true;
             state.isSignedUp = false;
-        }
+        },
     },
     extraReducers: (builder) => {
         // Login
 
         // Retrieve token 
-        builder.addCase(getUserByToken.fulfilled, (state, action) => {
-            state.user = action.payload['user'];
+        builder.addMatcher(UserApi.endpoints.getUserByTok.matchFulfilled, (state, action) => {
+            state.user = (action.payload as any)['user'];
+            state.isLogged = true;
         })
         
         // Signup
