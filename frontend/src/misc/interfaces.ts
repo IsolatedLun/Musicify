@@ -23,6 +23,7 @@ export interface MusicState {
     browseSongs: INF_Song[];
     recentSongs: INF_Song[];
     favoriteSongs: INF_Song[];
+    uploadedSongs: INF_Song[];
     songsToPlay: INF_Song[];
     status: 'idle' | 'fulfilled' | 'rejected';
     currSong: INF_Song;

@@ -37,9 +37,30 @@ export const MusicApi = createApi({
                 },
                 body: songData
             })
+        }),
+
+        updateRecentSong: builder.mutation<void, number>({
+            query: (songId) => ({
+                url: `recents/post/${songId}`,
+                method: 'POST',
+                headers: {
+                    'authorization': getToken()
+                }
+            })
+        }),
+
+        getUploadedSongs: builder.query<INF_Song[], void>({
+            query: () => ({
+                url: 'uploads/user',
+                method: 'GET',
+                headers: {
+                    'authorization': getToken()
+                }
+            })
         })
 
     })
 })
 
-export const { useGetSongsQuery, useGetRecentSongsQuery, useUploadSongMutation } = MusicApi;
+export const { useGetSongsQuery, useGetRecentSongsQuery, useUploadSongMutation, 
+    useUpdateRecentSongMutation, useGetUploadedSongsQuery } = MusicApi;

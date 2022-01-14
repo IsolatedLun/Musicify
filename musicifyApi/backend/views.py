@@ -92,3 +92,14 @@ class UploadSong(APIView):
         except Exception as e:
             return Response({'err': f'Someting went wrong.'}, ERR)
 
+class UploadedSong(APIView):
+    def get(self, req):
+        try:
+            user = get_user_by_tok(req.headers['authorization'])
+            songs = Song.objects.filter(user_id=user.id)
+            serializer = SongSerializer(songs, many=True).data
+
+            return Response({'data': serializer}, OK)
+        except:
+            return Response({'err': 'Couldn\'t fetch songs.'}, ERR)
+

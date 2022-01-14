@@ -1,17 +1,19 @@
 import { useEffect } from "react";
-import { postRecentSong, setIndex } from "../features/music-slice";
+import { setIndex } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { API_URL } from "../misc/consts";
 import { User } from "../misc/interfaces";
 import { changeTime, dragAudioBar, handleAudio, handleAudioBar, 
     handleControls, playBetween, updateTime } from "../misc/musicPlayerHandler";
 import { focusElement, toggleElement } from "../misc/utils";
+import { useUpdateRecentSongMutation } from "../services/musicService";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
 const MusicPlayer = ({ user } : { user: User | null }) => {
     const { currSong, songsToPlay, currIdx } = useAppSelector(state => state.music);
     const dispatch = useAppDispatch();
+    const [postRecentSong, { isLoading }] = useUpdateRecentSongMutation();
 
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
     const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
@@ -29,10 +31,13 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     useEffect(() => {
         dispatch(setIndex(songsToPlay.map(song => song.id).indexOf(currSong.id)))
         if(user) {
-            dispatch(postRecentSong({ userId: user.id, songId: currSong.id }))
+            updateRecentSong(currSong.id!);
         }
     }, [songsToPlay, currSong.id])
 
+    const updateRecentSong = async(songId: number) => {
+        await postRecentSong(songId).unwrap();
+    }
    
 
     if(currSong.id !== null)

@@ -1,14 +1,12 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { INF_Song, MusicState, } from '../misc/interfaces';
-import axios from 'axios';
-import { GET_RECENTS, GET_SONG, GET_SONGS, POST_RECENTS, POST_UPLOAD } from '../misc/consts';
-import { constructHeaders, popup } from '../misc/utils';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { MusicState, } from '../misc/interfaces';
 import { MusicApi } from '../services/musicService';
 
 const initialState: MusicState = {
     browseSongs: [],
     recentSongs: [],
     favoriteSongs: [],
+    uploadedSongs: [],
     songsToPlay: [],
     status: 'idle',
     currSong: {
@@ -24,17 +22,6 @@ const initialState: MusicState = {
     currIdx: NaN,
     currSongType: '',
 }
-
-export const postRecentSong = createAsyncThunk(
-    'music/post-recent-song',
-    async(data: any, thunk) => {
-        const res: any = await axios.post(POST_RECENTS + data.songId, {}, {
-            headers: { ...constructHeaders(false, true) }
-        });
-
-        return res.data;
-    }
-)
 
 export const musicSlice = createSlice({
     name: 'music',
@@ -74,6 +61,10 @@ export const musicSlice = createSlice({
         builder.addMatcher(MusicApi.endpoints.getSongs.matchFulfilled, (state, action) => {
             state.browseSongs = action.payload;
             state.status = 'fulfilled';
+        })
+
+        builder.addMatcher(MusicApi.endpoints.getUploadedSongs.matchFulfilled, (state, action) => {
+            state.uploadedSongs = (action.payload as any)['data'];
         })
     }
 })
