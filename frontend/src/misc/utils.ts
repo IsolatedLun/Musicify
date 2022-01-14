@@ -138,14 +138,14 @@ export function previewImage(id: string, imgFile: File, def: string | null) {
     }
 }
 
-export function constructHeaders(hasFiles: boolean, requiresAuth: boolean): object {
+export function constructHeaders(hasFiles: boolean, requiresAuth: boolean, addDefaults: boolean=true): object {
     let headers: any = {};
 
     if(hasFiles) {
         headers['content-type'] = 'multipart/form-data';
     }
 
-    else {
+    else if(addDefaults) {
         headers['content-type'] = 'application/json';
     }
 
@@ -155,4 +155,12 @@ export function constructHeaders(hasFiles: boolean, requiresAuth: boolean): obje
     }
 
     return headers;
+}
+
+export function getToken(isHeader: boolean=true): string {
+    const tok = localStorage.getItem('tok')!;
+    if(tok !== null)
+        if(isHeader)
+            return 'Token ' + tok;
+        return tok
 }

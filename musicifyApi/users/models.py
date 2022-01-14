@@ -31,7 +31,7 @@ class cUser(AbstractUser):
 
     joined_at = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 'email';
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = cUserManager()

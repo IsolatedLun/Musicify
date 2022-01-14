@@ -3,7 +3,9 @@ import { postRecentSong, setIndex } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { API_URL } from "../misc/consts";
 import { User } from "../misc/interfaces";
-import { focusElement, getSongEl, toggleElement } from "../misc/utils";
+import { changeTime, dragAudioBar, handleAudio, handleAudioBar, 
+    handleControls, playBetween, updateTime } from "../misc/musicPlayerHandler";
+import { focusElement, toggleElement } from "../misc/utils";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
@@ -20,7 +22,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
     useEffect(() => {
         if(audioEl) {
-            handleAudio();
+            handleAudio(audioEl, toggleBtn);
         }
     }, [isMouseDown, currSong.id])
 
@@ -31,66 +33,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         }
     }, [songsToPlay, currSong.id])
 
-    const handleControls = (e: React.MouseEvent<HTMLButtonElement>) => {
-       const target = (e.target as HTMLButtonElement);
-       switch(target.name) {
-           case 'toggle-song':
-               handleAudio();
-               break;
-
-            case 'change-song':
-                playBetween(target.getAttribute('data-num')!);
-                break;
-       }       
-    }
-
-    const handleAudio = () => {
-        if(audioEl.paused) {
-            toggleBtn.innerText = '\uf04c';
-            audioEl.play()
-        }
-
-        else {
-            toggleBtn.innerText = '\uf04b';
-            audioEl.pause()
-        }
-    }
-
-    const changeTime = (e: React.MouseEvent<HTMLDivElement>) => {
-        const pct: number = e.nativeEvent.offsetX / (e.target as HTMLDivElement).offsetWidth;
-        audioEl.currentTime = pct * audioEl.duration;
-    }
-
-    const handleAudioBar = () => {
-        const pct: number = (audioEl.currentTime / audioEl.duration);
-        audioBarProgress.style.transform = `scaleX(${pct})`;
-    }
-
-    const dragAudioBar = (e: React.MouseEvent<HTMLDivElement>) => {
-        if(isMouseDown) {
-            changeTime(e);
-        }
-    }
-
-    const playBetween = (action: string='any') => {
-        let nextSong: HTMLButtonElement | null = null;
-
-        if(songsToPlay[currIdx + 1] && (action === 'any' || action === '1')) {
-            nextSong = getSongEl(songsToPlay[currIdx + 1].id!)
-        }
-
-        else if(songsToPlay[currIdx - 1] && (action === 'any' || action === '-1')) {
-            nextSong = getSongEl(songsToPlay[currIdx - 1].id!);
-        }
-
-        if(nextSong)
-            nextSong.click();
-    }
-
-    const updateTime = () => {
-        const currTime = new Date(audioEl.currentTime * 1000).toISOString().substr(11, 8);
-        audioTime.innerText = currTime + ' / ' + audioDuration;
-    }
+   
 
     if(currSong.id !== null)
         return (
@@ -111,22 +54,29 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
 
                 <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
-                autoPlay onTimeUpdate={() => { handleAudioBar(); updateTime(); }} onEnded={() => playBetween()}
+                autoPlay onTimeUpdate={() => { 
+                    handleAudioBar(audioEl, audioBarProgress); 
+                    updateTime(audioEl, audioTime, audioDuration); }} onEnded={() => 
+                        playBetween(songsToPlay, currIdx)}
                 id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
                 <div className="music__controls flex gap--2">
-                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
+                        handleControls(e, audioEl, songsToPlay, currIdx)}
                     className='fa reverse btn--def music__control' name='change-song' data-num='-1'>&#xf050;</button>
                     
-                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
+                        handleControls(e, audioEl, songsToPlay, currIdx)}
                     className='fa btn--def music__control' id='music-toggler' name='toggle-song'>&#xf04c;</button>
 
-                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleControls(e)}
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
+                        handleControls(e, audioEl, songsToPlay, currIdx)}
                     className='fa btn--def music__control' name='change-song' data-num='1'>&#xf050;</button>
                 </div>
 
-                <div onMouseMove={(e) => dragAudioBar(e)}
-                className="music__bar" id='audio-bar' onClick={(e: React.MouseEvent<HTMLDivElement>) => changeTime(e)}>
+                <div onMouseMove={(e) => dragAudioBar(e, audioEl, isMouseDown)}
+                className="music__bar" id='audio-bar' onClick={(e: React.MouseEvent<HTMLDivElement>) => 
+                    changeTime(e, audioEl)}>
                     <div className="music__progress" id='audio-bar-progress'></div>
                 </div>
                 

@@ -36,23 +36,6 @@ export const postRecentSong = createAsyncThunk(
     }
 )
 
-export const postUploadSong = createAsyncThunk(
-    'music/upload-song',
-    async(data: FormData, { rejectWithValue }) => {
-        try {
-            const res: any = await axios.post(POST_UPLOAD, data, {
-                headers: { ...constructHeaders(true, true) }
-            })
-    
-            return res.data;
-        }
-
-        catch(err: any) {
-            popup(err.response.data['err'], 'err');
-        }
-    }
-)
-
 export const musicSlice = createSlice({
     name: 'music',
     initialState,

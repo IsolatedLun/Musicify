@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../misc/consts';
 import { User, UserLogin } from '../misc/interfaces';
-import { constructHeaders } from '../misc/utils';
+import { getToken } from '../misc/utils';
 
 export const UserApi = createApi({
     baseQuery: fetchBaseQuery({ 
@@ -32,7 +32,7 @@ export const UserApi = createApi({
                 url: 'update',
                 method: 'POST',
                 headers: { 
-                    'authorization': 'Token ' + localStorage.getItem('tok'),
+                    'authorization': getToken()
                  },
                 body: updatedData
             })
@@ -43,10 +43,10 @@ export const UserApi = createApi({
                 url: 'token',
                 method: 'GET',
                 headers: {
-                    'authorization': 'Token ' + localStorage.getItem('tok')!
+                    'authorization': getToken()
                 }
             })
-        })
+        }),
      })
 })
 

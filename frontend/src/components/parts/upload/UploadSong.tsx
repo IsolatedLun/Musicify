@@ -1,20 +1,21 @@
 import React, { FormEvent, useState } from 'react';
-import { postUploadSong } from '../../../features/music-slice';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
 import { validateInputs } from '../../../misc/formHandler';
 import { NewSong } from '../../../misc/interfaces';
-import { constructFormData, previewImage } from '../../../misc/utils';
+import { constructFormData, popup, previewImage } from '../../../misc/utils';
+import { useUploadSongMutation } from '../../../services/musicService';
 import songGenres from '../../json/genres.json';
 import Option from '../utils/Option';
 
 const UploadSong = () => {
-    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [newSong, setNewSong] = useState<NewSong>({
         title: '',
         genre: 'All',
         profile: null,
         audio: null
     })
+    const [songUpload, { isLoading }] = useUploadSongMutation();
 
     const handleInput = (e: FormEvent<HTMLInputElement | HTMLSelectElement>) => {
         const target = e.target as HTMLInputElement;
@@ -37,14 +38,23 @@ const UploadSong = () => {
             }
     }
 
-    const handleForm = (e: React.FormEvent) => {
+    const handleForm = async(e: React.FormEvent) => {
         e.preventDefault();
     
         const inputs = document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>;
 
         if(validateInputs(inputs)) {
             const formData: FormData | null = constructFormData(newSong);
-            dispatch(postUploadSong(formData!));
+            if(formData !== null) {
+                try {
+                    await songUpload(formData).unwrap();
+                    navigate('/browse');
+                }
+
+                catch(err: any) {
+                    popup(err.data['err'], 'err');
+                }
+            }
         }
     }
 

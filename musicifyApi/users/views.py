@@ -78,6 +78,7 @@ class UpdateUser(APIView):
                 user.producer_name = data['producer_name']
 
                 update_profile(user, data['profile'])
+                user.save()
 
                 return Response({'detail': 'Account updated'}, OK)
 
