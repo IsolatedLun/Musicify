@@ -2,7 +2,7 @@
 Musicify, a nice music app.
 **A WIP app that will have it's on twists!**
 ---
-<img src="./intro.png" width="1024"/>
+<img src="./intr.png" width="1024"/>
 ---
 <img src="./upload.png" width="1024"/>
 ---
