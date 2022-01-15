@@ -91,11 +91,13 @@ const SignUp = () => {
 
                 <div className="form__part">
                     <label className="form__label">Password</label>
-                    <input id='inpt-password' type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
-                        placeholder='Enter password' className="form__inpt" 
-                        data-realtype='password' name='password' />
-                    <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password')}
-                        className='btn--def fa part__btn'>&#xf06e;</button>
+                    <div className="form__inpt-container">
+                        <input id='inpt-password' type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                            placeholder='Enter password' className="form__inpt" 
+                            data-realtype='password' name='password' />
+                        <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password')}
+                            className='btn--def fa part__btn'>&#xf06e;</button>
+                    </div>
                     <p className="form__helptext"></p>
                 </div>
 

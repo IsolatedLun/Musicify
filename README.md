@@ -14,6 +14,7 @@ Musicify, a nice music app.
 * Open 2 terminals
 * `cd frontend => npm run dev`
 * `cd musicifyApi => python manage.py runserver`
+* **(Optional - Make changes to css)** `npm run postcss-run`
 
 ### Desc
 I made this app to strengthen my knowledge of programming/web dev. in general, I learned numerous crucial things and am definitely having fun!

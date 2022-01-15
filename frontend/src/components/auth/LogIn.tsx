@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { setCredentails } from '../../features/user.slice';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { validateInputs } from '../../misc/formHandler';
+import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserLogin } from '../../misc/interfaces';
 import { popup } from '../../misc/utils';
 import { useLoginMutation } from '../../services/userServices';
@@ -61,9 +61,13 @@ const LogIn = () => {
 
                 <div className="form__part">
                     <label className="form__label">Password</label>
-                    <input type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
-                        placeholder='Enter password' className="form__inpt"
-                        data-realType='password' name='password' />
+                    <div className="form__inpt-container">
+                        <input type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                            placeholder='Enter password' className="form__inpt" id='inpt-password-login'
+                            data-realType='password' name='password' />
+                        <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password-login')}
+                            className='btn--def fa part__btn'>&#xf06e;</button>
+                    </div>
                     <p className="form__helptext"></p>
                 </div>
 

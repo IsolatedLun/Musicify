@@ -64,6 +64,11 @@
     width: 100%;
 }
 
+.form__part .form__inpt-container {
+    position: relative;
+    width: 100%;
+}
+
 .form__part .form__label {
     font-size: var(--fs-450);
     font-weight: bold;
@@ -150,7 +155,9 @@
 
 .part__btn {
     position: absolute;
-    top: 47.5%;
+    top: 50%;
+    left: 97.5%;
+    transform: translate(-50%, -50%);
     right: 1%;
     font-size: var(--fs-400);
     color: var(--txt-muted);
@@ -172,7 +179,6 @@
     }
 
     .part__btn {
-        top: 45.2%;
-        right: 3%;
+        left: 95.5%;
     }
 }

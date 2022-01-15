@@ -86,4 +86,9 @@
     .home__card {
         text-align: center;
     }
+
+    .home__mixer::after {
+        background: transparent;
+        border: 2px solid var(--bg-secondary);
+    }
 }
