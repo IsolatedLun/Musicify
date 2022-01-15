@@ -89,6 +89,8 @@ class UploadSong(APIView):
 
         except KeyError as e:
             return Response({'err': f'A {prettify(e, True)} is required.'}, ERR)
+        except IntegrityError as e:
+            return Response({'err': f'The same {prettify(e, False)} already exists.'}, ERR)
         except Exception as e:
             return Response({'err': f'Someting went wrong.'}, ERR)
 

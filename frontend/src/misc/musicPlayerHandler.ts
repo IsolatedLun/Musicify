@@ -59,7 +59,8 @@ export const handleControls = (e: React.MouseEvent<HTMLButtonElement>, audioEl: 
          nextSong.click();
  }
 
- export const updateTime = (audioEl: HTMLAudioElement, audioTime: HTMLDivElement, audioDuration: Date | string) => {
+ export const updateTime = (audioEl: HTMLAudioElement, audioTime: HTMLDivElement) => {
      const currTime = new Date(audioEl.currentTime * 1000).toISOString().substr(11, 8);
-     audioTime.innerText = currTime + ' / ' + audioDuration;
+     const duration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8);
+     audioTime.innerText = currTime + ' / ' + duration;
  }

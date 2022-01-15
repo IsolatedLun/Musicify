@@ -1,11 +1,12 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { User } from '../../../misc/interfaces';
 import { useGetRecentSongsQuery } from '../../../services/musicService';
 import Songs from '../song/Songs';
 
 const UserHome = ({ user }: { user: User | null }) => {
-    const dispatch = useAppDispatch();
     const { recentSongs, favoriteSongs } = useAppSelector(state => state.music)
+    
     useGetRecentSongsQuery();
 
     return (

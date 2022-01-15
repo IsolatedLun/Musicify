@@ -211,6 +211,10 @@ input[type="radio"]:checked + *::after {
     color: var(--txt-muted);
 }
 
+.txt--small {
+    font-size: var(--fs-450);
+}
+
 /* Transitions */
 .trans--bg {
     transition: background-color 95ms ease-out;

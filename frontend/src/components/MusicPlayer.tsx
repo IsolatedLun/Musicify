@@ -19,7 +19,6 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
     const toggleBtn = document.getElementById('music-toggler') as HTMLButtonElement;
     const audioTime = document.getElementById('audio-time') as HTMLParagraphElement;
-    let audioDuration: Date | string = '00:00:00';
     let isMouseDown = false;
 
     useEffect(() => {
@@ -38,7 +37,6 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     const updateRecentSong = async(songId: number) => {
         await postRecentSong(songId).unwrap();
     }
-   
 
     if(currSong.id !== null)
         return (
@@ -58,10 +56,9 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                     </div>
 
 
-                <audio onCanPlay={() => { audioDuration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8); }}
-                autoPlay onTimeUpdate={() => { 
+                <audio autoPlay onTimeUpdate={() => { 
                     handleAudioBar(audioEl, audioBarProgress); 
-                    updateTime(audioEl, audioTime, audioDuration); }} onEnded={() => 
+                    updateTime(audioEl, audioTime); }} onEnded={() => 
                         playBetween(songsToPlay, currIdx)}
                 id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 

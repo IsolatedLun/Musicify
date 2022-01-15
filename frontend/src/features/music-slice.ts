@@ -51,6 +51,9 @@ export const musicSlice = createSlice({
 
             else if(state.currSongType === 'ref-favorites')
                 state.songsToPlay = state.favoriteSongs
+            
+            else if(state.currSongType === 'ref-uploads')
+            state.songsToPlay = state.uploadedSongs
         }
     },
     extraReducers: (builder) => {

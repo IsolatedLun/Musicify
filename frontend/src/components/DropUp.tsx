@@ -19,10 +19,6 @@ const DropUp = () => {
                         <i className='fa item__icon'>&#xf019;</i>
                         <p className='item__text'>Download</p>
                     </li>
-                    <li className="list__item">
-                        <i className='fa item__icon'>&#xf004;</i>
-                        <p className='item__text'>Favorite</p>
-                    </li>
                 </ul>
             </div>
         )
