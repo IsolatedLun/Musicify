@@ -18,3 +18,7 @@ export const HEADERS_FILE = {
 // For toggling
 export const DROPUP_ON = '70%';
 export const DROPUP_OFF = '105%';
+
+// Icons
+export const ICON_ERROR = '\uf071';
+export const ICON_INFO = '\uf05a';

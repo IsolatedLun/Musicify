@@ -1,3 +1,4 @@
+import { ICON_ERROR, ICON_INFO } from "./consts";
 import { UserAgent } from "./interfaces";
 
 export function animateMixerBars(id: string): void {
@@ -78,18 +79,31 @@ export function toggleEl(id: string, clsName: string): void {
     document.getElementById(id)?.classList.toggle(clsName);
 }
 
-export function popup(text: string, type: string): void {
+let popupInterval = setTimeout(() => null);
+export function popup(text: string, type: string, forceClear: boolean=false): void {
     const popup = document.getElementById('popup') as HTMLDivElement;
     const popupIcon = document.getElementById('popup-icon') as HTMLParagraphElement;
+    const popupType = document.getElementById('popup-type') as HTMLParagraphElement;
     const popupText = document.getElementById('popup-text') as HTMLParagraphElement;
+
+    const error_icon = ICON_ERROR;
+    const info_icon = ICON_INFO;
+
+    if(forceClear) {
+        clearInterval(popupInterval);
+        return;
+    }
 
     if(!popup.classList.contains('active')) {
         popupText.textContent = text;
-        popup.className = `popup ${type} active`;
-        setTimeout(() => {
+        popup.className = `popup ${type.toLowerCase()} active`;
+        popupIcon.textContent = eval(`${type.toLowerCase()}_icon`);
+        popupType.textContent = type;
+
+        popupInterval = setTimeout(() => {
             popup.classList.remove('active');
             popup.classList.add('inactive');
-        }, 5000);
+        }, 4900);
     }
 }
 

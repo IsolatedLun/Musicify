@@ -37,7 +37,7 @@ const LogIn = () => {
 
                 catch(err: any) {
                     console.log(err.data)
-                    popup(err.data['err'], 'err');
+                    popup(err.data['err'], 'Error');
                 }
         }
     }

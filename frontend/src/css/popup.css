@@ -1,33 +1,88 @@
 .popup {
     position: fixed;
-    top: 92%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 150ms ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    inset: 10% auto auto 78%;
+    background-color: var(--popup-err);
+    padding: 0.25em 0.5em;
+    width: 18em;
+    border-radius: 2px;
+    box-shadow: 0 0 3px 7px rgba(0, 0, 0, 0.25);
 }
 
-.popup .popup__content {
-    padding: 0.25em 0.6em;
-    border-radius: 6px;
+.popup::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--txt);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 5.15s ease-out;
 }
 
-.popup .popup__content.warn {
-    background-color: var(--clr-warn);
+.popup .popup__head {
+    font-size: calc(var(--fs-400) * 1.1);
 }
 
-.popup .popup__content.err {
-    background-color: var(--clr-err);
-}
-
-.popup .popup__content.info {
-    background-color: var(--clr-primary);
+.popup .popup__text {
+    max-width: 100%;
+    word-wrap: break-word;
+    padding-bottom: 0.25em;
 }
 
 .popup.active {
-    visibility: visible;
-    transition: translate(-50%, -50%);
+    animation: appear 1.5s ease-out forwards;
+}
+
+.popup.active::after {
+    transform: scaleX(1);
 }
 
 .popup.inactive {
-    transform: translate(-50%, 320%);
+    animation: disappear 1.5s ease-out forwards;
+}
+
+.popup.error {
+    background-color: var(--popup-err);
+}
+
+.popup.warning {
+    background-color: var(--popup-warn);
+}
+
+.popup.info {
+    background-color: var(--clr-primary);
+}
+
+/* Animations */
+@keyframes appear {
+    0% {
+        transform: translateX(500px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes disappear {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(500px);
+    }
 }

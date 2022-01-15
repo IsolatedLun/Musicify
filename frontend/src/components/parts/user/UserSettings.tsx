@@ -50,13 +50,13 @@ const UserSettings = ({ user }: { user: User | null }) => {
                 update();
             }
 
-            catch(err) {
-                console.log(err)
+            catch(err: any) {
+                popup(err.data['err'], 'Error');
             }
         }
 
         else if(!isVerified) {
-            popup('Verify changes first.', 'err');
+            popup('Verify changes first.', 'Error');
         }
     }, [doSave])
 
@@ -69,7 +69,7 @@ const UserSettings = ({ user }: { user: User | null }) => {
         }
 
         else {
-            popup('Only images are allowed.', 'err');
+            popup('Only images are allowed.', 'Error');
             dispatch(setChangesMade(false));
         }
     }

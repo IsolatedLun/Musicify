@@ -40,7 +40,7 @@ const SignUp = () => {
                 }
 
                 catch(err: any) {
-                    popup(err.data['err'], 'err');
+                    popup(err.data['err'], 'Error');
                 }
             }
         }
