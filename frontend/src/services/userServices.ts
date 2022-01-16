@@ -50,6 +50,7 @@ export const UserApi = createApi({
      })
 })
 
-export const { useLoginMutation, useSignUpMutation, useGetUserByTokMutation, useUpdateUserInfoMutation } = UserApi;
+export const { useLoginMutation, useSignUpMutation, useGetUserByTokMutation, 
+    useUpdateUserInfoMutation } = UserApi;
 
 // Functions

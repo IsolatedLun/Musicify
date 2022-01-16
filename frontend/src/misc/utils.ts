@@ -85,6 +85,7 @@ export function popup(text: string, type: string, forceClear: boolean=false): vo
     const popupIcon = document.getElementById('popup-icon') as HTMLParagraphElement;
     const popupType = document.getElementById('popup-type') as HTMLParagraphElement;
     const popupText = document.getElementById('popup-text') as HTMLParagraphElement;
+    const typeLowerCase: string = type.toLowerCase();
 
     const error_icon = ICON_ERROR;
     const info_icon = ICON_INFO;
@@ -96,8 +97,8 @@ export function popup(text: string, type: string, forceClear: boolean=false): vo
 
     if(!popup.classList.contains('active')) {
         popupText.textContent = text;
-        popup.className = `popup ${type.toLowerCase()} active`;
-        popupIcon.textContent = eval(`${type.toLowerCase()}_icon`);
+        popup.className = `popup ${typeLowerCase} active`;
+        popupIcon.textContent = eval(`${typeLowerCase}_icon`);
         popupType.textContent = type;
 
         popupInterval = setTimeout(() => {

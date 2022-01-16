@@ -22,3 +22,5 @@ export const DROPUP_OFF = '105%';
 // Icons
 export const ICON_ERROR = '\uf071';
 export const ICON_INFO = '\uf05a';
+export const ICON_PAUSE = '\uf04c';
+export const ICON_PLAY = '\uf04b';

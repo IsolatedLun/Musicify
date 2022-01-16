@@ -64,11 +64,11 @@ img {
   --txt: white;
   --txt-muted: hsl(225, 2%, 55%);
 
-  --fs-400: 1rem;
-  --fs-420: 1.12rem;
-  --fs-450: 1.25rem;
-  --fs-500: 1.75em;
-  --fs-600: 2.25em;
+  --fs-400: clamp(0.75rem, 1vw + 0.1rem, 2rem);
+  --fs-420: clamp(1rem, 1vw + 0.1rem, 2.5rem);
+  --fs-450: clamp(1rem, 1.5vw + 0.1rem, 3rem);
+  --fs-500: clamp(1.25rem, 2.5vw + 0.1rem, 4.75em);
+  --fs-600: clamp(1.5rem, 2.5vw + 0.1rem, 5.25em);
 
   --clr-primary: hsl(274, 76%, 52%);
   --clr-secondary: hsl(274, 76%, 58%);
@@ -81,9 +81,9 @@ img {
 }
 
 @media(max-width: 768px) {
-  :root {
+  /* :root {
     --fs-400: 0.9rem;
     --fs-450: 1rem;
     --fs-500: 1.35rem;
-  }
+  } */
 }

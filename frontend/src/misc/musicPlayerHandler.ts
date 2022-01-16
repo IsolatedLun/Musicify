@@ -1,3 +1,4 @@
+import { ICON_PAUSE, ICON_PLAY } from "./consts";
 import { INF_Song } from "./interfaces";
 import { getSongEl } from "./utils";
 
@@ -17,12 +18,12 @@ export const handleControls = (e: React.MouseEvent<HTMLButtonElement>, audioEl: 
 
  export const handleAudio = (audioEl: HTMLAudioElement, toggleBtn: HTMLButtonElement) => {
      if(audioEl.paused) {
-         toggleBtn.innerText = '\uf04c';
+         toggleBtn.innerText = ICON_PAUSE;
          audioEl.play()
      }
 
      else {
-         toggleBtn.innerText = '\uf04b';
+         toggleBtn.innerText = ICON_PLAY;
          audioEl.pause()
      }
  }
