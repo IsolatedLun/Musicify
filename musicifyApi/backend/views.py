@@ -8,7 +8,7 @@ from users.utils import get_user_by_tok
 
 from .utils import prettify
 
-from .models import Song, RecentSong
+from .models import LikedSong, Song, RecentSong
 from .serializers import SongSerializer
 from users.models import cUser
 from datetime import date, datetime
@@ -92,7 +92,7 @@ class UploadSong(APIView):
         except IntegrityError as e:
             return Response({'err': f'The same {prettify(e, False)} already exists.'}, ERR)
         except Exception as e:
-            return Response({'err': f'Someting went wrong.'}, ERR)
+            return Response({'err': f'Something went wrong.'}, ERR)
 
 class UploadedSong(APIView):
     def get(self, req):
@@ -104,4 +104,39 @@ class UploadedSong(APIView):
             return Response({'data': serializer}, OK)
         except:
             return Response({'err': 'Couldn\'t fetch songs.'}, ERR)
+
+class LikedSongView(APIView):
+    def get(self, req):
+        song = Song.objects.get(id=req.data['song_id'])
+        res = {'rating': self.calculate_song_rating(song.likes, song.dislikes)}
+
+        user = get_user_by_tok(req.headers['authorization'])
+        if(LikedSong.objects.filter(user_id=user.id).exists()):
+            res['is_rated'] = True
+            return Response({'data': res}, OK)
+            
+        res['is_rated'] = False
+        return Response({'data': res}, ERR)
+
+    def post(self, req):
+        user = get_user_by_tok(req.headers['authorization'])
+        disliked = req.data.get('disliked', None)
+        liked_song, created = LikedSong.objects.get_or_create(user=user, song_id=req.data['song_id'])
+        song = Song.objects.get(id=req.data['song_id'])
+
+        if created and not disliked:
+            song.likes += 1
+            song.save()
+
+            return Response({'detail': 'Added liked song.'}, OK)
+        elif disliked:
+            song.dislikes += 1
+            song.save()
+
+            return Response({'detail': 'Added disliked song.'}, OK)
+
+        return Response({'err': 'Liked song already exists.'}, ERR)
+
+    def calculate_song_rating(self, likes, dislikes):
+        return (likes / (likes + dislikes)) / 100
 

@@ -1,19 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setIndex } from "../features/music-slice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { API_URL } from "../misc/consts";
-import { User } from "../misc/interfaces";
+import { INF_Song, User } from "../misc/interfaces";
 import { changeTime, dragAudioBar, handleAudio, handleAudioBar, 
-    handleControls, playBetween, updateTime } from "../misc/musicPlayerHandler";
+    playBetween, updateTime } from "../misc/musicPlayerHandler";
 import { focusElement, toggleElement } from "../misc/utils";
-import { useUpdateRecentSongMutation } from "../services/musicService";
+import { useGetRatedSongQuery, usePostDislikeSongMutation, usePostLikeSongMutation, 
+    useUpdateRecentSongMutation } from "../services/musicService";
 import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
 const MusicPlayer = ({ user } : { user: User | null }) => {
     const { currSong, songsToPlay, currIdx } = useAppSelector(state => state.music);
     const dispatch = useAppDispatch();
-    const [postRecentSong, { isLoading }] = useUpdateRecentSongMutation();
+    const postRecentSong = useUpdateRecentSongMutation()[0];
+    const likeSong = usePostLikeSongMutation()[0];
+    const dislikeSong = usePostDislikeSongMutation()[0];
+
+    const [isRated, setIsRated] = useState(false);
 
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
     const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
@@ -34,8 +39,46 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         }
     }, [songsToPlay, currSong.id])
 
+    useEffect(() => {
+        // const fetchHasRatedSong = async() => {
+        //     if(currSong.id) {
+        //         const res = await hasRatedSong(currSong.id).unwrap()
+        //         setIsRated(res.data['rating']); 
+        //     }
+        // }
+
+        // fetchHasRatedSong();
+    }, [currSong.id])
+
     const updateRecentSong = async(songId: number) => {
         await postRecentSong(songId).unwrap();
+    }
+
+    const handleControls = async(e: React.MouseEvent<HTMLButtonElement>, audioEl: HTMLAudioElement, 
+        songs: INF_Song[], idx: number) => {
+        const target = (e.target as HTMLButtonElement);
+
+        switch(target.name) {
+            case 'toggle-song':
+                handleAudio(audioEl, target);
+                break;
+
+            case 'change-song':
+                playBetween(songs, idx, target.getAttribute('data-num')!);
+                break;
+
+            case 'rate':
+                const action: string = target.getAttribute('data-action')!;
+                const songId: number = Number(target.getAttribute('data-song-id'))!;
+                console.log(action)
+                if(action === 'like') {
+                    await likeSong(songId).unwrap();
+                    alert('sus')
+                }
+
+                break;
+                    
+        }       
     }
 
     if(currSong.id !== null)
@@ -64,6 +107,10 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                 <div className="music__controls flex gap--2">
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
+                        handleControls(e, audioEl, songsToPlay, currIdx)} data-song-id={ currSong.id }
+                    className="fa btn--def music__control" name='rate' data-action='dislike'>&#xf165;</button>
+
+                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
                         handleControls(e, audioEl, songsToPlay, currIdx)}
                     className='fa reverse btn--def music__control' name='change-song' data-num='-1'>&#xf050;</button>
                     
@@ -74,6 +121,10 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
                         handleControls(e, audioEl, songsToPlay, currIdx)}
                     className='fa btn--def music__control' name='change-song' data-num='1'>&#xf050;</button>
+
+                   <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
+                        handleControls(e, audioEl, songsToPlay, currIdx)} data-song-id={ currSong.id }
+                    className="fa btn--def music__control" name='rate' data-action='like'>&#xf164;</button>
                 </div>
 
                 <div onMouseMove={(e) => dragAudioBar(e, audioEl, isMouseDown)}
@@ -91,7 +142,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         
         )
     else
-        return (<></>)
+        return (<></>);
 }
 
 export default MusicPlayer

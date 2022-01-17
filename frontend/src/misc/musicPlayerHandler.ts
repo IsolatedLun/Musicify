@@ -2,20 +2,6 @@ import { ICON_PAUSE, ICON_PLAY } from "./consts";
 import { INF_Song } from "./interfaces";
 import { getSongEl } from "./utils";
 
-export const handleControls = (e: React.MouseEvent<HTMLButtonElement>, audioEl: HTMLAudioElement, 
-        songs: INF_Song[], idx: number) => {
-    const target = (e.target as HTMLButtonElement);
-    switch(target.name) {
-        case 'toggle-song':
-            handleAudio(audioEl, target);
-            break;
-
-         case 'change-song':
-             playBetween(songs, idx, target.getAttribute('data-num')!);
-             break;
-    }       
- }
-
  export const handleAudio = (audioEl: HTMLAudioElement, toggleBtn: HTMLButtonElement) => {
      if(audioEl.paused) {
          toggleBtn.innerText = ICON_PAUSE;
