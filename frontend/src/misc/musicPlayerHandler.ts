@@ -47,7 +47,9 @@ import { getSongEl } from "./utils";
  }
 
  export const updateTime = (audioEl: HTMLAudioElement, audioTime: HTMLDivElement) => {
-     const currTime = new Date(audioEl.currentTime * 1000).toISOString().substr(11, 8);
-     const duration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8);
-     audioTime.innerText = currTime + ' / ' + duration;
+     if(audioEl.duration) {
+        const currTime = new Date(audioEl.currentTime * 1000).toISOString().substr(11, 8);
+        const duration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8);
+        audioTime.innerText = currTime + ' / ' + duration;
+     }
  }

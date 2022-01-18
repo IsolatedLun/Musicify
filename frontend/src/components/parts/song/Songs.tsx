@@ -3,14 +3,16 @@ import { INF_Song } from '../../../misc/interfaces'
 import Loader from '../../layout/Loader'
 import Song from './Song'
 
-const Songs = ({ songs, referBy, mode='def', search='', genre='' } : 
-    { songs: INF_Song[] | null | undefined, referBy: string, mode: 'def' | 'filter', search: string, genre: string }) => {
+const Songs = ({ songs, referBy, mode='def', search='', genre='', fallbackEl } : 
+    { songs: INF_Song[] | null | undefined, referBy: string, mode: 'def' | 'filter', 
+        search: string, genre: string, fallbackEl: React.Component | JSX.Element }) => {
 
     if(songs !== undefined && songs !== null) {
         if(mode === 'def')
             return <>{
                 songs.map((song: INF_Song, idx: number) => (
-                    <Song song={song} key={song.id} idx={idx} ignore={false} queueType={null} referBy={referBy} />
+                    <Song song={song} key={song.id} idx={idx} 
+                        ignore={false} queueType={null} referBy={referBy} />
                 ))
             }</>
 
@@ -27,13 +29,15 @@ const Songs = ({ songs, referBy, mode='def', search='', genre='' } :
                         }
                     })
                     .map((song: INF_Song, idx: number) => (
-                    <Song song={song} key={song.id} idx={idx} ignore={false} queueType={null} referBy={referBy} />
+                    <Song song={song} key={song.id} idx={idx} 
+                        ignore={false} queueType={null} referBy={referBy} />
             ))}</>
         else
             return(<></>)
     }
+    
     else
-        return(<Loader text={'Loading songs...'} />)
+        return (<>{fallbackEl}</>)
 }
 
 export default Songs

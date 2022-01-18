@@ -12,11 +12,9 @@ import Song from "./parts/song/Song";
 import SongPreview from "./parts/song/SongPreview";
 
 const MusicPlayer = ({ user } : { user: User | null }) => {
-    const { currSong, songsToPlay, currIdx } = useAppSelector(state => state.music);
+    const { currSong, songsToPlay, currIdx, currSongType } = useAppSelector(state => state.music);
     const dispatch = useAppDispatch();
     const postRecentSong = useUpdateRecentSongMutation()[0];
-    const likeSong = usePostLikeSongMutation()[0];
-    const dislikeSong = usePostDislikeSongMutation()[0];
 
     const [isRated, setIsRated] = useState(false);
 
@@ -33,22 +31,13 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     }, [isMouseDown, currSong.id])
 
     useEffect(() => {
-        dispatch(setIndex(songsToPlay.map(song => song.id).indexOf(currSong.id)))
-        if(user) {
-            updateRecentSong(currSong.id!);
+        if(songsToPlay[currSongType]) {
+            dispatch(setIndex(songsToPlay[currSongType].map(song => song.id).indexOf(currSong.id)))
+            if(user) {
+                updateRecentSong(currSong.id!);
+            }
         }
     }, [songsToPlay, currSong.id])
-
-    useEffect(() => {
-        // const fetchHasRatedSong = async() => {
-        //     if(currSong.id) {
-        //         const res = await hasRatedSong(currSong.id).unwrap()
-        //         setIsRated(res.data['rating']); 
-        //     }
-        // }
-
-        // fetchHasRatedSong();
-    }, [currSong.id])
 
     const updateRecentSong = async(songId: number) => {
         await postRecentSong(songId).unwrap();
@@ -72,8 +61,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                 const songId: number = Number(target.getAttribute('data-song-id'))!;
                 console.log(action)
                 if(action === 'like') {
-                    await likeSong(songId).unwrap();
-                    alert('sus')
+
                 }
 
                 break;
@@ -81,7 +69,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         }       
     }
 
-    if(currSong.id !== null)
+    if(currSong && songsToPlay[currSongType])
         return (
             <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
             className='music-player flex flex--align text--center gap--1' id='music-player'>
@@ -90,40 +78,40 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                     <div className="music__reprs">
 
-                        <Song song={songsToPlay[currIdx - 1]} idx={songsToPlay.length + 1} ignore={true} 
-                            queueType='previous' referBy="ref-player" />
+                        <Song song={songsToPlay[currSongType][currIdx - 1]} idx={currIdx - 1} ignore={true} 
+                            queueType='previous' referBy="ref-browse" />
                         <SongPreview song={currSong} currId={null} isQueue={false} />
-                        <Song song={songsToPlay[currIdx + 1]} idx={songsToPlay.length + 2} ignore={true} 
-                            queueType='next' referBy="ref-player" />
+                        <Song song={songsToPlay[currSongType][currIdx + 1]} idx={currIdx + 1} ignore={true} 
+                            queueType='next' referBy="ref-browse" />
 
                     </div>
 
 
-                <audio autoPlay onTimeUpdate={() => { 
+                <audio autoPlay onTimeUpdate={(e) => { 
                     handleAudioBar(audioEl, audioBarProgress); 
-                    updateTime(audioEl, audioTime); }} onEnded={() => 
-                        playBetween(songsToPlay, currIdx)}
+                    updateTime(e.currentTarget, audioTime); }} onEnded={() => 
+                        playBetween(songsToPlay[currSongType], currIdx)}
                 id='audio-el' src={API_URL + 'songs/audio/' + currSong.id}></audio>
 
                 <div className="music__controls flex gap--2">
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
-                        handleControls(e, audioEl, songsToPlay, currIdx)} data-song-id={ currSong.id }
+                        handleControls(e, audioEl, songsToPlay[currSongType], currIdx)} data-song-id={ currSong.id }
                     className="fa btn--def music__control" name='rate' data-action='dislike'>&#xf165;</button>
 
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
-                        handleControls(e, audioEl, songsToPlay, currIdx)}
+                        handleControls(e, audioEl, songsToPlay[currSongType], currIdx)}
                     className='fa reverse btn--def music__control' name='change-song' data-num='-1'>&#xf050;</button>
                     
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
-                        handleControls(e, audioEl, songsToPlay, currIdx)}
+                        handleControls(e, audioEl, songsToPlay[currSongType], currIdx)}
                     className='fa btn--def music__control' id='music-toggler' name='toggle-song'>&#xf04c;</button>
 
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
-                        handleControls(e, audioEl, songsToPlay, currIdx)}
+                        handleControls(e, audioEl, songsToPlay[currSongType], currIdx)}
                     className='fa btn--def music__control' name='change-song' data-num='1'>&#xf050;</button>
 
                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
-                        handleControls(e, audioEl, songsToPlay, currIdx)} data-song-id={ currSong.id }
+                        handleControls(e, audioEl, songsToPlay[currSongType], currIdx)} data-song-id={ currSong.id }
                     className="fa btn--def music__control" name='rate' data-action='like'>&#xf164;</button>
                 </div>
 

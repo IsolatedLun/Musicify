@@ -16,7 +16,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(UserApi.middleware, MusicApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

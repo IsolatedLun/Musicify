@@ -4,8 +4,9 @@ import { INF_Song } from "../misc/interfaces";
 import { getToken } from "../misc/utils";
 
 export const MusicApi = createApi({
+    reducerPath: 'MusicApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: API_URL + 'songs',
+        baseUrl: API_URL + 'songs', 
         prepareHeaders: (headers, { getState }) => {
             return headers
         }

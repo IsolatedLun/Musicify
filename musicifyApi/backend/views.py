@@ -53,7 +53,8 @@ class RecentSongs(APIView):
             songs = [Song.objects.get(id=x.song_id) for x in recent_songs]
 
             serializer = SongSerializer(songs, many=True).data
-            return Response({'data': serializer}, OK)
+            
+            return Response({"recents": serializer, 'favorites': []}, OK)
             
         except Song.DoesNotExist:
             return Response({'err': 'User has no recent songs'}, ERR)
@@ -61,6 +62,9 @@ class RecentSongs(APIView):
             return Response({'err': 'User does not exist.'}, ERR)
 
     def post(self, req, song_id):
+        if(song_id == 'null'):
+            return Response({'detail': 'null'}, OK)
+
         user = get_user_by_tok(req.headers['authorization'])
 
         obj, created = RecentSong.objects.update_or_create(user=user, song_id=song_id, 

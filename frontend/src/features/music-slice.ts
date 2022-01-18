@@ -3,21 +3,9 @@ import { MusicState, } from '../misc/interfaces';
 import { MusicApi } from '../services/musicService';
 
 const initialState: MusicState = {
-    browseSongs: [],
-    recentSongs: [],
-    favoriteSongs: [],
-    uploadedSongs: [],
-    songsToPlay: [],
+    songsToPlay: {},
+    currSong: {},
     status: 'idle',
-    currSong: {
-        id: null,
-        title: 'No Music',
-        author: 'No Author',
-        views: 0,
-        genre: 'all',
-        rating: 0,
-        created_at: new Date(),
-    },
 
     currIdx: NaN,
     currSongType: '',
@@ -28,7 +16,7 @@ export const musicSlice = createSlice({
     initialState,
     reducers: {
         setCurrSong(state, action) {
-            state.currSong = state.songsToPlay.filter(song => song.id === action.payload['id'])[0];
+            
             state.currSongType = action.payload['referBy'];
         },
 
@@ -36,41 +24,22 @@ export const musicSlice = createSlice({
             state.currIdx = action.payload;
         },
 
-        setSongsToPlay(state, action) {
-            state.songsToPlay = action.payload;
+        setSong(state, action) {
+            const song = Object.assign({}, state.songsToPlay[action.payload['songKey']][action.payload['idx']]);
+            state.currSong = song;
         },
 
         setSongType(state, action) {
             state.currSongType = action.payload;
+        },
 
-            if(state.currSongType === 'ref-browse')
-                state.songsToPlay = state.browseSongs
-
-            else if(state.currSongType === 'ref-recent')
-                state.songsToPlay = state.recentSongs
-
-            else if(state.currSongType === 'ref-favorites')
-                state.songsToPlay = state.favoriteSongs
-            
-            else if(state.currSongType === 'ref-uploads')
-            state.songsToPlay = state.uploadedSongs
+        setSongList(state, action) {
+            state.songsToPlay[action.payload['songKey']] = action.payload['data'];
         }
     },
     extraReducers: (builder) => {
-        builder.addMatcher(MusicApi.endpoints.getRecentSongs.matchFulfilled, (state, action) => {
-            state.recentSongs = (action.payload as any)['data'];
-        })
-
-        builder.addMatcher(MusicApi.endpoints.getSongs.matchFulfilled, (state, action) => {
-            state.browseSongs = action.payload;
-            state.status = 'fulfilled';
-        })
-
-        builder.addMatcher(MusicApi.endpoints.getUploadedSongs.matchFulfilled, (state, action) => {
-            state.uploadedSongs = (action.payload as any)['data'];
-        })
     }
 })
 
-export const { setCurrSong, setIndex, setSongsToPlay, setSongType } = musicSlice.actions;
+export const { setCurrSong, setIndex, setSong, setSongType, setSongList } = musicSlice.actions;
 export default musicSlice.reducer;

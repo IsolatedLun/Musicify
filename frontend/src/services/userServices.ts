@@ -4,6 +4,7 @@ import { User, UserLogin } from '../misc/interfaces';
 import { getToken } from '../misc/utils';
 
 export const UserApi = createApi({
+    reducerPath: 'UserApi',
     baseQuery: fetchBaseQuery({ 
         baseUrl: API_URL + 'users',
         prepareHeaders: (headers, { getState }) => {

@@ -20,15 +20,15 @@ export interface INF_Song {
 }
 
 export interface MusicState {
-    browseSongs: INF_Song[];
-    recentSongs: INF_Song[];
-    favoriteSongs: INF_Song[];
-    uploadedSongs: INF_Song[];
-    songsToPlay: INF_Song[];
+    songsToPlay: I_INF_Song;
     status: 'idle' | 'fulfilled' | 'rejected';
-    currSong: INF_Song;
+    currSong: INF_Song | any;
     currIdx: number;
     currSongType: string;
+}
+
+export interface I_INF_Song {
+    [key: string]: INF_Song[]
 }
 
 export interface NewSong {
