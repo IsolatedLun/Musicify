@@ -69,6 +69,11 @@
     color: var(--txt);
 }
 
+.music-player .music__control:is(:disabled) {
+    color: var(--txt);
+    pointer-events: none;
+}
+
 .music-player .music__bar {
     position: relative;
     width: 90%;

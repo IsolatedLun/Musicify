@@ -2,7 +2,9 @@ import React from 'react';
 import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';
 
-const SongPreview = ({ song, currId, isQueue } : { song: INF_Song, currId: number | null, isQueue: boolean }) => {
+const SongPreview = ({ song, ratedSong,
+        currId, isQueue } : { song: INF_Song, ratedSong: any,
+            currId: number | null, isQueue: boolean }) => {
     if(!song || song.id === currId) {
         if(isQueue) {
             return(<div></div>);
@@ -23,7 +25,7 @@ const SongPreview = ({ song, currId, isQueue } : { song: INF_Song, currId: numbe
                         </div>
                         <div className="music__stat">
                             <i className="fas fa-star rate"></i>
-                            <p className="stat__num">{ song.rating }</p>
+                            <p className="stat__num">{ ratedSong && Math.ceil(ratedSong.rating) }</p>
                         </div>
                     </div>
                     : null

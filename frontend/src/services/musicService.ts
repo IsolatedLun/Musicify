@@ -62,38 +62,36 @@ export const MusicApi = createApi({
 
         postLikeSong: builder.mutation<void, number>({
             query: (songId) => ({
-                url: 'rating',
-                method: "POST",
+                url: `rating/${songId}`,
+                method: 'POST',
                 headers: {
                     'authorization': getToken(),
                 },
                 body: {
-                    'song_id': songId
+                    rate_type: 'like'
                 }
             })
         }),
 
         postDislikeSong: builder.mutation<void, number>({
             query: (songId) => ({
-                url: 'rating',
+                url: `rating/${songId}`,
                 method: "POST",
                 headers: {
                     'authorization': getToken(),
-                    'disliked': 'true'
                 },
                 body: {
-                    'song_id': songId
+                    rate_type: 'dislike'
                 }
             })
         }),
 
         getRatedSong: builder.query<any | null, number | string>({
             query: (songId) => ({
-                url: 'rating',
+                url: `rating/${songId}`,
                 method: "GET",
                 headers: {
                     'authorization': getToken(),
-                    'song_id': `${songId}`
                 },
             })
         })

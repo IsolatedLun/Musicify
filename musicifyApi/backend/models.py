@@ -37,8 +37,8 @@ class Song(models.Model):
 
     views = models.PositiveBigIntegerField(default=0)
     rating = models.PositiveIntegerField(default=1)
-    likes = models.PositiveIntegerField(default=0)
-    dislikes = models.PositiveIntegerField(default=0)
+    likes = models.PositiveIntegerField(default=1)
+    dislikes = models.PositiveIntegerField(default=1)
 
     thumbnail = models.ImageField(upload_to='thumbnails/')
 

@@ -15,8 +15,12 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     const { currSong, songsToPlay, currIdx, currSongType } = useAppSelector(state => state.music);
     const dispatch = useAppDispatch();
     const postRecentSong = useUpdateRecentSongMutation()[0];
+    const likeSong = usePostLikeSongMutation()[0];
+    const dislikeSong = usePostDislikeSongMutation()[0];
+    const { data: ratedSongData , isFetching, isSuccess, refetch } = useGetRatedSongQuery(currSong.id);
 
     const [isRated, setIsRated] = useState(false);
+    const [rateType ,setRateType] = useState('');
 
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
     const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
@@ -39,8 +43,28 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         }
     }, [songsToPlay, currSong.id])
 
+    useEffect(() => {
+        if(ratedSongData) {
+            refetch();
+            setIsRated(ratedSongData.is_rated);
+            setRateType(ratedSongData.rate_type);
+        }
+    }, [currSong.id])
+
     const updateRecentSong = async(songId: number) => {
         await postRecentSong(songId).unwrap();
+    }
+
+    const postLikeSong = async(songId: number) => {
+        await likeSong(songId).unwrap();
+        setIsRated(true);
+        setRateType('like');
+    }
+
+    const postDislikeSong = async(songId: number) => {
+        await dislikeSong(songId).unwrap();
+        setIsRated(true);
+        setRateType('dislike');
     }
 
     const getIsRated = async(songId: number) => {
@@ -63,9 +87,12 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
             case 'rate':
                 const action: string = target.getAttribute('data-action')!;
                 const songId: number = Number(target.getAttribute('data-song-id'))!;
-                console.log(action)
                 if(action === 'like') {
+                    postLikeSong(currSong.id);
+                }
 
+                else if(action === 'dislike') {
+                    postDislikeSong(currSong.id);
                 }
 
                 break;     
@@ -83,12 +110,12 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                         <Song song={songsToPlay[currSongType][currIdx - 1]} idx={currIdx - 1} ignore={true} 
                             queueType='previous' referBy={currSongType} />
-                        <SongPreview song={currSong} currId={null} isQueue={false} />
+                        <SongPreview song={currSong} ratedSong={ratedSongData}
+                            currId={null} isQueue={false} />
                         <Song song={songsToPlay[currSongType][currIdx + 1]} idx={currIdx + 1} ignore={true} 
                             queueType='next' referBy={currSongType} />
 
                     </div>
-
 
                 <audio autoPlay onTimeUpdate={(e) => { 
                     handleAudioBar(audioEl, audioBarProgress); 
@@ -99,6 +126,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                 <div className="music__controls flex gap--2">
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
                         handleControls(e, audioEl, songsToPlay[currSongType], currIdx)} data-song-id={ currSong.id }
+                        disabled={rateType === 'dislike' ? true : false}
                     className="fa btn--def music__control" name='rate' data-action='dislike'>&#xf165;</button>
 
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
@@ -115,6 +143,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
                         handleControls(e, audioEl, songsToPlay[currSongType], currIdx)} data-song-id={ currSong.id }
+                        disabled={rateType === 'like' ? true : false}
                     className="fa btn--def music__control" name='rate' data-action='like'>&#xf164;</button>
                 </div>
 
