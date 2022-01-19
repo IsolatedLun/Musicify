@@ -55,7 +55,7 @@ const LogIn = () => {
                     <label className="form__label">Email address</label>
                     <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
                     placeholder='Enter email address' className="form__inpt"
-                        data-realType='email' name='email' />
+                        data-realtype='email' name='email' />
                     <p className="form__helptext"></p>
                 </div>
 
@@ -64,7 +64,7 @@ const LogIn = () => {
                     <div className="form__inpt-container">
                         <input type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
                             placeholder='Enter password' className="form__inpt" id='inpt-password-login'
-                            data-realType='password' name='password' />
+                            data-realtype='password' name='password' />
                         <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password-login')}
                             className='btn--def fa part__btn'>&#xf06e;</button>
                     </div>

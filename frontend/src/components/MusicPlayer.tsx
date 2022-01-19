@@ -43,6 +43,10 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         await postRecentSong(songId).unwrap();
     }
 
+    const getIsRated = async(songId: number) => {
+        
+    }
+
     const handleControls = async(e: React.MouseEvent<HTMLButtonElement>, audioEl: HTMLAudioElement, 
         songs: INF_Song[], idx: number) => {
         const target = (e.target as HTMLButtonElement);
@@ -64,8 +68,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                 }
 
-                break;
-                    
+                break;     
         }       
     }
 
@@ -79,10 +82,10 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                     <div className="music__reprs">
 
                         <Song song={songsToPlay[currSongType][currIdx - 1]} idx={currIdx - 1} ignore={true} 
-                            queueType='previous' referBy="ref-browse" />
+                            queueType='previous' referBy={currSongType} />
                         <SongPreview song={currSong} currId={null} isQueue={false} />
                         <Song song={songsToPlay[currSongType][currIdx + 1]} idx={currIdx + 1} ignore={true} 
-                            queueType='next' referBy="ref-browse" />
+                            queueType='next' referBy={currSongType} />
 
                     </div>
 

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MusicState, } from '../misc/interfaces';
+import { INF_Song, MusicState, } from '../misc/interfaces';
 import { MusicApi } from '../services/musicService';
 
 const initialState: MusicState = {
@@ -25,7 +25,9 @@ export const musicSlice = createSlice({
         },
 
         setSong(state, action) {
-            const song = Object.assign({}, state.songsToPlay[action.payload['songKey']][action.payload['idx']]);
+            const song: INF_Song = 
+                Object.assign({}, state.songsToPlay[action.payload['songKey']][action.payload['idx']]);
+                
             state.currSong = song;
         },
 

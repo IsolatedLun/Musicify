@@ -24,6 +24,11 @@ genres_choices = [
     ('jazz', 'Jazz'),
 ]
 
+rate_choices = [
+    ('like', 'like'),
+    ('dislike', 'dislike'),
+]
+
 class Song(models.Model):
     user = models.ForeignKey(cUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, unique=True)
@@ -47,9 +52,10 @@ class RecentSong(models.Model):
     song_id = models.PositiveBigIntegerField()
     listened_at = models.DateTimeField(auto_now_add=True)
 
-class LikedSong(models.Model):
+class RatedSong(models.Model):
     user = models.ForeignKey(cUser, on_delete=models.CASCADE)
     song_id = models.PositiveBigIntegerField()
+    rate_type = models.CharField(max_length=32, choices=rate_choices)
 
 class Album(models.Model):
     name = models.CharField(max_length=64, unique=True)

@@ -4,3 +4,4 @@ from . import models
 # Register your models here.
 admin.site.register(models.Song)
 admin.site.register(models.RecentSong)
+admin.site.register(models.RatedSong)

@@ -8,7 +8,7 @@ from users.utils import get_user_by_tok
 
 from .utils import prettify
 
-from .models import LikedSong, Song, RecentSong
+from .models import RatedSong, Song, RecentSong
 from .serializers import SongSerializer
 from users.models import cUser
 from datetime import date, datetime
@@ -109,38 +109,66 @@ class UploadedSong(APIView):
         except:
             return Response({'err': 'Couldn\'t fetch songs.'}, ERR)
 
-class LikedSongView(APIView):
-    def get(self, req):
-        song = Song.objects.get(id=req.data['song_id'])
+class RatedSongView(APIView):
+    def get(self, req, song_id):
+        song = Song.objects.get(id=song_id)
         res = {'rating': self.calculate_song_rating(song.likes, song.dislikes)}
 
         user = get_user_by_tok(req.headers['authorization'])
-        if(LikedSong.objects.filter(user_id=user.id).exists()):
+        print(req.headers['authorization'])
+        rated_song = RatedSong.objects.filter(user_id=user.id, song_id=song_id)
+
+        if(rated_song.exists()):
             res['is_rated'] = True
-            return Response({'data': res}, OK)
+            res['rate_type'] = rated_song[0].rate_type
+            return Response(res, OK)
             
         res['is_rated'] = False
-        return Response({'data': res}, ERR)
+        return Response(res, OK)
 
-    def post(self, req):
+    def post(self, req, song_id):
         user = get_user_by_tok(req.headers['authorization'])
-        disliked = req.data.get('disliked', None)
-        liked_song, created = LikedSong.objects.get_or_create(user=user, song_id=req.data['song_id'])
-        song = Song.objects.get(id=req.data['song_id'])
+        rate_type = req.data.get('rate_type', None)
+        rated_song, created = RatedSong.objects.get_or_create(user=user, song_id=song_id)
+        song = Song.objects.get(id=song_id)
 
-        if created and not disliked:
+        if created:
+            self.rate_song(song, rated_song, rate_type)
+        
+        elif rated_song.rate_type != rate_type:
+           return self.swap_rate_song(song, rated_song, rate_type)
+
+        else:
+            return Response({'err': 'Rated song already exists.'}, ERR)
+
+    def rate_song(self, song, rated_song, rate_type, alter_type='Added'):
+        if rate_type == 'like':
             song.likes += 1
+            rated_song.rate_type = 'like'
+            rated_song.save()
             song.save()
 
-            return Response({'detail': 'Added liked song.'}, OK)
-        elif disliked:
+            return Response({'detail': f'{alter_type} liked song.'}, OK)
+        elif rate_type == 'dislike':
             song.dislikes += 1
+            rated_song.rate_type = 'dislike'
+            rated_song.save()
             song.save()
 
-            return Response({'detail': 'Added disliked song.'}, OK)
+            return Response({'detail': f'{alter_type} disliked song.'}, OK)
 
-        return Response({'err': 'Liked song already exists.'}, ERR)
+    def swap_rate_song(self, song, rated_song, rate_type):
+        if rate_type == 'like':
+            song.dislikes -= 1 if song.dislikes > 0 else 0
+
+        elif rate_type == 'dislike':
+            song.likes -= 1 if song.likes > 0 else 0
+
+        return self.rate_song(song, rated_song, rate_type, 'Updated')
 
     def calculate_song_rating(self, likes, dislikes):
-        return (likes / (likes + dislikes)) / 100
+        if likes == 0:
+            likes = 1
+
+        return (likes / (likes + dislikes)) * 100
 

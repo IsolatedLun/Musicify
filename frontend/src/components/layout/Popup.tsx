@@ -10,7 +10,7 @@ const Popup = () => {
     }
 
     return (
-        <div className="popup inactive" id='popup'>
+        <div className="popup" id='popup'>
             <div className="popup__head flex flex--align--between gap--05">
                 <div className='flex flex--align gap--05'>
                     <p className="fa popup__icon" id='popup-icon'></p>

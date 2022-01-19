@@ -1,6 +1,7 @@
 .popup {
     position: fixed;
     display: flex;
+    visibility: hidden;
     flex-direction: column;
     gap: 0.5em;
     inset: 10% auto auto 78%;
@@ -35,6 +36,7 @@
 }
 
 .popup.active {
+    visibility: visible;
     animation: appear 1.5s ease-out forwards;
 }
 
@@ -43,6 +45,7 @@
 }
 
 .popup.inactive {
+    visibility: visible;
     animation: disappear 1.5s ease-out forwards;
 }
 
