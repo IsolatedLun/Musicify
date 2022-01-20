@@ -115,7 +115,6 @@ class RatedSongView(APIView):
         res = {'rating': self.calculate_song_rating(song.likes, song.dislikes)}
 
         user = get_user_by_tok(req.headers['authorization'])
-        print(req.headers['authorization'])
         rated_song = RatedSong.objects.filter(user_id=user.id, song_id=song_id)
 
         if(rated_song.exists()):
@@ -169,6 +168,8 @@ class RatedSongView(APIView):
     def calculate_song_rating(self, likes, dislikes):
         if likes == 0:
             likes = 1
+        if dislikes == 0:
+            dislikes = 1
 
         return (likes / (likes + dislikes)) * 100
 

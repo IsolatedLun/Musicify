@@ -45,11 +45,12 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
     useEffect(() => {
         if(ratedSongData) {
-            refetch();
             setIsRated(ratedSongData.is_rated);
             setRateType(ratedSongData.rate_type);
         }
-    }, [currSong.id])
+
+        refetch();
+    }, [currSong.id, ratedSongData])
 
     const updateRecentSong = async(songId: number) => {
         await postRecentSong(songId).unwrap();
@@ -57,18 +58,12 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
     const postLikeSong = async(songId: number) => {
         await likeSong(songId).unwrap();
-        setIsRated(true);
-        setRateType('like');
+        refetch();
     }
 
     const postDislikeSong = async(songId: number) => {
         await dislikeSong(songId).unwrap();
-        setIsRated(true);
-        setRateType('dislike');
-    }
-
-    const getIsRated = async(songId: number) => {
-        
+        refetch();
     }
 
     const handleControls = async(e: React.MouseEvent<HTMLButtonElement>, audioEl: HTMLAudioElement, 
@@ -126,7 +121,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                 <div className="music__controls flex gap--2">
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
                         handleControls(e, audioEl, songsToPlay[currSongType], currIdx)} data-song-id={ currSong.id }
-                        disabled={rateType === 'dislike' ? true : false}
+                        disabled={ratedSongData.rate_type === 'dislike' ? true : false}
                     className="fa btn--def music__control" name='rate' data-action='dislike'>&#xf165;</button>
 
                     <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
@@ -143,7 +138,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                    <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => 
                         handleControls(e, audioEl, songsToPlay[currSongType], currIdx)} data-song-id={ currSong.id }
-                        disabled={rateType === 'like' ? true : false}
+                        disabled={ratedSongData.rate_type === 'like' ? true : false}
                     className="fa btn--def music__control" name='rate' data-action='like'>&#xf164;</button>
                 </div>
 
