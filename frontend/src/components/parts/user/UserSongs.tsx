@@ -32,6 +32,8 @@ const UserSongs = ({ user }: { user: User }) => {
                 </div>
             </div>
         )
+    else
+        return(<></>)
 }
 
 export default UserSongs

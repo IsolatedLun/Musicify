@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { User } from '../../../misc/interfaces';
 import Upload from '../upload/Upload';
+import UploadAlbum from '../upload/UploadAlbum';
 import UploadSong from '../upload/UploadSong';
 import UserHeader from './UserHeader';
 import UserHome from './UserHome';
@@ -28,6 +29,7 @@ const UserRouter = ({ user }: { user: User | null }) => {
 
                     <Route path='upload' element={<Upload />}/>
                     <Route path='upload/song' element={<UploadSong />}/>
+                    <Route path='upload/album' element={<UploadAlbum />}/>
                 </Routes>
             </div>
         )

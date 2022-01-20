@@ -87,10 +87,6 @@ const UserSettings = ({ user }: { user: User | null }) => {
             dispatch(setChangesMade(true));
             setIsVerified(true);
         }
-
-        else {
-            dispatch(setChangesMade(false));
-        }
     }
 
     if(user && editableUser)

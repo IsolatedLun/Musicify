@@ -64,6 +64,12 @@
     width: 100%;
 }
 
+.form__part-tight {
+    width: 50%;
+    margin-inline: auto;
+    text-align: center;
+}
+
 .form__part .form__inpt-container {
     position: relative;
     width: 100%;
@@ -166,6 +172,39 @@
 .form__link {
     font-size: calc(var(--fs-400) * 0.9);
     color: var(--clr-primary);
+}
+
+/* Form list */
+.form__list {
+    margin-top: 1em;
+    background-color: var(--bg-secondary);
+}
+
+.form__list .list__item {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    font-size: var(--fs-450);
+    padding: 0.5em;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 95ms ease-out;
+}
+
+.form__list .list__item:is(:hover, :focus) {
+    background-color: var(--clr-err-transp);
+}
+
+.form__list .list__item .item__profile {
+    width: 4em;
+    aspect-ratio: 1;
+    background-color: black;
+}
+
+.form__part .list__btn {
+    font-size: calc(var(--fs-450) * 0.9);
+    margin-top: 1em;
+    width: max-content;
 }
 
 @media(max-width: 768px) {

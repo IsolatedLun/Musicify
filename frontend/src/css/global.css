@@ -74,6 +74,7 @@ img {
   --clr-secondary: hsl(274, 76%, 58%);
   --clr-warn: hsl(34, 100%, 53%);
   --clr-err: hsl(4, 100%, 53%);
+  --clr-err-transp: hsl(4, 100%, 53%, 0.12);
   --clr-err-secondary: hsl(4, 100%, 60%);
 
   --popup-err: hsl(6, 100%, 46%);

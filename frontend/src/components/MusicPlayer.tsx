@@ -19,9 +19,6 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     const dislikeSong = usePostDislikeSongMutation()[0];
     const { data: ratedSongData , isFetching, isSuccess, refetch } = useGetRatedSongQuery(currSong.id);
 
-    const [isRated, setIsRated] = useState(false);
-    const [rateType ,setRateType] = useState('');
-
     const audioEl = document.getElementById('audio-el') as HTMLAudioElement;
     const audioBarProgress = document.getElementById('audio-bar-progress') as HTMLDivElement;
     const toggleBtn = document.getElementById('music-toggler') as HTMLButtonElement;
@@ -44,11 +41,6 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
     }, [songsToPlay, currSong.id])
 
     useEffect(() => {
-        if(ratedSongData) {
-            setIsRated(ratedSongData.is_rated);
-            setRateType(ratedSongData.rate_type);
-        }
-
         refetch();
     }, [currSong.id, ratedSongData])
 
@@ -94,7 +86,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
         }       
     }
 
-    if(currSong && songsToPlay[currSongType])
+    if(currSong && songsToPlay[currSongType] && ratedSongData)
         return (
             <div onMouseDown={() => isMouseDown = true} onMouseUp={() => isMouseDown = false} 
             className='music-player flex flex--align text--center gap--1' id='music-player'>
