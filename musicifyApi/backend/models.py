@@ -58,6 +58,7 @@ class RatedSong(models.Model):
     rate_type = models.CharField(max_length=32, choices=rate_choices)
 
 class Album(models.Model):
+    user = models.ForeignKey(cUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=64, unique=True)
     published = models.BooleanField(default=False)
 
@@ -65,7 +66,7 @@ class Album(models.Model):
     thumbnail = models.ImageField(upload_to='thumbnails/albums/')
 
     created_at = models.DateTimeField(auto_now_add=True)
-    published_at = models.DateTimeField(auto_now_add=False)
+    published_at = models.DateTimeField(auto_now_add=True)
 
 class AlbumSong(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE)

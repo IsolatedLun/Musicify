@@ -5,3 +5,5 @@ from . import models
 admin.site.register(models.Song)
 admin.site.register(models.RecentSong)
 admin.site.register(models.RatedSong)
+admin.site.register(models.Album)
+admin.site.register(models.AlbumSong)

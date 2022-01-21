@@ -94,7 +94,7 @@ export const MusicApi = createApi({
                     'authorization': getToken(),
                 },
             })
-        })
+        }),
 
     })
 })

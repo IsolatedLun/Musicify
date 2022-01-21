@@ -4,6 +4,7 @@ import { User } from '../../../misc/interfaces';
 import Upload from '../upload/Upload';
 import UploadAlbum from '../upload/UploadAlbum';
 import UploadSong from '../upload/UploadSong';
+import UserAlbums from './UserAlbums';
 import UserHeader from './UserHeader';
 import UserHome from './UserHome';
 import UserSettings from './UserSettings';
@@ -24,7 +25,7 @@ const UserRouter = ({ user }: { user: User | null }) => {
                 <Routes>
                     <Route path='/' element={<UserHome user={user} />} />
                     <Route path='songs' element={<UserSongs user={user} />}/>
-                    <Route path='albums' element={<h1>User albums</h1>}/>
+                    <Route path='albums' element={<UserAlbums user={user} />} />
                     <Route path='settings' element={<UserSettings user={user} />}/>
 
                     <Route path='upload' element={<Upload />}/>

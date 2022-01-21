@@ -74,3 +74,10 @@ export interface User {
 export interface UtilsState {
     loc: string;
 }
+
+// Album
+
+export interface INF_Album {
+    id: number
+    album_name: string;
+} 

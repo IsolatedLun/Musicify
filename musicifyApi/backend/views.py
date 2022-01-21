@@ -188,7 +188,7 @@ class CreateAlbumView(APIView):
         data = req.data
         user = get_user_by_tok(req.headers['authorization'])
 
-        new_album = Album.objects.create(name=data['album_name'], user=user, thumbnail=data['thumbnail'])
+        new_album = Album.objects.create(name=data['album_name'], user=user, thumbnail=data['profile'])
         return Response({'detail': f'Album {new_album.name} created.'}, OK)
 
     def get(self, req):
