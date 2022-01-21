@@ -64,7 +64,9 @@ class Album(models.Model):
     views = models.PositiveBigIntegerField(default=0)
     thumbnail = models.ImageField(upload_to='thumbnails/albums/')
 
-    songs = models.ForeignKey(Song, on_delete=models.CASCADE)
-
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now_add=False)
+
+class AlbumSong(models.Model):
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)

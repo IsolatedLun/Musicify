@@ -11,3 +11,8 @@ class RecentSongSerializer(ModelSerializer):
     class Meta:
         model = models.RecentSong
         fields = '__all__'
+
+class AlbumSerializer(ModelSerializer):
+    class Meta:
+        model = models.Album
+        fields = '__all__'

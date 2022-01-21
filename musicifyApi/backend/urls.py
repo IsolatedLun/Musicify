@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import RatedSongView, RecentSongs, SongAudio, SongThumbnail, Songs, UploadSong, UploadedSong
+from .views import CreateAlbumView, RatedSongView, RecentSongs, SongAudio, SongThumbnail, Songs, UploadSong, UploadedSong
 
 urlpatterns = [
     path('songs', Songs.as_view(), name='songs'),
@@ -14,5 +14,8 @@ urlpatterns = [
     path('songs/upload', UploadSong.as_view(), name='post-upload-song'),
     path('songs/uploads/user', UploadedSong.as_view(), name='get-uploaded-song'),
 
-    path('songs/rating/<int:song_id>', RatedSongView.as_view(), name='handle-liked-song')
+    path('songs/rating/<int:song_id>', RatedSongView.as_view(), name='handle-liked-song'),
+
+    # Albums
+    path('albums', CreateAlbumView.as_view(), name='post-create-album')
 ]

@@ -8,8 +8,8 @@ from users.utils import get_user_by_tok
 
 from .utils import prettify
 
-from .models import RatedSong, Song, RecentSong
-from .serializers import SongSerializer
+from .models import Album, RatedSong, Song, RecentSong
+from .serializers import AlbumSerializer, SongSerializer
 from users.models import cUser
 from datetime import date, datetime
 
@@ -173,3 +173,28 @@ class RatedSongView(APIView):
 
         return (likes / (likes + dislikes)) * 100
 
+# ===================
+# Album views
+# ===================
+class AlbumView(APIView):
+    def get(self, req):
+        albums = Album.objects.all()
+        serializer = AlbumSerializer(albums, may=True).data
+        return Response(serializer, OK)
+
+
+class CreateAlbumView(APIView):
+    def post(self, req):
+        data = req.data
+        user = get_user_by_tok(req.headers['authorization'])
+
+        new_album = Album.objects.create(name=data['album_name'], thumbnail=data['thumbnail'])
+        return Response({'detail': f'Album {new_album.name} created.'}, OK)
+
+    def get(self, req):
+        try:
+            album = Album.objects.get(id=req.data['album_id'])
+            serializer = AlbumSerializer(album).data
+            return Response(serializer, OK)
+        except:
+            return Response({'err': 'Album does not exist'}, ERR)

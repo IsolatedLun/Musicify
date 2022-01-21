@@ -43,7 +43,7 @@ const UploadAlbum = () => {
                     <p className="form__helptext"></p>
                 </div>
 
-                <div className="form__part">
+                {/* <div className="form__part">
                     <label className='form__label'>Songs</label>
                     <div className="form__list">
 
@@ -60,9 +60,9 @@ const UploadAlbum = () => {
                         to='/user/upload/song?for=album'>
                         Add song
                     </Link>
-                </div>
+                </div> */}
 
-                <button className="btn--def form__btn btn--primary">Publish</button>
+                <button className="btn--def form__btn btn--primary">Upload album</button>
           </form>
       </div>
   )
