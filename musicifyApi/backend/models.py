@@ -63,7 +63,7 @@ class Album(models.Model):
     published = models.BooleanField(default=False)
 
     views = models.PositiveBigIntegerField(default=0)
-    thumbnail = models.ImageField(upload_to='thumbnails/albums/')
+    profile = models.ImageField(upload_to='thumbnails/albums/')
 
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now_add=True)

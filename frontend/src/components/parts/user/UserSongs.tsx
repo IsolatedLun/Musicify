@@ -7,14 +7,20 @@ import Loader from '../../layout/Loader';
 import { setSongList } from '../../../features/music-slice';
 
 const UserSongs = ({ user }: { user: User }) => {
-    const { data, isLoading, isFetching, isSuccess } = useGetUploadedSongsQuery();
+    const { data, isLoading, isFetching, isSuccess, error } = useGetUploadedSongsQuery();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if(data) {
             dispatch(setSongList({ songKey: 'ref-uploaded', data: (data as any)['data'] }));
         }
+
+        
     }, [isFetching])
+
+    useEffect(() => {
+        console.log(error)
+    }, [error])
 
     if(isFetching)
         return <Loader text='Loading uploaded songs...'/>

@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAutoState } from '../../../hooks/useAutoState';
 import { validateInputs } from '../../../misc/formHandler';
 import { NewSong } from '../../../misc/interfaces';
@@ -10,6 +10,9 @@ import Option from '../utils/Option';
 
 const UploadSong = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const uploadMode = searchParams.get('for');
+
     const [newSong, setNewSong] = useState<NewSong>({
         title: '',
         genre: 'All',
@@ -25,7 +28,7 @@ const UploadSong = () => {
 
         if(validateInputs(inputs)) {
             const formData: FormData | null = constructFormData(newSong);
-            if(formData !== null) {
+            if(formData !== null && uploadMode === null) {
                 try {
                     await songUpload(formData).unwrap();
                     navigate('/browse');
@@ -34,6 +37,10 @@ const UploadSong = () => {
                 catch(err: any) {
                     popup(err.data['err'], 'Error');
                 }
+            }
+
+            else {
+                alert('lol')
             }
         }
     }

@@ -16,3 +16,8 @@ class AlbumSerializer(ModelSerializer):
     class Meta:
         model = models.Album
         fields = '__all__'
+
+class AlbumSongSerializer(ModelSerializer):
+    class Meta:
+        model = models.AlbumSong
+        fields = '__all__'

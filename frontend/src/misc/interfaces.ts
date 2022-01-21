@@ -79,5 +79,5 @@ export interface UtilsState {
 
 export interface INF_Album {
     id: number
-    album_name: string;
+    name: string;
 } 
