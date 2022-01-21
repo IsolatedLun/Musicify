@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAutoState } from '../../../hooks/useAutoState';
 import { validateInputs } from '../../../misc/formHandler';
 import { NewSong } from '../../../misc/interfaces';
 import { constructFormData, popup, previewImage } from '../../../misc/utils';
@@ -16,27 +17,6 @@ const UploadSong = () => {
         audio: null
     })
     const [songUpload, { isLoading }] = useUploadSongMutation();
-
-    const handleInput = (e: FormEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const target = e.target as HTMLInputElement;
-        setNewSong({ ...newSong, [target.name]: target.value })
-    }
-
-    const handleFileInput = (e: FormEvent<HTMLInputElement>) => {
-        const target = e.target as HTMLInputElement;
-        
-        if(target.files)
-            setNewSong({ ...newSong, [target.name]: target.files[0] })
-        
-            if(target.name === 'profile') {
-                previewImage('upload-song-profile-prev', target.files![0], null);
-            }
-
-            else if(target.name === 'audio') {
-                const label = document.getElementById('song-label-inpt') as HTMLLabelElement;
-                label?.setAttribute('data-fname', target.files![0].name)
-            }
-    }
 
     const handleForm = async(e: React.FormEvent) => {
         e.preventDefault();
@@ -68,7 +48,9 @@ const UploadSong = () => {
                             <label htmlFor="song-input" id='song-label-inpt' data-fname='Add audio file'
                                 className='form__label-drop-inpt fa elliptic'>&#xf1c7;
                                 <input data-realtype='file' name='audio' accept='audio/*'
-                                    onInput={(e: React.FormEvent<HTMLInputElement>) => handleFileInput(e)}
+                                    onInput={(e: React.FormEvent<HTMLInputElement>) => 
+                                        useAutoState(e, setNewSong, newSong, 'file', 
+                                        { fileTargetId: 'song-label-inpt' })}
                                     type="file" data-file-type='audio' className='form__inpt' id='song-input' />
                             </label>
                             <p className="form__helptext"></p>
@@ -78,7 +60,8 @@ const UploadSong = () => {
                     <section>
                     <div className="form__part">
                         <label className="form__label">Song name</label>
-                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
+                            useAutoState(e, setNewSong, newSong, 'text')}
                             placeholder='Enter song name' className='form__inpt' 
                             data-realtype='text' name='title' />
                         <p className="form__helptext"></p>
@@ -90,7 +73,9 @@ const UploadSong = () => {
                             <div className="image__prev">
                                 <img id='upload-song-profile-prev' src="" />
                             </div>
-                            <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => handleFileInput(e)}
+                            <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => 
+                                useAutoState(e, setNewSong, newSong, 'file', 
+                                { fileTargetId: 'upload-song-profile-prev' })}
                                 placeholder='Add song thumbnail' accept='image/*'
                                 className='form__inpt' data-file-type='img'
                                 data-realtype='file' name='profile' />
@@ -100,7 +85,8 @@ const UploadSong = () => {
 
                     <div className="form__part">
                         <label className="form__label">Genre</label>
-                        <select name='genre' onChange={(e: FormEvent<HTMLSelectElement>) => handleInput(e)}
+                        <select name='genre' onChange={(e: FormEvent<HTMLSelectElement>) => 
+                            useAutoState(e, setNewSong, newSong, 'text')}
                             className='select__inpt'>
                             {
                                 songGenres.map(genre => (

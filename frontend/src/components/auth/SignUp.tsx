@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/hooks';
+import { useAutoState } from '../../hooks/useAutoState';
 import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserForm } from '../../misc/interfaces';
 import { constructFormData, popup } from '../../misc/utils';
@@ -46,16 +47,6 @@ const SignUp = () => {
         }
     }
 
-    const handleInput = (e: FormEvent<HTMLInputElement>) => {
-        const target = e.target as HTMLInputElement;
-        setNewUser({ ...newUser, [target.name]: target.value });
-    }
-
-    const handleProfileInput = (e: FormEvent<HTMLInputElement>) => {
-        const target = e.target as HTMLInputElement
-        setNewUser({ ...newUser, profilePicture: target.files![0] })
-    }
-
     return (
         <div className="form-container" id='main-content'>
             <form className="auth--form capitalize" encType='multipart/form-data'
@@ -65,7 +56,8 @@ const SignUp = () => {
 
                     <div className="form__part">
                         <label className="form__label">First name</label>
-                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
+                            useAutoState(e, setNewUser, newUser, 'text')}
                             placeholder='Enter first name' className='form__inpt' 
                             data-realtype='text' name='firstName' />
                         <p className="form__helptext"></p>
@@ -73,7 +65,8 @@ const SignUp = () => {
 
                     <div className="form__part">
                         <label className="form__label">Last name</label>
-                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
+                            useAutoState(e, setNewUser, newUser, 'text')}
                             placeholder='Enter last name' className='form__inpt'
                             data-realtype='text' name='lastName' />
                         <p className="form__helptext"></p>
@@ -83,7 +76,8 @@ const SignUp = () => {
 
                 <div className="form__part">
                     <label className="form__label">Email address</label>
-                    <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                    <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => 
+                        useAutoState(e, setNewUser, newUser, 'text')}
                         placeholder='Enter email address' className="form__inpt" 
                         data-realtype='email' name='email' />
                     <p className="form__helptext"></p>
@@ -92,7 +86,8 @@ const SignUp = () => {
                 <div className="form__part">
                     <label className="form__label">Password</label>
                     <div className="form__inpt-container">
-                        <input id='inpt-password' type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                        <input id='inpt-password' type="password" onInput={(e: FormEvent<HTMLInputElement>) => 
+                            useAutoState(e, setNewUser, newUser, 'text')}
                             placeholder='Enter password' className="form__inpt" 
                             data-realtype='password' name='password' />
                         <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password')}
@@ -105,7 +100,8 @@ const SignUp = () => {
 
                 <div className="form__part">
                     <label className="form__label">Producer name<span className='txt--muted'>* (Public username)</span></label>
-                    <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                    <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
+                        useAutoState(e, setNewUser, newUser, 'text')}
                         placeholder='Enter producer name' className='form__inpt' 
                         data-realtype='ignore' name='producerName' />
                     <p className="form__helptext"></p>
@@ -113,7 +109,8 @@ const SignUp = () => {
 
                 <div className="form__part">
                     <label className="form__label">Profile<span className='txt--muted'>*</span></label>
-                    <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => handleProfileInput(e)}
+                    <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => 
+                        useAutoState(e, setNewUser, newUser, 'file')}
                         placeholder='Upload profie pciture' className='form__inpt' 
                         data-realtype='ignore' data-file-type='img' name='profilePicture' />
                     <p className="form__helptext"></p>

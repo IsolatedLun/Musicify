@@ -179,7 +179,7 @@ class RatedSongView(APIView):
 class AlbumView(APIView):
     def get(self, req):
         albums = Album.objects.all()
-        serializer = AlbumSerializer(albums, may=True).data
+        serializer = AlbumSerializer(albums, many=True).data
         return Response(serializer, OK)
 
 
@@ -188,7 +188,7 @@ class CreateAlbumView(APIView):
         data = req.data
         user = get_user_by_tok(req.headers['authorization'])
 
-        new_album = Album.objects.create(name=data['album_name'], thumbnail=data['thumbnail'])
+        new_album = Album.objects.create(name=data['album_name'], user=user, thumbnail=data['thumbnail'])
         return Response({'detail': f'Album {new_album.name} created.'}, OK)
 
     def get(self, req):

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { setCredentails } from '../../features/user.slice';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAutoState } from '../../hooks/useAutoState';
 import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler';
 import { UserLogin } from '../../misc/interfaces';
 import { popup } from '../../misc/utils';
@@ -42,18 +43,14 @@ const LogIn = () => {
         }
     }
 
-    const handleInput = (e: FormEvent<HTMLInputElement>) => {
-        const target = e.target as HTMLInputElement;
-        setUser({ ...user, [target.name]: target.value });
-    }
-
     return (
         <div className="form-container" id='main-content'>
             <form className="auth--form capitalize" onSubmit={(e: FormEvent) => handleForm(e)}>
 
                 <div className="form__part">
                     <label className="form__label">Email address</label>
-                    <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                    <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => 
+                        useAutoState(e, setUser, user, 'text')}
                     placeholder='Enter email address' className="form__inpt"
                         data-realtype='email' name='email' />
                     <p className="form__helptext"></p>
@@ -62,7 +59,8 @@ const LogIn = () => {
                 <div className="form__part">
                     <label className="form__label">Password</label>
                     <div className="form__inpt-container">
-                        <input type="password" onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)}
+                        <input type="password" onInput={(e: FormEvent<HTMLInputElement>) => 
+                            useAutoState(e, setUser, user, 'text')}
                             placeholder='Enter password' className="form__inpt" id='inpt-password-login'
                             data-realtype='password' name='password' />
                         <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password-login')}
