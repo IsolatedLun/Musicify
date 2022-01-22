@@ -1,0 +1,56 @@
+.songs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1em;
+    margin: 0.75em;
+}
+
+.song-list {
+    margin-block: 1em;
+}
+
+.song {
+    display: flex;
+    align-items: flex-end;
+    font-size: calc(var(--fs-400) * 0.8);
+    padding: 0.75em;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+    transition: background-color 95ms ease-out;
+}
+
+.song:not(.horiz) {
+    flex-direction: column;
+    align-items: center;
+}
+
+.song:is(.horiz) p:last-child {
+    margin-left: auto;
+}
+
+.song:is(:hover, :focus-visible, :focus-within) {
+    background-color: var(--bg-hov);
+}
+
+.song .song__queue {
+    font-size: var(--fs-600);
+    font-weight: lighter;
+    margin-bottom: 0.5em;
+}
+
+.song .song__thumbnail {
+    width: 10em;
+    max-width: 10em;
+    aspect-ratio: 1;
+    border-radius: 4px;
+}
+
+.song .song__title {
+    font-size: var(--fs-450);
+    margin: 0.35em;
+}
+
+.song .song__author {
+    color: var(--txt-muted);
+}

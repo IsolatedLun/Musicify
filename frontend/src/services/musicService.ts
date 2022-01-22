@@ -29,7 +29,7 @@ export const MusicApi = createApi({
             })
         }),
 
-        uploadSong: builder.mutation<void, FormData>({
+        uploadSong: builder.mutation<number, FormData>({
             query: (songData) => ({
                 url: 'upload',
                 method: 'POST',

@@ -9,7 +9,7 @@ from users.utils import get_user_by_tok
 from .utils import prettify
 
 from .models import Album, AlbumSong, RatedSong, Song, RecentSong
-from .serializers import AlbumSerializer, SongSerializer
+from .serializers import AlbumSerializer, AlbumSongSerializer, SongSerializer
 from users.models import cUser
 from datetime import date, datetime
 
@@ -50,7 +50,14 @@ class RecentSongs(APIView):
         try:
             user = get_user_by_tok(req.headers['authorization'])
             recent_songs = RecentSong.objects.filter(user=user).order_by('-listened_at')
-            songs = [Song.objects.get(id=x.song_id) for x in recent_songs]
+            songs = []
+
+            try:
+                for x in recent_songs:
+                    songs.append(Song.objects.get(id=x.song_id))
+            except:
+                # Song doesn't exist so we delete it from the recents too.
+                RecentSong.objects.get(id=x.song_id).delete()
 
             serializer = SongSerializer(songs, many=True).data
             
@@ -89,7 +96,7 @@ class UploadSong(APIView):
             if not created:
                 return Response({'err': 'Song already exists.'}, ERR)
 
-            return Response({'detail': 'Song uploaded.'}, OK)
+            return Response({'data': new_song.id}, OK)
 
         except KeyError as e:
             return Response({'err': f'A {prettify(e, True)} is required.'}, ERR)
@@ -194,7 +201,7 @@ class CreateAlbumView(APIView):
         data = req.data
         user = get_user_by_tok(req.headers['authorization'])
 
-        new_album = Album.objects.create(name=data['album_name'], user=user, thumbnail=data['profile'])
+        new_album = Album.objects.create(name=data['album_name'], user=user, profile=data['profile'])
         return Response({'detail': f'Album {new_album.name} created.'}, OK)
 
     def get(self, req):
@@ -208,9 +215,20 @@ class CreateAlbumView(APIView):
 class AlbumSongView(APIView):
     def get(self, req, album_id):
         album_songs = AlbumSong.objects.filter(album_id=album_id)
-        serializer = AlbumSerializer(album_songs, many=True).data
+        songs = [Song.objects.get(id=x.song.id) for x in album_songs]
+
+        serializer = SongSerializer(songs, many=True).data
 
         return Response(serializer, OK)
+
+    def post(self, req, album_id):
+        data = req.data
+
+        song = Song.objects.get(id=data['song_id']['data'])
+        album_song = AlbumSong.objects.create(song=song, album_id=album_id)
+
+        return Response({'detail': 'Added song to album'}, OK)
+
 
 class AlbumProfieView(APIView):
     def get(self, req, album_id):

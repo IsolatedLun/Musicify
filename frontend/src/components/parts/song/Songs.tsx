@@ -3,15 +3,17 @@ import { INF_Song } from '../../../misc/interfaces'
 import Loader from '../../layout/Loader'
 import Song from './Song'
 
-const Songs = ({ songs, referBy, mode='def', search='', genre='', fallbackEl } : 
+const Songs = ({ songs, referBy, mode='def', search='', direction='vert',
+    genre='', fallbackEl=<></> } : 
     { songs: INF_Song[] | null | undefined, referBy: string, mode: 'def' | 'filter', 
-        search: string, genre: string, fallbackEl: React.Component | JSX.Element }) => {
+        search: string, genre: string, direction: 'horiz' | 'vert', 
+        fallbackEl: React.Component | JSX.Element }) => {
 
     if(songs !== undefined && songs !== null) {
         if(mode === 'def')
             return <>{
                 songs.map((song: INF_Song, idx: number) => (
-                    <Song song={song} key={song.id} idx={idx} 
+                    <Song song={song} key={song.id} idx={idx} direction={direction}
                         ignore={false} queueType={null} referBy={referBy} />
                 ))
             }</>
@@ -29,7 +31,7 @@ const Songs = ({ songs, referBy, mode='def', search='', genre='', fallbackEl } :
                         }
                     })
                     .map((song: INF_Song, idx: number) => (
-                    <Song song={song} key={song.id} idx={idx} 
+                    <Song song={song} key={song.id} idx={idx} direction={direction}
                         ignore={false} queueType={null} referBy={referBy} />
             ))}</>
         else

@@ -37,11 +37,19 @@ export const AlbumApi = createApi({
             query: (albumId) => ({
                 url: `songs/${albumId}`,
                 method: 'GET',
-                
+            })
+        }),
+
+        postSongToAlbum: builder.mutation<void, any>({
+            query: ({ albumId, songId }) => ({
+                url: `songs/${albumId}`,
+                method: 'POST',
+                body: { song_id: songId }
             })
         })
 
     })
 })
 
-export const { usePostNewAlbumMutation, useGetUserAlbumsQuery } = AlbumApi;
+export const { usePostNewAlbumMutation, useGetUserAlbumsQuery, 
+    usePostSongToAlbumMutation, useGetAlbumSongsQuery } = AlbumApi;

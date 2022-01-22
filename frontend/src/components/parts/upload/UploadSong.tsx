@@ -4,6 +4,7 @@ import { useAutoState } from '../../../hooks/useAutoState';
 import { validateInputs } from '../../../misc/formHandler';
 import { NewSong } from '../../../misc/interfaces';
 import { constructFormData, popup, previewImage } from '../../../misc/utils';
+import { usePostSongToAlbumMutation } from '../../../services/albumService';
 import { useUploadSongMutation } from '../../../services/musicService';
 import songGenres from '../../json/genres.json';
 import Option from '../utils/Option';
@@ -12,6 +13,7 @@ const UploadSong = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const uploadMode = searchParams.get('for');
+    const albumId = searchParams.get('id');
 
     const [newSong, setNewSong] = useState<NewSong>({
         title: '',
@@ -19,7 +21,9 @@ const UploadSong = () => {
         profile: null,
         audio: null
     })
+
     const [songUpload, { isLoading }] = useUploadSongMutation();
+    const [albumSongUpload, { isSuccess }] = usePostSongToAlbumMutation();
 
     const handleForm = async(e: React.FormEvent) => {
         e.preventDefault();
@@ -28,10 +32,17 @@ const UploadSong = () => {
 
         if(validateInputs(inputs)) {
             const formData: FormData | null = constructFormData(newSong);
-            if(formData !== null && uploadMode === null) {
+            if(formData !== null) {
                 try {
-                    await songUpload(formData).unwrap();
-                    navigate('/browse');
+                    const songId = await songUpload(formData).unwrap();
+                    if(uploadMode === 'album') {
+                        await albumSongUpload({ albumId, songId }).unwrap();
+                        navigate('/user/albums');
+                    }
+
+                    else {
+                        navigate('/browse');
+                    }
                 }
 
                 catch(err: any) {

@@ -5,8 +5,9 @@ import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
 import { INF_Song } from '../../../misc/interfaces';
 import { toggleElement } from '../../../misc/utils';
 
-const Song = ({ song, idx, ignore, queueType, referBy } : 
-    { song: INF_Song, idx: number, ignore: boolean, queueType: string | null, referBy: string }) => {
+const Song = ({ song, idx, ignore, queueType, referBy, direction='vert' } : 
+    { song: INF_Song, idx: number, ignore: boolean, queueType: string | null, referBy: string,
+    direction: 'horiz' | 'vert' }) => {
     const dispatch = useAppDispatch();
 
     const selectSong = (id: number | null, referBy: string, idx: number) => {
@@ -20,12 +21,10 @@ const Song = ({ song, idx, ignore, queueType, referBy } :
     }
 
     return (
-        <a className='song' data-type={queueType} tabIndex={0} onKeyDown={(e) => {
+        <a className={`song ${direction}`} data-type={queueType} tabIndex={0} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(song.id, referBy, idx)
-        }}
-
-            onClick={() => selectSong(song.id, referBy, idx)} 
-                id={'song-' + song.id + (queueType ? '-queue' : '')}>
+        }}  onClick={() => selectSong(song.id, referBy, idx)} 
+            id={'song-' + song.id + (queueType ? '-queue' : '')}>
             <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'
