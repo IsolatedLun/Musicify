@@ -20,6 +20,14 @@
     border-radius: 100vw;
 }
 
+.album .song::after {
+    inset: 3% 0.5% auto auto;
+}
+
+.album .song:hover {
+    background-color: var(--clr-err-transp);
+}
+
 .albums .album:is(:focus, :hover) {
     background-color: var(--bg-hov);
 }

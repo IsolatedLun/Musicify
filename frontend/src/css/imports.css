@@ -8,6 +8,8 @@
 @import url('songs.css');
 @import url('albums.css');
 
+@import url('context-menu.css');
+
 @import url('user-view.css');
 @import url('user-header.css');
 @import url('user-home.css');

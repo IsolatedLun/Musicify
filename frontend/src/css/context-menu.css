@@ -1,0 +1,30 @@
+.context-menu {
+    position: fixed;
+    transform: scale(0);
+    background-color: var(--clr-primary);
+    border-radius: 8px;
+}
+
+.context-menu:focus {
+    transform: scale(1);
+}
+
+.context-menu .menu__options {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    border-radius: inherit;
+}
+
+.context-menu .menu__option {
+    font-size: calc(var(--fs-450) * 0.8);
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    border-radius: inherit;
+    cursor: pointer;
+    transition: background-color 105ms ease-out;
+}
+
+.context-menu .menu__option:hover {
+    background-color: var(--clr-secondary);
+}

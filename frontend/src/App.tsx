@@ -14,7 +14,8 @@ import Popup from "./components/layout/Popup";
 import DropUp from "./components/DropUp";
 import { useGetUserByTokMutation } from "./services/userServices";
 import { useAuth } from "./hooks/useAuth";
-import { popup } from "./misc/utils";
+import { focusElement, popup, toggleEl } from "./misc/utils";
+import ContextMenu from "./components/ContextMenu";
 
 function App() {
   const { user } = useAuth();
@@ -26,7 +27,7 @@ function App() {
     }
 
     catch(err: any) {
-      popup('User does not exist.', 'err');
+      popup('User does not exist.', 'Error');
       localStorage.removeItem('tok');
     }
   }
@@ -61,6 +62,7 @@ function App() {
           
           <DropUp />
           <Popup />
+          <ContextMenu />
         </div>
 
         <Footer />

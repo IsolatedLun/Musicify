@@ -19,15 +19,16 @@
     background-color: var(--bg-secondary);
     cursor: pointer;
     transition: background-color 95ms ease-out;
+    user-select: none;
 }
 
 .song::after {
     content: attr(data-duration) " ";
     position: absolute;
-    font-size: calc(var(--fs-400) * 0.65);
+    font-size: calc(var(--fs-400) * 0.75);
     inset: auto 1% 2% auto;
     padding: 0.35em 0.75em;
-    border: 2px solid var(--txt);
+    border: 2px solid var(--clr-primary);
     border-radius: 100vw;
 }
 

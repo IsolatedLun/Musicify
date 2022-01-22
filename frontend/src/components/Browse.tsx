@@ -60,6 +60,8 @@ const Browse = () => {
 
             </div>
         )
+    else
+        return(<></>)
 }
 
 export default Browse
