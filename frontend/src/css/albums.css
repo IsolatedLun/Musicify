@@ -4,9 +4,20 @@
 }
 
 .albums .album {
+    position: relative;
     padding: 0.25em;
+    background-color: var(--bg-secondary);
     cursor: pointer;
     transition: background-color 100ms ease-out;
+}
+
+.albums .album::after {
+    content: 'Album';
+    position: absolute;
+    inset: auto 1% 2% auto;
+    padding: 0.35em 0.75em;
+    border: 2px solid var(--txt);
+    border-radius: 100vw;
 }
 
 .albums .album:is(:focus, :hover) {

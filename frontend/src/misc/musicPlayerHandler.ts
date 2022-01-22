@@ -1,6 +1,6 @@
 import { ICON_PAUSE, ICON_PLAY } from "./consts";
 import { INF_Song } from "./interfaces";
-import { getSongEl } from "./utils";
+import { convertToDateTime, getSongEl } from "./utils";
 
  export const handleAudio = (audioEl: HTMLAudioElement, toggleBtn: HTMLButtonElement) => {
      if(audioEl.paused) {
@@ -48,8 +48,6 @@ import { getSongEl } from "./utils";
 
  export const updateTime = (audioEl: HTMLAudioElement, audioTime: HTMLDivElement) => {
      if(audioEl.duration) {
-        const currTime = new Date(audioEl.currentTime * 1000).toISOString().substr(11, 8);
-        const duration = new Date(audioEl.duration * 1000).toISOString().substr(11, 8);
-        audioTime.innerText = currTime + ' / ' + duration;
+        audioTime.innerText = convertToDateTime(audioEl.currentTime);
      }
  }

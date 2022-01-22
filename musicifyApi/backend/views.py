@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from rest_framework import status
 from django.db.utils import IntegrityError
+from sqlalchemy import except_
 
 from users.utils import get_user_by_tok
 
@@ -56,8 +57,7 @@ class RecentSongs(APIView):
                 for x in recent_songs:
                     songs.append(Song.objects.get(id=x.song_id))
             except:
-                # Song doesn't exist so we delete it from the recents too.
-                RecentSong.objects.get(id=x.song_id).delete()
+                pass
 
             serializer = SongSerializer(songs, many=True).data
             
@@ -90,8 +90,9 @@ class UploadSong(APIView):
         user = get_user_by_tok(req.headers['authorization'])
 
         try:
-            new_song, created = Song.objects.get_or_create(title=data['title'], user=user,
-                thumbnail=data['profile'], genre=data['genre'], author=user.producer_name, audio=data['audio'])
+            new_song, created = Song.objects.get_or_create(title=data['title'], 
+                user=user, duration=data['duration'], thumbnail=data['profile'], genre=data['genre'], 
+                author=user.producer_name, audio=data['audio'])
             
             if not created:
                 return Response({'err': 'Song already exists.'}, ERR)

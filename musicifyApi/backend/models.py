@@ -41,6 +41,7 @@ class Song(models.Model):
     dislikes = models.PositiveIntegerField(default=1)
 
     thumbnail = models.ImageField(upload_to='thumbnails/')
+    duration = models.CharField(max_length=16, default='00:00:00')
 
     audio = models.FileField(upload_to='audios/', 
         validators=[])

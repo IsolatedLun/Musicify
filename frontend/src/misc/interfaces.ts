@@ -16,6 +16,7 @@ export interface INF_Song {
     genre: string;
     views: number;
     rating: number;
+    duration: string;
     created_at: Date;
 }
 

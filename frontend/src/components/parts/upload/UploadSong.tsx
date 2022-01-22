@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAutoState } from '../../../hooks/useAutoState';
 import { validateInputs } from '../../../misc/formHandler';
 import { NewSong } from '../../../misc/interfaces';
-import { constructFormData, popup, previewImage } from '../../../misc/utils';
+import { constructFormData, getAudioLength, popup, previewImage } from '../../../misc/utils';
 import { usePostSongToAlbumMutation } from '../../../services/albumService';
 import { useUploadSongMutation } from '../../../services/musicService';
 import songGenres from '../../json/genres.json';
@@ -32,7 +32,11 @@ const UploadSong = () => {
 
         if(validateInputs(inputs)) {
             const formData: FormData | null = constructFormData(newSong);
+
             if(formData !== null) {
+                await getAudioLength(newSong.audio!)
+                    .then((duration: any) => formData.append('duration', duration));
+
                 try {
                     const songId = await songUpload(formData).unwrap();
                     if(uploadMode === 'album') {

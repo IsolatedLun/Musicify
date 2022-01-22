@@ -21,7 +21,8 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert' } :
     }
 
     return (
-        <a className={`song ${direction}`} data-type={queueType} tabIndex={0} onKeyDown={(e) => {
+        <a className={`song ${direction}`} data-duration={song.duration}
+             data-type={queueType} tabIndex={0} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(song.id, referBy, idx)
         }}  onClick={() => selectSong(song.id, referBy, idx)} 
             id={'song-' + song.id + (queueType ? '-queue' : '')}>

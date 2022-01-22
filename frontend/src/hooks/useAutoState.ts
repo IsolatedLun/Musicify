@@ -5,11 +5,16 @@ interface AutoStateOptions {
 }
 
 export function useAutoState(e: React.FormEvent<any>, 
-    setter: Function, data: Object, type: string, options: AutoStateOptions | null=null) {
+    setter: Function, data: Object, type: 'text' | 'string' | 'file', 
+    options: AutoStateOptions | null=null) {
     
     const target = e.target as HTMLInputElement;
     if(type === 'text') {
         setter({ ...data, [target.name]: target.value });
+    }
+
+    else if(type === 'string') {
+        setter(target.value);
     }
 
     else if(type === 'file' && target.files) {

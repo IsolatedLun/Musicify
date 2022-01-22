@@ -153,29 +153,43 @@ export function previewImage(id: string, imgFile: File, def: string | null) {
     }
 }
 
-export function constructHeaders(hasFiles: boolean, requiresAuth: boolean, addDefaults: boolean=true): object {
-    let headers: any = {};
-
-    if(hasFiles) {
-        headers['content-type'] = 'multipart/form-data';
-    }
-
-    else if(addDefaults) {
-        headers['content-type'] = 'application/json';
-    }
-
-    if(requiresAuth) {
-        headers['user-agent'] = getUserAgent();
-        headers['authorization'] = 'Token ' + localStorage.getItem('tok');
-    }
-
-    return headers;
-}
-
+/**
+ * @param isHeader -> if true then splits the scheme and token
+ * @returns Token from localStorage or api
+ */
 export function getToken(isHeader: boolean=true): string {
     const tok = localStorage.getItem('tok')!;
     if(tok !== null)
         if(isHeader)
             return 'Token ' + tok;
         return tok
+}
+
+/**
+ * @param File -> Audio file
+ * @param format -> return HH:MM:SS if *then* s
+ */
+export function getAudioLength(file: File, format: boolean=true) {
+    return new Promise((resolve) => {
+        const audio = new Audio();
+
+        audio.onloadedmetadata = () => {
+            let duration: string | number = audio.duration;
+
+            if(format)
+                duration = convertToDateTime(audio.duration);
+
+            resolve(duration);
+        }
+
+        audio.src = URL.createObjectURL(file);
+    })
+}
+
+/**
+ * @param time in seconds
+ * @returns -> HH::MM:SS
+ */
+export function convertToDateTime(time: number): string {
+    return new Date(time * 1000).toISOString().substr(11, 8);
 }

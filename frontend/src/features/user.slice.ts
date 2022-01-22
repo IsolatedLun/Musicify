@@ -1,10 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { UserState } from '../misc/interfaces';
-import axios from 'axios';
-import { constructHeaders } from '../misc/utils';
-import { popup } from '../misc/utils';
 import { UserApi } from '../services/userServices';
-import { POST_SAVE } from '../misc/consts';
 
 const initialState: UserState = {
     user: null,
@@ -14,21 +10,6 @@ const initialState: UserState = {
     changesMade: false,
     doSave: false
 }
-
-export const save = createAsyncThunk(
-    'users/save-changes',
-    async(updatedUser: FormData, { rejectWithValue }) => {
-        try {
-            const res: any = await axios.post(POST_SAVE, updatedUser, {
-                headers: { ...constructHeaders(true, true) }
-            }) 
-        }
-
-        catch(err: any) {
-            popup(err.response.data['err'], 'err');
-        }
-    }
-)
 
 export const userSlice = createSlice({
     name: 'user',

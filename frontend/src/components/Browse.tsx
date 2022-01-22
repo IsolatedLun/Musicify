@@ -6,6 +6,7 @@ import Songs from './parts/song/Songs';
 import Option from './parts/utils/Option';
 import songGenres from './json/genres.json';
 import { useGetSongsQuery } from '../services/musicService';
+import { useAutoState } from '../hooks/useAutoState';
 
 const Browse = () => {
     const {data, isLoading, isFetching, isSuccess} = useGetSongsQuery();
@@ -36,22 +37,24 @@ const Browse = () => {
             <div className="browse-container" id='main-content'>
                 <div className="browse__controls flex--align gap--1">
                     <input id='search-inpt' type="text" placeholder='Search songs...' 
-                        onInput={(e: FormEvent<HTMLInputElement>) => handleInput(e)} 
+                        onInput={(e: FormEvent<HTMLInputElement>) => 
+                            useAutoState(e, setSearch, '', 'string')} 
                         className='inpt--def input--primary' />
 
                     <select id='genres-input' 
-                        onChange={(e: FormEvent<HTMLSelectElement>) => handleSelect(e)}
+                        onChange={(e: FormEvent<HTMLSelectElement>) =>
+                            useAutoState(e, setGenre, '', 'string')}
                         className='input--select' name='Genres'>
                         {
-                        songGenres.map(genre => (
-                            <Option val={genre}/>
+                        songGenres.map((genre, key) => (
+                            <Option key={key} val={genre}/>
                         ))
                         }
                     </select>
                 </div>
 
                 <div className="songs">
-                    <Songs songs={data} referBy='ref-browse' mode='filter' 
+                    <Songs songs={data} referBy='ref-browse' mode='filter' direction='vert'
                     genre={genre} search={search} fallbackEl={<Loader text='Loading songs'/>} />
                 </div>
 

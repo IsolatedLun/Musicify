@@ -33,7 +33,7 @@ const UserSongs = ({ user }: { user: User }) => {
                 </h1>
 
                 <div className="songs__results songs">
-                    <Songs songs={(data as any)['data']} referBy='ref-uploaded' mode='def' 
+                    <Songs songs={(data as any)['data']} referBy='ref-uploaded' mode='def' direction='vert'
                         search='' genre='' fallbackEl={<p>No uploaded songs</p>}/>
                 </div>
             </div>

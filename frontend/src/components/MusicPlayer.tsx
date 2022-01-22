@@ -95,11 +95,13 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                     <div className="music__reprs">
 
-                        <Song song={songsToPlay[currSongType][currIdx - 1]} idx={currIdx - 1} ignore={true} 
+                        <Song song={songsToPlay[currSongType][currIdx - 1]} 
+                            idx={currIdx - 1} ignore={true} direction='vert'
                             queueType='previous' referBy={currSongType} />
                         <SongPreview song={currSong} ratedSong={ratedSongData}
                             currId={null} isQueue={false} />
-                        <Song song={songsToPlay[currSongType][currIdx + 1]} idx={currIdx + 1} ignore={true} 
+                        <Song song={songsToPlay[currSongType][currIdx + 1]} 
+                            idx={currIdx + 1} ignore={true} direction='vert'
                             queueType='next' referBy={currSongType} />
 
                     </div>
@@ -140,7 +142,7 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
                     <div className="music__progress" id='audio-bar-progress'></div>
                 </div>
                 
-                <p className="music__time" id='audio-time'>00:00:00 / 00:00:00</p>
+                <p className="music__time"><span id='audio-time'></span> / { currSong.duration }</p>
 
                 <button onClick={() => focusElement('main-dropup')}
                 className="fa btn--def music__dropdown-btn" id='dropup-btn'>&#xf142;</button>
