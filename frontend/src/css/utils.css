@@ -191,6 +191,10 @@ input[type="radio"]:checked + *::after {
     border-radius: 100vw;
 }
 
+.round--50 {
+    border-radius: 50%;
+}
+
 .reverse {
     transform: rotate(-180deg);
 }
@@ -237,4 +241,8 @@ input[type="radio"]:checked + *::after {
 /* Margins & Paddings */
 .mt-1 {
     margin-top: 1em;
+}
+
+.p-05 {
+    padding: 0.5em;
 }

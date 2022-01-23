@@ -9,7 +9,7 @@ const Songs = ({ songs, referBy, mode='def', search='', direction='vert',
         search: string, genre: string, direction: 'horiz' | 'vert', editable: boolean,
         fallbackEl: React.Component | JSX.Element }) => {
 
-    if(songs !== undefined && songs !== null) {
+    if(songs !== undefined && songs !== null && songs.length > 0) {
         if(mode === 'def')
             return <>{
                 songs.map((song: INF_Song, idx: number) => (
@@ -39,7 +39,7 @@ const Songs = ({ songs, referBy, mode='def', search='', direction='vert',
     }
     
     else
-        return (<>{fallbackEl}</>)
+        return (<>{ fallbackEl }</>)
 }
 
 export default Songs

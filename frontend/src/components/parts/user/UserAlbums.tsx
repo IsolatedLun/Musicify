@@ -10,12 +10,14 @@ const UserAlbums = ({ user }: { user: User }) => {
   return(
       <div className="user__albums">
           <h1 className="albums__title">{ user.producer_name }'s albums</h1>
-          {
-            isFetching && <Loader text='Loading albums...' />
-          }
-          {
-            isSuccess && data && <Albums albums={data} />
-          }
+          <div className="albums">
+            {
+              isFetching && <Loader text='Loading albums...' />
+            }
+            {
+              isSuccess && data && <Albums albums={data} />
+            }
+          </div>
       </div>
   )
 };

@@ -9,7 +9,7 @@ import { useGetSongsQuery } from '../services/musicService';
 import { useAutoState } from '../hooks/useAutoState';
 
 const Browse = () => {
-    const {data, isLoading, isFetching, isSuccess} = useGetSongsQuery();
+    const {data, isLoading, isFetching, isSuccess, refetch} = useGetSongsQuery();
     const dispatch = useAppDispatch();
 
     const [search, setSearch] = useState('');
@@ -51,11 +51,15 @@ const Browse = () => {
                         ))
                         }
                     </select>
+                    
+                    <button onClick={() => refetch()} name='refresh' 
+                        aria-label='Refresh button' aria-hidden='true'
+                        className='fa btn--def btn--primary round--50 p-05'>&#xf021;</button>
                 </div>
 
                 <div className="songs">
                     <Songs songs={data} referBy='ref-browse' mode='filter' direction='vert' editable={false}
-                    genre={genre} search={search} fallbackEl={<Loader text='Loading songs'/>} />
+                    genre={genre} search={search} fallbackEl={<p>No songs found.</p>} />
                 </div>
 
             </div>
