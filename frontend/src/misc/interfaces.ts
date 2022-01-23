@@ -26,7 +26,7 @@ export interface MusicState {
     currSong: INF_Song | any;
     currIdx: number;
     currSongType: string;
-    selectedSong: number;
+    selectedSong: DataItem;
 }
 
 export interface I_INF_Song {
@@ -78,8 +78,14 @@ export interface UtilsState {
 }
 
 // Album
-
 export interface INF_Album {
     id: number
     name: string;
 } 
+
+// Misc
+export interface DataItem {
+    id: number;
+    type: string;
+    referBy: string;
+}

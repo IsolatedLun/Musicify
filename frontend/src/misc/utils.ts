@@ -1,5 +1,5 @@
 import { ICON_ERROR, ICON_INFO } from "./consts";
-import { UserAgent } from "./interfaces";
+import { DataItem, UserAgent } from "./interfaces";
 
 export function animateMixerBars(id: string): void {
     const mixers = (document.getElementById(id) as HTMLDivElement).children!
@@ -192,4 +192,14 @@ export function getAudioLength(file: File, format: boolean=true) {
  */
 export function convertToDateTime(time: number): string {
     return new Date(time * 1000).toISOString().substr(11, 8);
+}
+
+/**
+ * @param el
+ * @returns {object} { id, type, referBy }
+*/
+export function splitDataItem(el: HTMLElement): DataItem {
+    const attrs: string[] = el.getAttribute('data-item')!?.split(';')
+
+    return { id: Number(attrs[0]), type: attrs[1], referBy: attrs[2] }
 }

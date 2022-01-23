@@ -1,11 +1,12 @@
 .context-menu {
     position: fixed;
+    padding: 0.5em 0.25em;
     transform: scale(0);
-    background-color: var(--clr-primary);
+    background-color: var(--bg);
     border-radius: 8px;
 }
 
-.context-menu:focus {
+.context-menu:is(:focus, :focus-within) {
     transform: scale(1);
 }
 
@@ -17,9 +18,9 @@
 }
 
 .context-menu .menu__option {
-    font-size: calc(var(--fs-450) * 0.8);
-    font-weight: bold;
+    font-size: calc(var(--fs-450) * 0.9);
     padding: 0.25em 0.5em;
+    background-color: var(--bg-hov);
     border-radius: inherit;
     cursor: pointer;
     transition: background-color 105ms ease-out;

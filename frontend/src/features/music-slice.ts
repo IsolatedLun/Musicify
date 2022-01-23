@@ -9,7 +9,11 @@ const initialState: MusicState = {
 
     currIdx: NaN,
     currSongType: '',
-    selectedSong: -1,
+    selectedSong: {
+        id: -1,
+        type: 'null',
+        referBy: 'ref-noReffer'
+    },
 }
 
 export const musicSlice = createSlice({

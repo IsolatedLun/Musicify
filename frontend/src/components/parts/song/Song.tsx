@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { GET_THUMBNAIL } from '../../../misc/consts';
 import { showContextMenu } from '../../../misc/contextMenuHandler';
 import { INF_Song } from '../../../misc/interfaces';
-import { toggleElement } from '../../../misc/utils';
+import { splitDataItem, toggleElement } from '../../../misc/utils';
 
 const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editable=false } : 
     { song: INF_Song, idx: number, ignore: boolean, queueType: string | null, referBy: string,
@@ -28,8 +28,8 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editabl
         <a className={`song ${direction}`} data-duration={song.duration} data-editable={editable}
             onContextMenu={(e) => {
                 showContextMenu(e, 'context-menu');
-                dispatch(setSelectedSong(song.id))
-            }} data-song='true'
+                dispatch(setSelectedSong(splitDataItem(e.target as HTMLElement)));
+            }} data-song='true' data-item={`${song.id};song;${referBy}`}
              data-type={queueType} tabIndex={0} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(null, song.id, referBy, idx)
         }}  onClick={(e: React.MouseEvent) => selectSong(e, song.id, referBy, idx)} 
