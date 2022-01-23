@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('songs', views.Songs.as_view(), name='songs'),
+    path('delete/<int:item_id>', views.DeleteItem.as_view(), name='post-delete-item'),
 
     path('songs/thumb/<int:song_id>', views.SongThumbnail.as_view(), name='get-song-thumbnail'),
     path('songs/audio/<int:song_id>', views.SongAudio.as_view(), name='get-song-audio'),

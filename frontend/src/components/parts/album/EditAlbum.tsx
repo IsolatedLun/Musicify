@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { setSongList } from '../../../features/music-slice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useGetAlbumSongsQuery } from '../../../services/albumService';
@@ -8,6 +8,8 @@ import Songs from '../song/Songs';
 
 const EditAlbum = () => {
     const { albumId } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const albumName = searchParams.get('album_name')
     const dispatch = useAppDispatch()
     const { data, isSuccess, isFetching } = useGetAlbumSongsQuery(Number(albumId));
     
@@ -15,23 +17,33 @@ const EditAlbum = () => {
         if(data)
             dispatch(setSongList({songKey: `ref-album-${albumId}`, data}));
     }, [isFetching])
-  
-    return(
-        <div className="album">
-            <h1 className="album__title">{}</h1>
+    
+    if(data)
+        return(
+            <div className="album">
+                <h1 className="album__title">{}</h1>
 
-            <div className="song-list">
-                { isFetching && <Loader text='Loading album songs...'/> }
-                { isSuccess && <Songs songs={data} referBy={'ref-album-' + albumId} mode='def'
-                    fallbackEl={<></>} search='' genre='' direction='horiz' editable={true} /> }
+                <div className="song-list">
+                    { isFetching && <Loader text='Loading album songs...'/> }
+                    { isSuccess && <Songs songs={data} referBy={'ref-album-' + albumId} mode='def'
+                        fallbackEl={<></>} search='' genre='' direction='horiz' editable={true} /> }
+                </div>
+
+                <div className="btn--group">
+                    <Link className='btn--def form__btn btn--primary list__btn' 
+                        to={'/user/upload/song?for=album&id=' + albumId}>
+                        Add song
+                    </Link>
+                    <Link className='btn--def form__btn btn--primary list__btn' 
+                        to={`/user/delete?for=album&id=${albumId}&name=${albumName}`}>
+                        Delete album
+                    </Link>
+                </div>
             </div>
-
-            <Link className='btn--def form__btn btn--primary list__btn' 
-                to={'/user/upload/song?for=album&id=' + albumId}>
-                Add song
-            </Link>
-        </div>
     )
+
+    else
+        return(<></>)
 };
 
 export default EditAlbum;

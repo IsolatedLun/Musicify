@@ -4,6 +4,7 @@ import userSlice from "./features/user.slice";
 import utilsSlice from "./features/utils-slice";
 import { AlbumApi } from "./services/albumService";
 import { MusicApi } from "./services/musicService";
+import { rootApi } from "./services/rootService";
 import { UserApi } from "./services/userServices";
 
 export const store = configureStore({
@@ -14,11 +15,12 @@ export const store = configureStore({
         [UserApi.reducerPath]: UserApi.reducer,
         [MusicApi.reducerPath]: MusicApi.reducer,
         [AlbumApi.reducerPath]: AlbumApi.reducer,
+        [rootApi.reducerPath]: rootApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(UserApi.middleware, MusicApi.middleware, AlbumApi.middleware),
+    }).concat(UserApi.middleware, MusicApi.middleware, AlbumApi.middleware, rootApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -10,6 +10,8 @@
 
 @import url('context-menu.css');
 
+@import url('delete-view.css');
+
 @import url('user-view.css');
 @import url('user-header.css');
 @import url('user-home.css');

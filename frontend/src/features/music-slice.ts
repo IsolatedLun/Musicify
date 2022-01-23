@@ -9,6 +9,7 @@ const initialState: MusicState = {
 
     currIdx: NaN,
     currSongType: '',
+    selectedSong: -1,
 }
 
 export const musicSlice = createSlice({
@@ -37,11 +38,16 @@ export const musicSlice = createSlice({
 
         setSongList(state, action) {
             state.songsToPlay[action.payload['songKey']] = action.payload['data'];
+        },
+
+        setSelectedSong(state, action) {
+            state.selectedSong = action.payload;
         }
     },
     extraReducers: (builder) => {
     }
 })
 
-export const { setCurrSong, setIndex, setSong, setSongType, setSongList } = musicSlice.actions;
+export const { setCurrSong, setIndex, setSong, setSelectedSong,
+    setSongType, setSongList } = musicSlice.actions;
 export default musicSlice.reducer;

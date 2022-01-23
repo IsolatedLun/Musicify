@@ -1,5 +1,5 @@
 import React from 'react';
-import { setSong, setSongType } from '../../../features/music-slice';
+import { setSelectedSong, setSong, setSongType } from '../../../features/music-slice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { GET_THUMBNAIL } from '../../../misc/consts';
 import { showContextMenu } from '../../../misc/contextMenuHandler';
@@ -26,7 +26,10 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editabl
 
     return (
         <a className={`song ${direction}`} data-duration={song.duration} data-editable={editable}
-            onContextMenu={(e) => showContextMenu(e, 'context-menu')} data-song='true'
+            onContextMenu={(e) => {
+                showContextMenu(e, 'context-menu');
+                dispatch(setSelectedSong(song.id))
+            }} data-song='true'
              data-type={queueType} tabIndex={0} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(null, song.id, referBy, idx)
         }}  onClick={(e: React.MouseEvent) => selectSong(e, song.id, referBy, idx)} 

@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../features/user.slice';
 import { useAppDispatch } from '../../hooks/hooks';
+import { fullReload } from '../../misc/utils';
 
 const Logout = () => {
     const navigate = useNavigate();
@@ -9,6 +10,7 @@ const Logout = () => {
 
     const commenceLogout = () => {
         dispatch(logout());
+        fullReload();
         navigate('/login');
     }
 

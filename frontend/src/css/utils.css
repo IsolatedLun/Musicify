@@ -79,6 +79,11 @@
 .btn--group {
     display: flex;
     justify-content: space-between;
+
+}
+
+.btn--group .btn--primary {
+    width: max-content;
 }
 
 .group--y {

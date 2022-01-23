@@ -5,6 +5,7 @@ import EditAlbum from '../album/EditAlbum';
 import Upload from '../upload/Upload';
 import UploadAlbum from '../upload/UploadAlbum';
 import UploadSong from '../upload/UploadSong';
+import DeleteView from '../views/DeleteView';
 import UserAlbums from './UserAlbums';
 import UserHeader from './UserHeader';
 import UserHome from './UserHome';
@@ -33,6 +34,8 @@ const UserRouter = ({ user }: { user: User | null }) => {
                     <Route path='upload/song' element={<UploadSong />}/>
                     <Route path='upload/album' element={<UploadAlbum />}/>
                     <Route path='/album/edit/:albumId' element={<EditAlbum />}/>
+
+                    <Route path='delete' element={<DeleteView />} />
                 </Routes>
             </div>
         )

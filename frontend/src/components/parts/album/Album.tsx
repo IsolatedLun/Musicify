@@ -6,7 +6,7 @@ import { INF_Album } from '../../../misc/interfaces';
 const Album = ({ album }: { album: INF_Album }) => {
     const navigate = useNavigate()
     return(
-        <div onClick={() => navigate('/user/album/edit/' + album.id)}
+        <div onClick={() => navigate(`/user/album/edit/${album.id}?album_name=${album.name}`)}
             className="album flex--align flex--col gap--05">
             <h1 className="album__title">{ album.name }</h1>
             <div className="album__profile">

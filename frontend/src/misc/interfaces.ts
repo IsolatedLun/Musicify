@@ -26,6 +26,7 @@ export interface MusicState {
     currSong: INF_Song | any;
     currIdx: number;
     currSongType: string;
+    selectedSong: number;
 }
 
 export interface I_INF_Song {

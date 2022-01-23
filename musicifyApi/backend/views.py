@@ -53,11 +53,12 @@ class RecentSongs(APIView):
             recent_songs = RecentSong.objects.filter(user=user).order_by('-listened_at')
             songs = []
 
-            try:
-                for x in recent_songs:
+            
+            for x in recent_songs:
+                try:
                     songs.append(Song.objects.get(id=x.song_id))
-            except:
-                pass
+                except:
+                    RecentSong.objects.get(id=x.song_id).delete()
 
             serializer = SongSerializer(songs, many=True).data
             
@@ -236,3 +237,22 @@ class AlbumProfieView(APIView):
         album = Album.objects.get(id=album_id)
 
         return FileResponse(album.profile)
+
+class DeleteItem(APIView):
+    def post(self, req, item_id):
+        itemtype = req.data['type']
+        to_delete = None
+
+        if itemtype == 'song':
+            to_delete = Song.objects.get(id=item_id)
+        elif itemtype == 'album':
+            to_delete = Album.objects.get(id=item_id)
+            to_delete_children = AlbumSong.objects.filter(album_id=item_id)
+
+            for x in to_delete_children:
+                Song.objects.get(id=x.song.id).delete()
+        
+        if to_delete is not None:
+            to_delete.delete()
+            return Response({'detail': 'Item deleted'}, OK)
+        return Response({'err': 'Item does not exist'}, ERR)
