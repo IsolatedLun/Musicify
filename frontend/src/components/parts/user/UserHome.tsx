@@ -27,7 +27,7 @@ const UserHome = ({ user }: { user: User | null }) => {
                         <div className="part__items flex flex--align gap--05">
                             <Songs songs={(data as any)['recents']} referBy='ref-recent' 
                                 mode='def' fallbackEl={<p>No recent songs.</p>}
-                                genre='' search=''/>
+                                genre='' search='' direction='vert' editable={false}/>
                         </div>
                     )}
 
@@ -43,7 +43,7 @@ const UserHome = ({ user }: { user: User | null }) => {
                         <div className="part__items flex flex--align gap--05">
                             <Songs songs={(data as any)['favorites']} referBy='ref-favorites' 
                                 mode='def' fallbackEl={<p>No favorite songs</p>}
-                                genre='' search=''/>
+                                genre='' search='' direction='vert' editable={false}/>
                         </div>
                     )}
 

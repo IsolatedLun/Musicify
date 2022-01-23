@@ -4,9 +4,9 @@ import Loader from '../../layout/Loader'
 import Song from './Song'
 
 const Songs = ({ songs, referBy, mode='def', search='', direction='vert',
-    genre='', fallbackEl=<></> } : 
+    genre='', fallbackEl=<></>, editable=false } : 
     { songs: INF_Song[] | null | undefined, referBy: string, mode: 'def' | 'filter', 
-        search: string, genre: string, direction: 'horiz' | 'vert', 
+        search: string, genre: string, direction: 'horiz' | 'vert', editable: boolean,
         fallbackEl: React.Component | JSX.Element }) => {
 
     if(songs !== undefined && songs !== null) {
@@ -14,7 +14,7 @@ const Songs = ({ songs, referBy, mode='def', search='', direction='vert',
             return <>{
                 songs.map((song: INF_Song, idx: number) => (
                     <Song song={song} key={song.id} idx={idx} direction={direction}
-                        ignore={false} queueType={null} referBy={referBy} />
+                        ignore={false} queueType={null} referBy={referBy} editable={editable} />
                 ))
             }</>
 
@@ -32,7 +32,7 @@ const Songs = ({ songs, referBy, mode='def', search='', direction='vert',
                     })
                     .map((song: INF_Song, idx: number) => (
                     <Song song={song} key={song.id} idx={idx} direction={direction}
-                        ignore={false} queueType={null} referBy={referBy} />
+                        ignore={false} queueType={null} referBy={referBy} editable={editable} />
             ))}</>
         else
             return(<></>)

@@ -1,28 +1,23 @@
 import React from 'react';
 import { setSong, setSongType } from '../../../features/music-slice';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { API_URL, GET_THUMBNAIL } from '../../../misc/consts';
-import { moveMenu } from '../../../misc/contextMenuHandler';
+import { GET_THUMBNAIL } from '../../../misc/consts';
+import { showContextMenu } from '../../../misc/contextMenuHandler';
 import { INF_Song } from '../../../misc/interfaces';
-import { focusElement, toggleElement } from '../../../misc/utils';
+import { toggleElement } from '../../../misc/utils';
 
-const Song = ({ song, idx, ignore, queueType, referBy, direction='vert' } : 
+const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editable=false } : 
     { song: INF_Song, idx: number, ignore: boolean, queueType: string | null, referBy: string,
-    direction: 'horiz' | 'vert' }) => {
+    direction: 'horiz' | 'vert', editable: boolean }) => {
+        
     const dispatch = useAppDispatch();
 
     const selectSong = (e: React.MouseEvent | null, id: number | null, referBy: string, idx: number) => {
-        if(e.button !== 1) {
+        if(e && e.button !== 1) {
             dispatch(setSongType(referBy));
             dispatch(setSong({ songId: id, songKey: referBy, idx: idx }));
             toggleElement('music-player', '96%', '2%', 'active', ignore);
         }
-    }
-
-    const showContextMenu = (e: React.MouseEvent, id: string) => {
-        e.preventDefault()
-        focusElement(id);
-        moveMenu(e, id);
     }
 
     if(!song) {
@@ -30,7 +25,7 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert' } :
     }
 
     return (
-        <a className={`song ${direction}`} data-duration={song.duration} 
+        <a className={`song ${direction}`} data-duration={song.duration} data-editable={editable}
             onContextMenu={(e) => showContextMenu(e, 'context-menu')} data-song='true'
              data-type={queueType} tabIndex={0} onKeyDown={(e) => {
             if(e.key === 'Enter') selectSong(null, song.id, referBy, idx)

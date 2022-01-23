@@ -54,7 +54,7 @@ const Browse = () => {
                 </div>
 
                 <div className="songs">
-                    <Songs songs={data} referBy='ref-browse' mode='filter' direction='vert'
+                    <Songs songs={data} referBy='ref-browse' mode='filter' direction='vert' editable={false}
                     genre={genre} search={search} fallbackEl={<Loader text='Loading songs'/>} />
                 </div>
 

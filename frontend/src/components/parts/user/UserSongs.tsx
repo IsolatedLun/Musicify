@@ -34,7 +34,7 @@ const UserSongs = ({ user }: { user: User }) => {
 
                 <div className="songs__results songs">
                     <Songs songs={(data as any)['data']} referBy='ref-uploaded' mode='def' direction='vert'
-                        search='' genre='' fallbackEl={<p>No uploaded songs</p>}/>
+                        search='' genre='' fallbackEl={<p>No uploaded songs</p>} editable={true}/>
                 </div>
             </div>
         )

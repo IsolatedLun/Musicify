@@ -23,7 +23,7 @@ const EditAlbum = () => {
             <div className="song-list">
                 { isFetching && <Loader text='Loading album songs...'/> }
                 { isSuccess && <Songs songs={data} referBy={'ref-album-' + albumId} mode='def'
-                    fallbackEl={<></>} search='' genre='' direction='horiz' /> }
+                    fallbackEl={<></>} search='' genre='' direction='horiz' editable={true} /> }
             </div>
 
             <Link className='btn--def form__btn btn--primary list__btn' 

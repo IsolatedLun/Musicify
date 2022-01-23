@@ -1,4 +1,7 @@
-
+/**
+ * @param inputs -> A node list of HTMLInputElements[]
+ * @returns If the inputs are valid return true else false
+ */
 export function validateInputs(inputs: NodeListOf<HTMLInputElement>): boolean {
     let validAmt = 0;
 
@@ -20,15 +23,18 @@ export function validateInputs(inputs: NodeListOf<HTMLInputElement>): boolean {
     return false;
 }
 
+/**
+ * @param input -> An HTMLInputElement
+ * @summary Looks at **data-realtype** of the input and validates the value accordingly.
+ * - Use **data-file-type** for files.
+ * - Use **data-null=true** if the input can be empty.
+*/
 function validateInput(input: HTMLInputElement): boolean {
     const val: string | number = input.value;
-    const type: string = input.type;
     const realType: string | null = input.getAttribute('data-realtype') ?? null;
     const fileType: string | null = input.getAttribute('data-file-type') ?? null;
     const canBeNull: boolean = input.getAttribute('data-null') === 'true' ? true : false;
     let isNested: boolean = false;
-
-
 
     clearHelpText(input);
     if(realType === 'ignore') {
@@ -55,6 +61,12 @@ function validateInput(input: HTMLInputElement): boolean {
 }
 
 /* Input styling */
+
+/**
+ * @param input -> An HTMLInputElement
+ * @param type -> What color to highlight: [err, ok, warn]
+ * @summary Highlights the input depending on the type.
+*/
 function highlightInput(input: HTMLInputElement, type: 'err' | 'ok' | 'warn') {
     if(type === 'ok') {
         input.style.borderColor = 'var(--clr-primary)';
@@ -69,6 +81,11 @@ function highlightInput(input: HTMLInputElement, type: 'err' | 'ok' | 'warn') {
     }
 }
 
+/**
+ * @param input -> An HTMLInputElement
+ * @param text -> What to display for the user
+ * @todo Needs to be the last child of **form__part**
+*/
 function addHelpText(input: HTMLInputElement, text: string) {
     if(input.parentElement!.classList.contains('form__part')) {
         const p = input.parentElement?.lastChild!;
@@ -76,6 +93,10 @@ function addHelpText(input: HTMLInputElement, text: string) {
     }
 }
 
+/**
+ * @param input -> An HTMLInputElement
+ * @summary Clears the helptext
+*/
 function clearHelpText(input: HTMLInputElement) {
     let p: ChildNode | null = null;
 
@@ -89,6 +110,12 @@ function clearHelpText(input: HTMLInputElement) {
 }
 
 /* Validators */
+
+/**
+ * @param input -> An HTMLInputElement
+ * @param str -> Value of the input
+ * @summary Validates the password
+*/
 function isValidPassword(input: HTMLInputElement, str: string) {
     if(str.length > 7) {
         if(isNaN(Number(str))) {
@@ -107,6 +134,11 @@ function isValidPassword(input: HTMLInputElement, str: string) {
     return false;
 }
 
+/**
+ * @param input -> An HTMLInputElement
+ * @param str -> Value of the input
+ * @summary Validates the text
+*/
 function isValidText(input: HTMLInputElement, str: string) {
     if(str.length > 0) {
         return true;
@@ -119,6 +151,11 @@ function isValidText(input: HTMLInputElement, str: string) {
     return false;
 }
 
+/**
+ * @param input -> An HTMLInputElement
+ * @param str -> Value of the input
+ * @summary Validates the file
+*/
 function isValidFile(input: HTMLInputElement, val: File, fType: string | null) {
     if(val) {
         if(fType === 'img') {
@@ -157,6 +194,12 @@ export function isAudio(file: File): boolean {
 }
 
 /* Misc */
+
+/**
+ * @param MouseEvent
+ * @param inputId -> An HTMLInputElement
+ * @summary Toggles the input's type [text/password]
+*/
 export const togglePasswordVisibility = (e: React.MouseEvent, inputId: string) => {
     e.preventDefault();
     
