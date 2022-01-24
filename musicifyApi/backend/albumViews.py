@@ -54,5 +54,5 @@ class AlbumSongView(APIView):
 class AlbumProfieView(APIView):
     def get(self, req, album_id):
         album = Album.objects.get(id=album_id)
-
+        
         return FileResponse(album.profile)

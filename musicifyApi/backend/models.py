@@ -50,12 +50,12 @@ class Song(models.Model):
 
 class RecentSong(models.Model):
     user = models.ForeignKey(cUser, on_delete=models.CASCADE)
-    song_id = models.PositiveBigIntegerField()
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
     listened_at = models.DateTimeField(auto_now_add=True)
 
 class RatedSong(models.Model):
     user = models.ForeignKey(cUser, on_delete=models.CASCADE)
-    song_id = models.PositiveBigIntegerField()
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
     rate_type = models.CharField(max_length=32, choices=rate_choices)
 
 class Album(models.Model):

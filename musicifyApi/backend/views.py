@@ -26,25 +26,21 @@ class Songs(APIView):
 
 class SongThumbnail(APIView):
     def get(self, req, song_id):
-        if song_id > -1:
-            try:
-                thumbnail = Song.objects.get(id=song_id).thumbnail
-                return FileResponse(thumbnail)
-            except Song.DoesNotExist:
-                return Response({'err': f'Song with id of {song_id} does not exist'}, ERR)
-        return Response({'err': f'Song id is None'}, ERR)
+        try:
+            thumbnail = Song.objects.get(id=song_id).thumbnail
+            return FileResponse(thumbnail)
+        except Song.DoesNotExist:
+            return Response({'err': f'Song with id of {song_id} does not exist'}, ERR)
 
 class SongAudio(APIView):
     def get(self, req, song_id):
-        if song_id > -1:
-            try:
-                song = Song.objects.get(id=song_id)
-                song.views += 1
-                song.save()
-                return FileResponse(song.audio)
-            except Song.DoesNotExist:
-                return Response({'err': f'Song with id of {song_id} is None'}, ERR)
-        return Response({'err': f'Song id is None'}, ERR)
+        try:
+            song = Song.objects.get(id=song_id)
+            song.views += 1
+            song.save()
+            return FileResponse(song.audio)
+        except Song.DoesNotExist:
+            return Response({'err': f'Song with id of {song_id} is None'}, ERR)
 
 class RecentSongs(APIView):
     def get(self, req):
@@ -55,10 +51,7 @@ class RecentSongs(APIView):
 
             
             for x in recent_songs:
-                try:
-                    songs.append(Song.objects.get(id=x.song_id))
-                except:
-                    RecentSong.objects.get(id=x.song_id).delete()
+                songs.append(Song.objects.get(id=x.song_id))
 
             serializer = SongSerializer(songs, many=True).data
             
@@ -66,8 +59,6 @@ class RecentSongs(APIView):
             
         except Song.DoesNotExist:
             return Response({'err': 'User has no recent songs'}, ERR)
-        except cUser.DoesNotExist:
-            return Response({'err': 'User does not exist.'}, ERR)
 
     def post(self, req, song_id):
         if(song_id == 'null'):
@@ -175,10 +166,8 @@ class RatedSongView(APIView):
         return self.rate_song(song, rated_song, rate_type, 'Updated')
 
     def calculate_song_rating(self, likes, dislikes):
-        if likes == 0:
-            likes = 1
-        if dislikes == 0:
-            dislikes = 1
+        if likes == 0 and dislikes == 0:
+            return 50
 
         return (likes / (likes + dislikes)) * 100
 
