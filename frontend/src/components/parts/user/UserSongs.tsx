@@ -5,6 +5,7 @@ import { useGetUploadedSongsQuery } from '../../../services/musicService';
 import Songs from '../song/Songs';
 import Loader from '../../layout/Loader';
 import { setSongList } from '../../../features/music-slice';
+import ResultTitle from '../utils/ResultTitle';
 
 const UserSongs = ({ user }: { user: User }) => {
     const { data, isLoading, isFetching, isSuccess, error } = useGetUploadedSongsQuery();
@@ -25,19 +26,20 @@ const UserSongs = ({ user }: { user: User }) => {
     if(isFetching)
         return <Loader text='Loading uploaded songs...'/>
     
-    else if(isSuccess && data)
+    else if(isSuccess && data) {
+        const anyData: any = (data as any)['data'];
+
         return (
             <div className="user__songs">
-                <h1 className="songs__title">{ user.producer_name }'s songs  
-                    <span className="txt--muted txt--small"> { (data as any)['data'].length } result(s)</span>
-                </h1>
+                <ResultTitle text={`${user.producer_name}'s songs`} resultText='result' amt={anyData.length} />
 
                 <div className="songs__results songs">
-                    <Songs songs={(data as any)['data']} referBy='ref-uploaded' mode='def' direction='vert'
+                    <Songs songs={anyData} referBy='ref-uploaded' mode='def' direction='vert'
                         search='' genre='' fallbackEl={<p>No uploaded songs.</p>} editable={true}/>
                 </div>
             </div>
         )
+    }
     else
         return(<></>)
 }

@@ -1,5 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { setUploadedAlbum } from '../../../features/music-slice';
+import { useAppDispatch } from '../../../hooks/hooks';
 import { useAutoState } from '../../../hooks/useAutoState';
 import { validateInputs } from '../../../misc/formHandler';
 import { constructFormData, previewImage } from '../../../misc/utils';
@@ -7,6 +9,7 @@ import { usePostNewAlbumMutation } from '../../../services/albumService';
 
 const UploadAlbum = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [uploadAlbum, { isSuccess }] = usePostNewAlbumMutation();
     const [newAlbum, setNewAlbum] = useState({
         album_name: '',
@@ -18,6 +21,7 @@ const UploadAlbum = () => {
         const inputs = document.querySelectorAll('.form__inpt') as NodeListOf<HTMLInputElement>;
 
         if(validateInputs(inputs)) {
+            dispatch(setUploadedAlbum(true));
             const albumData: FormData = constructFormData(newAlbum)!;
             postAlbum(albumData);
         }

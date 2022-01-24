@@ -5,23 +5,27 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { useGetAlbumSongsQuery } from '../../../services/albumService';
 import Loader from '../../layout/Loader';
 import Songs from '../song/Songs';
+import ResultTitle from '../utils/ResultTitle';
 
 const EditAlbum = () => {
     const { albumId } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const albumName = searchParams.get('album_name')
     const dispatch = useAppDispatch()
-    const { data, isSuccess, isFetching } = useGetAlbumSongsQuery(Number(albumId));
+    const { data, isSuccess, isFetching, refetch } = useGetAlbumSongsQuery(Number(albumId));
     
     useEffect(() => {
         if(data)
             dispatch(setSongList({songKey: `ref-album-${albumId}`, data}));
+        
+        else
+            refetch()
     }, [isFetching])
     
-    if(data)
+    if(data && albumName)
         return(
             <div className="album">
-                <h1 className="album__title">{}</h1>
+                <ResultTitle text={albumName} resultText='song' amt={data.length} />
 
                 <div className="song-list">
                     { isFetching && <Loader text='Loading album songs...'/> }

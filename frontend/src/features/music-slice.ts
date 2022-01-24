@@ -14,6 +14,9 @@ const initialState: MusicState = {
         type: 'null',
         referBy: 'ref-noReffer'
     },
+
+    hasUploadedAlbum: false,
+    hasUploadedSong: false,
 }
 
 export const musicSlice = createSlice({
@@ -46,12 +49,21 @@ export const musicSlice = createSlice({
 
         setSelectedSong(state, action) {
             state.selectedSong = action.payload;
+        },
+
+        setUploadedSong(state, action) {
+            state.hasUploadedSong = action.payload
+        },
+
+        setUploadedAlbum(state, action) {
+            state.hasUploadedAlbum = action.payload
         }
     },
     extraReducers: (builder) => {
+        
     }
 })
 
 export const { setCurrSong, setIndex, setSong, setSelectedSong,
-    setSongType, setSongList } = musicSlice.actions;
+    setSongType, setSongList, setUploadedAlbum, setUploadedSong } = musicSlice.actions;
 export default musicSlice.reducer;

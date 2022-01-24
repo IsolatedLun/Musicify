@@ -27,6 +27,8 @@ export interface MusicState {
     currIdx: number;
     currSongType: string;
     selectedSong: DataItem;
+    hasUploadedSong: boolean;
+    hasUploadedAlbum: boolean;
 }
 
 export interface I_INF_Song {
