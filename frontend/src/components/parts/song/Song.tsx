@@ -29,11 +29,17 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editabl
             onContextMenu={(e) => {
                 showContextMenu(e, 'context-menu');
                 dispatch(setSelectedSong(splitDataItem(e.target as HTMLElement)));
-            }} data-song='true' data-item={`${song.id};song;${referBy}`}
-             data-type={queueType} tabIndex={0} onKeyDown={(e) => {
-            if(e.key === 'Enter') selectSong(null, song.id, referBy, idx)
-        }}  onClick={(e: React.MouseEvent) => selectSong(e, song.id, referBy, idx)} 
-            id={'song-' + song.id + (queueType ? '-queue' : '')}>
+            }} 
+             
+            onKeyDown={(e) => {
+                if(e.key === 'Enter') selectSong(null, song.id, referBy, idx)
+            }}  onClick={(e: React.MouseEvent) => selectSong(e, song.id, referBy, idx)} 
+
+            id={'song-' + song.id + (queueType ? '-queue' : '')}
+            data-song='true' data-item={`${song.id};song;${referBy}`}
+            data-type={queueType} tabIndex={0}
+            >
+
             <h2 className='song__queue light--h capitalize'>{ queueType }</h2>
             <div className="song__thumbnail">
                 <img loading='lazy'
@@ -41,6 +47,7 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editabl
             </div>
             <h1 className="song__title capitalize elliptic">{ song.title }</h1>
             <p className="song__author capitalize">{ song.author }</p>
+
         </a>
     )
 }

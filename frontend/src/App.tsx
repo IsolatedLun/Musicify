@@ -7,14 +7,13 @@ import MusicPlayer from "./components/MusicPlayer";
 import Browse from "./components/Browse";
 import SignUp from "./components/auth/SignUp";
 import LogIn from "./components/auth/LogIn";
-import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import Logout from "./components/auth/Logout";
 import UserRouter from "./components/parts/user/UserRouter";
 import Popup from "./components/layout/Popup";
 import DropUp from "./components/DropUp";
 import { useGetUserByTokMutation } from "./services/userServices";
 import { useAuth } from "./hooks/useAuth";
-import { focusElement, popup, toggleEl } from "./misc/utils";
+import { popup } from "./misc/utils";
 import ContextMenu from "./components/ContextMenu";
 
 function App() {

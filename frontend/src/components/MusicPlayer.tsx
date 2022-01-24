@@ -95,12 +95,12 @@ const MusicPlayer = ({ user } : { user: User | null }) => {
 
                     <div className="music__reprs">
 
-                        <Song song={songsToPlay[currSongType][currIdx - 1]} 
+                        <Song song={songsToPlay[currSongType][currIdx - 1]} editable={false}
                             idx={currIdx - 1} ignore={true} direction='vert'
                             queueType='previous' referBy={currSongType} />
                         <SongPreview song={currSong} ratedSong={ratedSongData}
                             currId={null} isQueue={false} />
-                        <Song song={songsToPlay[currSongType][currIdx + 1]} 
+                        <Song song={songsToPlay[currSongType][currIdx + 1]} editable={false}
                             idx={currIdx + 1} ignore={true} direction='vert'
                             queueType='next' referBy={currSongType} />
 

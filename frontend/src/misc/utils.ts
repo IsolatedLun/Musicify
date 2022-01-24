@@ -199,7 +199,7 @@ export function convertToDateTime(time: number): string {
  * @returns {object} { id, type, referBy }
 */
 export function splitDataItem(el: HTMLElement): DataItem {
-    const attrs: string[] = el.getAttribute('data-item')!?.split(';')
+    const attrs: string[] = el.getAttribute('data-item')!?.split(';');
 
     return { id: Number(attrs[0]), type: attrs[1], referBy: attrs[2] }
 }

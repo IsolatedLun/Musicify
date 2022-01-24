@@ -15,14 +15,6 @@ const Browse = () => {
     const [search, setSearch] = useState('');
     const [genre, setGenre] = useState('all');
 
-    const handleInput = (e: FormEvent<HTMLInputElement>) => {
-        setSearch((e.target as HTMLInputElement).value.toLowerCase());
-    }
-
-    const handleSelect = (e: FormEvent<HTMLSelectElement>) => {
-        setGenre((e.target as HTMLSelectElement).value.toLowerCase())
-    }
-
     useEffect(() => {
         if(data && data.length > 0) {
             dispatch(setSongList({songKey: 'ref-browse', data}));

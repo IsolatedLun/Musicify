@@ -45,10 +45,8 @@ const Upload = () => {
             <Link to={choice ? choice : ''} className='btn--def btn--primary'>
                 {
                     choice
-                    ?
-                    'Next'
-                    :
-                    'Select a choice'
+                    ? 'Next'
+                    : 'Select a choice'
                 }
             </Link>
         </section>
