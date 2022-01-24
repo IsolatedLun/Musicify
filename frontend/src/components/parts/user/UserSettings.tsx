@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { save, setChangesMade } from '../../../features/user.slice';
+import { setChangesMade, setDoSave } from '../../../features/user.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { GET_PROFILE } from '../../../misc/consts';
 import { isImage, validateInputs } from '../../../misc/formHandler';
@@ -57,6 +57,7 @@ const UserSettings = ({ user }: { user: User | null }) => {
 
         else if(!isVerified) {
             popup('Verify changes first.', 'Error');
+            dispatch(setDoSave(false));
         }
     }, [doSave])
 
