@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from . import albumViews
 
 urlpatterns = [
     path('songs', views.Songs.as_view(), name='songs'),
@@ -18,8 +19,8 @@ urlpatterns = [
     path('songs/rating/<int:song_id>', views.RatedSongView.as_view(), name='handle-liked-song'),
 
     # Albums
-    path('albums', views.AlbumView.as_view(), name='get-albums'),
-    path('albums/songs/<int:album_id>', views.AlbumSongView.as_view(), name='get-album-songs'),
-    path('albums/create', views.CreateAlbumView.as_view(), name='post-create-album'),
-    path('albums/profiles/<int:album_id>', views.AlbumProfieView.as_view(), name='get-album-profile')
+    path('albums', albumViews.AlbumView.as_view(), name='get-albums'),
+    path('albums/songs/<int:album_id>', albumViews.AlbumSongView.as_view(), name='get-album-songs'),
+    path('albums/create', albumViews.CreateAlbumView.as_view(), name='post-create-album'),
+    path('albums/profiles/<int:album_id>', albumViews.AlbumProfieView.as_view(), name='get-album-profile')
 ]
