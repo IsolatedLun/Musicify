@@ -31,7 +31,7 @@ const UserSongs = ({ user }: { user: User }) => {
 
         return (
             <div className="user__songs">
-                <ResultTitle text={`${user.producer_name}'s songs`} resultText='result' amt={anyData.length} />
+                <ResultTitle text={`${user.producer_name}'s songs`} resultText='song' amt={anyData.length} />
 
                 <div className="songs__results songs">
                     <Songs songs={anyData} referBy='ref-uploaded' mode='def' direction='vert'

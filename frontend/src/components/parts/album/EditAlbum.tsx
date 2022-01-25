@@ -17,15 +17,17 @@ const EditAlbum = () => {
     useEffect(() => {
         if(data)
             dispatch(setSongList({songKey: `ref-album-${albumId}`, data}));
-        
-        else
-            refetch()
     }, [isFetching])
     
     if(data && albumName)
         return(
             <div className="album">
-                <ResultTitle text={albumName} resultText='song' amt={data.length} />
+                <div className="flex flex--align--between">
+                    <ResultTitle text={albumName} resultText='song' amt={data.length} />
+                    <button onClick={() => refetch()} name='refresh' 
+                        aria-label='Refresh button' aria-hidden='true'
+                        className='fa btn--def btn--primary round--50 p-05'>&#xf021;</button>
+                </div>
 
                 <div className="song-list">
                     { isFetching && <Loader text='Loading album songs...'/> }
