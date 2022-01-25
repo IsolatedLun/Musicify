@@ -1,0 +1,13 @@
+{
+    "genres": [
+        "All", "Pop", "Rap", "Jazz", "Metal", "Instrumental"
+    ],
+
+    "itemTypes": [
+        "Songs", "Albums"
+    ],
+
+    "songTypes": [
+        "Uploads", "Premieres"
+    ]
+}

@@ -4,9 +4,11 @@ import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import Loader from './layout/Loader';
 import Songs from './parts/song/Songs';
 import Option from './parts/utils/Option';
-import songGenres from './json/genres.json';
+import filters from './json/filters.json';
 import { useGetSongsQuery } from '../services/musicService';
 import { useAutoState } from '../hooks/useAutoState';
+import { useFilters } from '../hooks/useFilters';
+import { INF_Song } from '../misc/interfaces';
 
 const Browse = () => {
     const {data, isLoading, isFetching, isSuccess, refetch} = useGetSongsQuery();
@@ -14,6 +16,7 @@ const Browse = () => {
 
     const [search, setSearch] = useState('');
     const [genre, setGenre] = useState('all');
+    const [itemType, setItemType] = useState('');
 
     useEffect(() => {
         if(data && data.length > 0) {
@@ -38,8 +41,21 @@ const Browse = () => {
                             useAutoState(e, setGenre, '', 'string')}
                         className='input--select' name='Genres'>
                         {
-                        songGenres.map((genre, key) => (
+
+                        filters.genres.map((genre, key) => (
                             <Option key={key} val={genre}/>
+                        ))
+                        }
+                    </select>
+
+                    <select id='genres-input' 
+                        onChange={(e: FormEvent<HTMLSelectElement>) =>
+                            useAutoState(e, setItemType, '', 'string')}
+                        className='input--select' name='Item types'>
+                        {
+
+                        filters.itemTypes.map((itemType, key) => (
+                            <Option key={key} val={itemType}/>
                         ))
                         }
                     </select>
@@ -50,8 +66,8 @@ const Browse = () => {
                 </div>
 
                 <div className="songs">
-                    <Songs songs={data} referBy='ref-browse' mode='filter' direction='vert' editable={false}
-                    genre={genre} search={search} fallbackEl={<p>No songs found.</p>} />
+                    <Songs songs={useFilters(data as any[], { genre: genre }, search)} direction='vert'
+                        editable={false} fallbackEl={<p>No songs found.</p>} referBy='ref-browse' />
                 </div>
 
             </div>

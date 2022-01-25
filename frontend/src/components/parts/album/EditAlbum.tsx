@@ -10,8 +10,8 @@ import ResultTitle from '../utils/ResultTitle';
 const EditAlbum = () => {
     const { albumId } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
-    const albumName = searchParams.get('album_name')
-    const dispatch = useAppDispatch()
+    const albumName = searchParams.get('album_name');
+    const dispatch = useAppDispatch();
     const { data, isSuccess, isFetching, refetch } = useGetAlbumSongsQuery(Number(albumId));
     
     useEffect(() => {
@@ -31,8 +31,8 @@ const EditAlbum = () => {
 
                 <div className="song-list">
                     { isFetching && <Loader text='Loading album songs...'/> }
-                    { isSuccess && <Songs songs={data} referBy={'ref-album-' + albumId} mode='def'
-                        fallbackEl={<></>} search='' genre='' direction='horiz' editable={true} /> }
+                    { isSuccess && <Songs songs={data} referBy={'ref-album-' + albumId}
+                        fallbackEl={<></>} direction='horiz' editable={true} /> }
                 </div>
 
                 <div className="btn--group">

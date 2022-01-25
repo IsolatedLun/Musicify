@@ -34,8 +34,8 @@ const UserSongs = ({ user }: { user: User }) => {
                 <ResultTitle text={`${user.producer_name}'s songs`} resultText='song' amt={anyData.length} />
 
                 <div className="songs__results songs">
-                    <Songs songs={anyData} referBy='ref-uploaded' mode='def' direction='vert'
-                        search='' genre='' fallbackEl={<p>No uploaded songs.</p>} editable={true}/>
+                    <Songs songs={anyData} referBy='ref-uploaded' direction='vert'
+                        fallbackEl={<p>No uploaded songs.</p>} editable={true}/>
                 </div>
             </div>
         )
