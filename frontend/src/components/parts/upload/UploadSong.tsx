@@ -6,7 +6,7 @@ import { NewSong } from '../../../misc/interfaces';
 import { constructFormData, getAudioLength, popup, previewImage } from '../../../misc/utils';
 import { usePostSongToAlbumMutation } from '../../../services/albumService';
 import { useUploadSongMutation } from '../../../services/musicService';
-import songGenres from '../../json/genres.json';
+import filters from '../../json/filters.json';
 import Option from '../utils/Option';
 
 const UploadSong = () => {
@@ -52,10 +52,6 @@ const UploadSong = () => {
                 catch(err: any) {
                     popup(err.data['err'], 'Error');
                 }
-            }
-
-            else {
-                alert('lol')
             }
         }
     }
@@ -111,7 +107,7 @@ const UploadSong = () => {
                             useAutoState(e, setNewSong, newSong, 'text')}
                             className='select__inpt'>
                             {
-                                songGenres.map(genre => (
+                                filters.genres.map(genre => (
                                     <Option val={genre}/>
                                 ))
                             }

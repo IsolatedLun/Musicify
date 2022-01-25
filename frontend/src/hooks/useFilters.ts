@@ -14,4 +14,6 @@ export function useFilters(items: any[], filters: any, search: string): any {
 
         })
     }).filter(item => item.title.toLowerCase().indexOf(search.toLowerCase()) > -1);
+    
+    return res;
 }
