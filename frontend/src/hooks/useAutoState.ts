@@ -4,6 +4,12 @@ interface AutoStateOptions {
     fileTargetId: string
 }
 
+/**
+ * @param event -> Input event
+ * @param setter -> State updater
+ * @param data -> The state itself
+ * @param type -> Input type
+*/
 export function useAutoState(e: React.FormEvent<any>, 
     setter: Function, data: Object, type: 'text' | 'string' | 'file', 
     options: AutoStateOptions | null=null) {

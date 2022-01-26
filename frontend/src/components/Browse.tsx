@@ -31,7 +31,7 @@ const Browse = () => {
         return (
             <div className="browse-container" id='main-content'>
                 <div className="browse__controls flex--align gap--1">
-                    <input id='search-inpt' type="text" placeholder='Search songs...' 
+                    <input id='search-inpt' type="text" placeholder='Search melodies...' 
                         onInput={(e: FormEvent<HTMLInputElement>) => 
                             useAutoState(e, setSearch, '', 'string')} 
                         className='inpt--def input--primary' />

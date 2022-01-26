@@ -55,7 +55,7 @@ REST_FRAMEWORK = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
 AUTH_USER_MODEL = 'users.cUser'
 
 SESSION_COOKIE_SECURE = False
