@@ -6,6 +6,7 @@ import { NewSong } from '../../../misc/interfaces';
 import { constructFormData, getAudioLength, popup, previewImage } from '../../../misc/utils';
 import { usePostSongToAlbumMutation } from '../../../services/albumService';
 import { useUploadSongMutation } from '../../../services/musicService';
+import TextInput from '../../inputs/TextInput';
 import filters from '../../json/filters.json';
 import Option from '../utils/Option';
 
@@ -76,14 +77,9 @@ const UploadSong = () => {
                     </section>
 
                     <section>
-                    <div className="form__part">
-                        <label className="form__label">Song name</label>
-                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
-                            useAutoState(e, setNewSong, newSong, 'text')}
-                            placeholder='Enter song name' className='form__inpt' 
-                            data-realtype='text' name='title' />
-                        <p className="form__helptext"></p>
-                    </div>
+
+                    <TextInput props={{ setter: setNewSong, data: newSong,
+                        label: 'song name', type: 'text', name: 'title' }} />
 
                     <div className="form__part">
                         <label className="form__label">Song thumbnail</label>

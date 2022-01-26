@@ -33,12 +33,12 @@ const Browse = () => {
                 <div className="browse__controls flex--align gap--1">
                     <input id='search-inpt' type="text" placeholder='Search melodies...' 
                         onInput={(e: FormEvent<HTMLInputElement>) => 
-                            useAutoState(e, setSearch, '', 'string')} 
+                            useAutoState(e, setSearch, '', 'singleStr')} 
                         className='inpt--def input--primary' />
 
                     <select id='genres-input' 
                         onChange={(e: FormEvent<HTMLSelectElement>) =>
-                            useAutoState(e, setGenre, '', 'string')}
+                            useAutoState(e, setGenre, '', 'singleStr')}
                         className='input--select' name='Genres'>
                         {
 

@@ -1,7 +1,7 @@
 import { previewImage } from "../misc/utils";
 
-interface AutoStateOptions {
-    fileTargetId: string
+export interface AutoStateOptions {
+    fileTargetId: string;
 }
 
 /**
@@ -11,7 +11,7 @@ interface AutoStateOptions {
  * @param type -> Input type
 */
 export function useAutoState(e: React.FormEvent<any>, 
-    setter: Function, data: Object, type: 'text' | 'string' | 'file', 
+    setter: Function, data: Object, type: string | 'text' | 'singleStr' | 'file', 
     options: AutoStateOptions | null=null) {
     
     const target = e.target as HTMLInputElement;
@@ -19,7 +19,7 @@ export function useAutoState(e: React.FormEvent<any>,
         setter({ ...data, [target.name]: target.value });
     }
 
-    else if(type === 'string') {
+    else if(type === 'singleStr') {
         setter(target.value);
     }
 

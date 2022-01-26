@@ -13,7 +13,7 @@ const DeleteView = () => {
     const [deleteItem, { isSuccess }] = usePostDeleteItemMutation();
 
     const postDeleteItem = async() => {
-        await deleteItem({ id, type })
+        await deleteItem({ id, type });
     }
 
     useEffect(() => {
