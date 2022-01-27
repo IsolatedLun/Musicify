@@ -6,7 +6,8 @@ import { NewSong } from '../../../misc/interfaces';
 import { constructFormData, getAudioLength, popup, previewImage } from '../../../misc/utils';
 import { usePostSongToAlbumMutation } from '../../../services/albumService';
 import { useUploadSongMutation } from '../../../services/musicService';
-import TextInput from '../../inputs/TextInput';
+import Input from '../../inputs/Input';
+import Inputs, { InputProps } from '../../inputs/Inputs';
 import filters from '../../json/filters.json';
 import Option from '../utils/Option';
 
@@ -15,6 +16,13 @@ const UploadSong = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const uploadMode = searchParams.get('for');
     const albumId = searchParams.get('id');
+
+    const inputs: InputProps[] = [
+        { inputType: 'text', label: 'song name', name: 'title', type: 'text', 
+            id: 'song-name-inpt', options: null },
+        { inputType: 'file', label: 'song thumbnail', name: 'profile', type: 'file', 
+            id: 'thumbnail-inpt', options: { fileTargetId: 'song-prev-thumbnail' }, fileType: 'img' },
+    ]
 
     const [newSong, setNewSong] = useState<NewSong>({
         title: '',
@@ -78,24 +86,7 @@ const UploadSong = () => {
 
                     <section>
 
-                    <TextInput props={{ setter: setNewSong, data: newSong,
-                        label: 'song name', type: 'text', name: 'title' }} />
-
-                    <div className="form__part">
-                        <label className="form__label">Song thumbnail</label>
-                        <div className='flex gap--05 flex--align--end'>
-                            <div className="image__prev">
-                                <img id='upload-song-profile-prev' src="" />
-                            </div>
-                            <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => 
-                                useAutoState(e, setNewSong, newSong, 'file', 
-                                { fileTargetId: 'upload-song-profile-prev' })}
-                                placeholder='Add song thumbnail' accept='image/*'
-                                className='form__inpt' data-file-type='img'
-                                data-realtype='file' name='profile' />
-                        </div>
-                        <p className="form__helptext"></p>
-                    </div>
+                    <Inputs props={{ setter: setNewSong, data: newSong, inputs: inputs }} />
 
                     <div className="form__part">
                         <label className="form__label">Genre</label>

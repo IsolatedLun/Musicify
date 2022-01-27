@@ -6,11 +6,34 @@ import { togglePasswordVisibility, validateInputs } from '../../misc/formHandler
 import { UserForm } from '../../misc/interfaces';
 import { constructFormData, popup } from '../../misc/utils';
 import { useSignUpMutation } from '../../services/userServices';
+import Inputs, { InputProps } from '../inputs/Inputs';
 
 const SignUp = () => {
     const { isLogged } = useAppSelector(state => state.user)
     const navigate = useNavigate();
     const [signup, { isLoading }] = useSignUpMutation();
+
+    const doubleInputs: InputProps[] = [
+        { inputType: 'text', label: 'first name', name: 'firstName', type: 'text', 
+            id: 'first-name-inpt', options: null },
+        { inputType: 'text', label: 'last name', name: 'lastName', type: 'text', 
+            id: 'last-name-inpt', options: null },
+    ]
+
+    const mainInputs: InputProps[] = [
+        { inputType: 'text', label: 'email address', name: 'email', type: 'text', 
+            id: 'email-inpt', options: null },
+        { inputType: 'text', label: 'password', name: 'password', type: 'password', 
+            id: 'passwrd-inpt', options: null },
+    ]
+
+    const miscInputs: InputProps[] = [
+        { inputType: 'text', label: 'producer name', name: 'producerName', type: 'text', 
+            id: 'producer-name-inpt', options: null, isOptional: true },
+        { inputType: 'file', label: 'profile picture', name: 'profilePicture', type: 'file', 
+            id: 'profile-pic-inpt', options: { fileTargetId: 'new-profile-prev' }, fileType: 'img',
+            isOptional: true },
+    ]
     
     const [newUser, setNewUser] = useState<UserForm>({
         firstName: '',
@@ -54,67 +77,15 @@ const SignUp = () => {
 
                 <div className="form__double-part">
 
-                    <div className="form__part">
-                        <label className="form__label">First name</label>
-                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
-                            useAutoState(e, setNewUser, newUser, 'text')}
-                            placeholder='Enter first name' className='form__inpt' 
-                            data-realtype='text' name='firstName' />
-                        <p className="form__helptext"></p>
-                    </div>
-
-                    <div className="form__part">
-                        <label className="form__label">Last name</label>
-                        <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
-                            useAutoState(e, setNewUser, newUser, 'text')}
-                            placeholder='Enter last name' className='form__inpt'
-                            data-realtype='text' name='lastName' />
-                        <p className="form__helptext"></p>
-                    </div>
+                    <Inputs props={{ setter: setNewUser, data: newUser, inputs: doubleInputs }} />
 
                 </div>
 
-                <div className="form__part">
-                    <label className="form__label">Email address</label>
-                    <input type="email" onInput={(e: FormEvent<HTMLInputElement>) => 
-                        useAutoState(e, setNewUser, newUser, 'text')}
-                        placeholder='Enter email address' className="form__inpt" 
-                        data-realtype='email' name='email' />
-                    <p className="form__helptext"></p>
-                </div>
-
-                <div className="form__part">
-                    <label className="form__label">Password</label>
-                    <div className="form__inpt-container">
-                        <input id='inpt-password' type="password" onInput={(e: FormEvent<HTMLInputElement>) => 
-                            useAutoState(e, setNewUser, newUser, 'text')}
-                            placeholder='Enter password' className="form__inpt" 
-                            data-realtype='password' name='password' />
-                        <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, 'inpt-password')}
-                            className='btn--def fa part__btn'>&#xf06e;</button>
-                    </div>
-                    <p className="form__helptext"></p>
-                </div>
+                <Inputs props={{ setter: setNewUser, data: newUser, inputs: mainInputs }} />
 
                 <p className="form__splitter">Misc</p>
 
-                <div className="form__part">
-                    <label className="form__label">Producer name<span className='txt--muted'>* (Public username)</span></label>
-                    <input type="text" onInput={(e: FormEvent<HTMLInputElement>) => 
-                        useAutoState(e, setNewUser, newUser, 'text')}
-                        placeholder='Enter producer name' className='form__inpt' 
-                        data-realtype='ignore' name='producerName' />
-                    <p className="form__helptext"></p>
-                </div>
-
-                <div className="form__part">
-                    <label className="form__label">Profile<span className='txt--muted'>*</span></label>
-                    <input type="file" onInput={(e: FormEvent<HTMLInputElement>) => 
-                        useAutoState(e, setNewUser, newUser, 'file')}
-                        placeholder='Upload profie pciture' className='form__inpt' 
-                        data-realtype='ignore' data-file-type='img' name='profilePicture' />
-                    <p className="form__helptext"></p>
-                </div>
+                <Inputs props={{ setter: setNewUser, data: newUser, inputs: miscInputs }} />
 
                 <Link to='/login' className='form__link' replace>Already have an account?</Link>
 

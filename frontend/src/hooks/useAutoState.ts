@@ -13,7 +13,7 @@ export interface AutoStateOptions {
 export function useAutoState(e: React.FormEvent<any>, 
     setter: Function, data: Object, type: string | 'text' | 'singleStr' | 'file', 
     options: AutoStateOptions | null=null) {
-    
+
     const target = e.target as HTMLInputElement;
     if(type === 'text') {
         setter({ ...data, [target.name]: target.value });
@@ -27,7 +27,7 @@ export function useAutoState(e: React.FormEvent<any>,
         setter({ ...data, [target.name]: target.files[0] });
 
         if(options) {
-            if(target.name === 'profile') {
+            if(target.getAttribute('data-file-type') === 'img') {
                 previewImage(options.fileTargetId, target.files[0], null);
             }
     
