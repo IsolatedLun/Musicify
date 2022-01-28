@@ -9,6 +9,8 @@ import { useGetSongsQuery } from '../services/musicService';
 import { useAutoState } from '../hooks/useAutoState';
 import { useFilters } from '../hooks/useFilters';
 import { INF_Song } from '../misc/interfaces';
+import Inputs, { InputProps } from './inputs/Inputs';
+import Input from './inputs/Input';
 
 const Browse = () => {
     const {data, isLoading, isFetching, isSuccess, refetch} = useGetSongsQuery();
@@ -17,6 +19,15 @@ const Browse = () => {
     const [search, setSearch] = useState('');
     const [genre, setGenre] = useState('all');
     const [itemType, setItemType] = useState('');
+
+    const inputs: InputProps[] = [
+        { inputType: 'select', label: 'genre', name: 'genre ', type: 'singleStr', 
+            formPartCls: 'width-auto',
+            id: 'song-genre-select', options: null, selectValues: filters.genres, disableLabel: true },
+        { inputType: 'select', label: 'item type', name: 'itemType ', type: 'singleStr', 
+            formPartCls: 'width-auto',
+            id: 'item-type-select', options: null, selectValues: filters.itemTypes, disableLabel: true },
+    ]
 
     useEffect(() => {
         if(data && data.length > 0) {
@@ -36,29 +47,9 @@ const Browse = () => {
                             useAutoState(e, setSearch, '', 'singleStr')} 
                         className='inpt--def input--primary' />
 
-                    <select id='genres-input' 
-                        onChange={(e: FormEvent<HTMLSelectElement>) =>
-                            useAutoState(e, setGenre, '', 'singleStr')}
-                        className='input--select' name='Genres'>
-                        {
+                    <Input props={inputs[0]} />
 
-                        filters.genres.map((genre, key) => (
-                            <Option key={key} val={genre}/>
-                        ))
-                        }
-                    </select>
-
-                    <select id='genres-input' 
-                        onChange={(e: FormEvent<HTMLSelectElement>) =>
-                            useAutoState(e, setItemType, '', 'string')}
-                        className='input--select' name='Item types'>
-                        {
-
-                        filters.itemTypes.map((itemType, key) => (
-                            <Option key={key} val={itemType}/>
-                        ))
-                        }
-                    </select>
+                    <Input props={inputs[1]} />
                     
                     <button onClick={() => refetch()} name='refresh' 
                         aria-label='Refresh button' aria-hidden='true'

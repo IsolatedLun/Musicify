@@ -6,13 +6,15 @@ import { InputProps } from './Inputs';
 
 const Input = ({ props } : { props: InputProps }) => {
     return(
-      <div className="form__part">
-          <label className="form__label">
-            { props.label }
-            { props.isOptional === true && (
-              <span className='txt--muted'>*</span>
-            ) }
+      <div className={`form__part ${props.formPartCls}`}>
+          { !props.disableLabel && (
+            <label className="form__label">
+              { props.label }
+              { props.isOptional === true && (
+                <span className='txt--muted'>*</span>
+              ) }
             </label>
+          ) }
           <div className={`form__inpt-container 
             ${props.options !== null ? 'flex gap--05 flex--align--end' : ''}`}>
 
