@@ -1,6 +1,7 @@
 import React, { FormEvent } from 'react';
 import { useAutoState } from '../../hooks/useAutoState';
 import { togglePasswordVisibility } from '../../misc/formHandler';
+import Option from '../parts/utils/Option';
 import { InputProps } from './Inputs';
 
 const Input = ({ props } : { props: InputProps }) => {
@@ -12,7 +13,8 @@ const Input = ({ props } : { props: InputProps }) => {
               <span className='txt--muted'>*</span>
             ) }
             </label>
-          <div className={`form__inpt-container ${props.options !== null ? 'flex gap--05 flex--align--end' : ''}`}>
+          <div className={`form__inpt-container 
+            ${props.options !== null ? 'flex gap--05 flex--align--end' : ''}`}>
 
             { props.options !== null && (
               <div className="image__prev">
@@ -20,20 +22,47 @@ const Input = ({ props } : { props: InputProps }) => {
               </div>
             ) }
 
-            <input 
+            {
+              props.inputType === 'select'
+              ?
+
+              (
+                <select
+                  
+                  onChange={(e: FormEvent<HTMLSelectElement>) => 
+                    useAutoState(e, props.setter!, props.data!, props.type, props.options)}
+
+                  id={props.id}
+                  name={props.name}
+                  className='select__inpt'
+                >
+                  {
+                    props.selectValues!.map(val => (
+                      <Option val={val}/>
+                  ))
+                  }
+                </select>
+              )
+              :
+
+              (
+                <input
             
-            onInput={(e: FormEvent<HTMLInputElement>) => 
-                useAutoState(e, props.setter!, props.data!, props.type, props.options)}
-            
-            id={props.id}
-            placeholder={`Enter ${props.label}`} 
-            className='form__inpt' 
-            data-realtype={props.type} name={props.name} 
-            type={props.type}
-            data-file-type={props.fileType ?? null}
-            accept={`${props.accept ?? null}/*`}
-            
-            />
+              onInput={(e: FormEvent<HTMLInputElement>) => 
+                  useAutoState(e, props.setter!, props.data!, props.type, props.options)}
+              
+              id={props.id}
+              placeholder={`Enter ${props.label}`} 
+              className='form__inpt' 
+              data-realtype={props.type} 
+              name={props.name} 
+              type={props.type}
+              data-file-type={props.fileType ?? null}
+              accept={`${props.accept ?? null}/*`}
+              
+              />
+              )
+            }
 
             { props.inputType === 'password' && 
             <button onClick={(e: React.MouseEvent) => togglePasswordVisibility(e, props.id)}

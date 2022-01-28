@@ -22,6 +22,8 @@ const UploadSong = () => {
             id: 'song-name-inpt', options: null },
         { inputType: 'file', label: 'song thumbnail', name: 'profile', type: 'file', 
             id: 'thumbnail-inpt', options: { fileTargetId: 'song-prev-thumbnail' }, fileType: 'img' },
+        { inputType: 'select', label: 'song genre', name: 'genre', type: 'text', 
+        id: 'song-genre-select', options: null, selectValues: filters.genres },
     ]
 
     const [newSong, setNewSong] = useState<NewSong>({
@@ -87,19 +89,6 @@ const UploadSong = () => {
                     <section>
 
                     <Inputs props={{ setter: setNewSong, data: newSong, inputs: inputs }} />
-
-                    <div className="form__part">
-                        <label className="form__label">Genre</label>
-                        <select name='genre' onChange={(e: FormEvent<HTMLSelectElement>) => 
-                            useAutoState(e, setNewSong, newSong, 'text')}
-                            className='select__inpt'>
-                            {
-                                filters.genres.map(genre => (
-                                    <Option val={genre}/>
-                                ))
-                            }
-                        </select>
-                    </div>
                     
                     </section>
                 </div>

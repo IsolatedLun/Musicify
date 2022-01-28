@@ -16,8 +16,9 @@ export interface InputProps {
     fileType?: 'img' | 'any' | 'audio'
     name: string;
     label: string;
-    inputType?: 'text' | 'file' | 'audio' | 'password';
+    inputType?: 'text' | 'file' | 'audio' | 'password' | 'select';
     options?: AutoStateOptions | null;
+    selectValues?: string[];
 
     accept?: string;
     isOptional?: boolean;
