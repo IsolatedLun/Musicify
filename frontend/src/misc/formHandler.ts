@@ -34,7 +34,6 @@ function validateInput(input: HTMLInputElement): boolean {
     const realType: string | null = input.getAttribute('data-realtype') ?? null;
     const fileType: string | null = input.getAttribute('data-file-type') ?? null;
     const canBeNull: boolean = input.getAttribute('data-null') === 'true' ? true : false;
-    let isNested: boolean = false;
 
     clearHelpText(input);
     if(realType === 'ignore') {
@@ -87,8 +86,8 @@ function highlightInput(input: HTMLInputElement, type: 'err' | 'ok' | 'warn') {
  * @todo Needs to be the last child of **form__part**
 */
 function addHelpText(input: HTMLInputElement, text: string) {
-    if(input.parentElement!.classList.contains('form__part')) {
-        const p = input.parentElement?.lastChild!;
+    if(input.parentElement!.parentElement!.classList.contains('form__part')) {
+        const p = input.parentElement?.parentElement?.lastChild!;
         p.textContent = text;
     }
 }
@@ -100,8 +99,8 @@ function addHelpText(input: HTMLInputElement, text: string) {
 function clearHelpText(input: HTMLInputElement) {
     let p: ChildNode | null = null;
 
-    if(input.parentElement?.classList.contains('form__part')) {
-        p = input.parentElement?.lastChild!;
+    if(input.parentElement!.parentElement!.classList.contains('form__part')) {
+        p = input.parentElement?.parentElement?.lastChild!;
     }
 
     if(p) {

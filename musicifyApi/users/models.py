@@ -36,8 +36,6 @@ class cUser(AbstractUser):
 
     objects = cUserManager()
 
-    # def check_password(self, raw_password):
-    #     if self.password == raw_password:
-    #         return True
-    #     else:
-    #         return False
+    def delete(self, using=None, keep_parents=False):
+        self.profile.storage.delete(self.profile.path)
+        super().delete()

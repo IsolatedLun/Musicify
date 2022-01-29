@@ -1,5 +1,5 @@
 import { ICON_ERROR, ICON_INFO } from "./consts";
-import { DataItem, UserAgent } from "./interfaces";
+import { DataItem, INF_Song, I_INF_Song, SelectedSong, UserAgent } from "./interfaces";
 
 export function animateMixerBars(id: string): void {
     const mixers = (document.getElementById(id) as HTMLDivElement).children!
@@ -202,4 +202,13 @@ export function splitDataItem(el: HTMLElement): DataItem {
     const attrs: string[] = el.getAttribute('data-item')!?.split(';');
 
     return { id: Number(attrs[0]), type: attrs[1], referBy: attrs[2] };
+}
+
+/**
+ * @param songs
+ * @param selSong
+ * @returns The index of the song
+*/
+export function findSong(obj: I_INF_Song, selSong: SelectedSong): number {
+    return obj[selSong.referBy].findIndex(song => song.id === selSong.id);
 }

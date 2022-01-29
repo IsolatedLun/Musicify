@@ -22,10 +22,11 @@ const Browse = () => {
 
     const inputs: InputProps[] = [
         { inputType: 'select', label: 'genre', name: 'genre ', type: 'singleStr', 
-            formPartCls: 'width-auto',
+            formPartCls: 'width-auto', setter: setGenre, data: genre,
             id: 'song-genre-select', options: null, selectValues: filters.genres, disableLabel: true },
+            
         { inputType: 'select', label: 'item type', name: 'itemType ', type: 'singleStr', 
-            formPartCls: 'width-auto',
+            formPartCls: 'width-auto', setter: setSearch, data: search,
             id: 'item-type-select', options: null, selectValues: filters.itemTypes, disableLabel: true },
     ]
 

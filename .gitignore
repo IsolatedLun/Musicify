@@ -5,3 +5,6 @@ dist-ssr
 *.local
 musicifyApi/media
 musicifyApi/db.sqlite3
+musicifyApi/backend/__pycache__
+musicifyApi/users/__pycache__
+musicifyApi/musicifyApi/__pycache__

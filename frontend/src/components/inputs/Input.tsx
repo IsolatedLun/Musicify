@@ -58,7 +58,7 @@ const Input = ({ props } : { props: InputProps }) => {
               className='form__inpt' 
               data-realtype={props.type} 
               name={props.name} 
-              type={props.type}
+              type={props.inputType}
               data-file-type={props.fileType ?? null}
               accept={`${props.accept ?? null}/*`}
               

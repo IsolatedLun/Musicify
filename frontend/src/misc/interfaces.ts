@@ -42,6 +42,11 @@ export interface NewSong {
     audio: File | null;
 }
 
+export interface SelectedSong {
+    idx: number | string;
+    referBy: string;
+}
+
 // User related 
 export interface UserForm {
     firstName?: string;
@@ -88,6 +93,7 @@ export interface INF_Album {
 // Misc
 export interface DataItem {
     id: number;
-    type: string;
+    idx: number;
     referBy: string;
+    type: string;
 }

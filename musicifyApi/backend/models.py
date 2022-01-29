@@ -48,6 +48,11 @@ class Song(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def delete(self, using=None, keep_parents=False):
+        self.thumbnail.storage.delete(self.thumbnail.path)
+        self.audio.storage.delete(self.audio.path)
+        super().delete()
+
 class RecentSong(models.Model):
     user = models.ForeignKey(cUser, on_delete=models.CASCADE)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
@@ -68,6 +73,10 @@ class Album(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now_add=True)
+
+    def delete(self, using=None, keep_parents=False):
+        self.profile.storage.delete(self.profile.path)
+        super().delete()
 
 class AlbumSong(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE)

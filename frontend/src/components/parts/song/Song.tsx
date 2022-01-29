@@ -28,7 +28,7 @@ const Song = ({ song, idx, ignore, queueType, referBy, direction='vert', editabl
         <a className={`song ${direction}`} data-duration={song.duration} data-editable={editable}
             onContextMenu={(e) => {
                 showContextMenu(e, 'context-menu');
-                dispatch(setSelectedSong(splitDataItem(e.target as HTMLElement)));
+                dispatch(setSelectedSong({ id: song.id, idx: idx, referBy: referBy, type: 'song' }));
             }} 
              
             onKeyDown={(e) => {

@@ -1,3 +1,9 @@
+.upload-album__form {
+    margin-block: 0.5em;
+    padding: 1em;
+    background-color: var(--bg-hov);
+}
+
 .albums {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));

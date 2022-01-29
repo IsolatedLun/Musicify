@@ -11,8 +11,9 @@ const initialState: MusicState = {
     currSongType: '',
     selectedSong: {
         id: -1,
-        type: 'null',
-        referBy: 'ref-noReffer'
+        idx: -1,
+        referBy: 'ref-noReffer',
+        type: '',
     },
 
     hasUploadedAlbum: false,
@@ -57,6 +58,14 @@ export const musicSlice = createSlice({
 
         setUploadedAlbum(state, action) {
             state.hasUploadedAlbum = action.payload
+        },
+
+        setRemoveSong(state, action) {
+            const referBy = action.payload['referBy'];
+            const id = action.payload['id'];
+
+            state.songsToPlay[referBy] = state.songsToPlay[referBy].filter(song => song.id !== id);
+            return state;
         }
     },
     extraReducers: (builder) => {
@@ -64,6 +73,6 @@ export const musicSlice = createSlice({
     }
 })
 
-export const { setCurrSong, setIndex, setSong, setSelectedSong,
+export const { setCurrSong, setIndex, setSong, setSelectedSong, setRemoveSong,
     setSongType, setSongList, setUploadedAlbum, setUploadedSong } = musicSlice.actions;
 export default musicSlice.reducer;

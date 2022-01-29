@@ -32,7 +32,7 @@ const SignUp = () => {
             id: 'producer-name-inpt', options: null, isOptional: true },
         { inputType: 'file', label: 'profile picture', name: 'profilePicture', type: 'file', 
             id: 'profile-pic-inpt', options: { fileTargetId: 'new-profile-prev' }, fileType: 'img',
-            isOptional: true },
+            isOptional: true, accept: 'image' },
     ]
     
     const [newUser, setNewUser] = useState<UserForm>({
