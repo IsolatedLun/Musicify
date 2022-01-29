@@ -10,7 +10,6 @@ const Logout = () => {
 
     const commenceLogout = () => {
         dispatch(logout());
-        fullReload();
         navigate('/login');
     }
 

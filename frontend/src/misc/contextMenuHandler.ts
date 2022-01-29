@@ -10,7 +10,7 @@ function moveMenu(e: React.MouseEvent, id: string) {
 
     contextMenu.style.top = e.clientY + 'px';
     contextMenu.style.left = e.clientX + 'px';
-    contextMenu.focus()
+    focusElement(id);
 }
 
 /**

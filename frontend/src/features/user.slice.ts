@@ -28,9 +28,7 @@ export const userSlice = createSlice({
         logout(state) {
             localStorage.removeItem('tok');
 
-            state.isLogged = false;
-            state.isSignedUp = false;
-            state.user = null;
+            return initialState;
         },
 
         setChangesMade(state, action) {

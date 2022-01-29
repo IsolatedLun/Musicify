@@ -8,6 +8,7 @@ export function useFilters(items: any[], filters: any, search: string): any {
         return Object.keys(filters).every(filter => {
             if(filters[filter] === 'all')
                 return item;
+                
             if(item[filter] === filters[filter]) {
                 return item;
             }
