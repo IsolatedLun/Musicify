@@ -36,6 +36,10 @@ const Browse = () => {
         }
     }, [isFetching])
 
+    useEffect(() => {
+        refetch();
+    }, [])
+
     if(isLoading)
        return (<Loader text='Loading songs...'/>) 
     

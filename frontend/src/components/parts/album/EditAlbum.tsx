@@ -18,6 +18,10 @@ const EditAlbum = () => {
         if(data)
             dispatch(setSongList({songKey: `ref-album-${albumId}`, data}));
     }, [isFetching])
+
+    useEffect(() => {
+        refetch();
+    }, [])
     
     if(data && albumName)
         return(

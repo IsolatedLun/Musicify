@@ -8,7 +8,7 @@ import Songs from '../song/Songs';
 const UserHome = ({ user }: { user: User | null }) => {
     const dispatch = useAppDispatch();
     
-    const { data, isLoading, isFetching, isSuccess } = useGetRecentSongsQuery();
+    const { data, isLoading, isFetching, isSuccess, refetch } = useGetRecentSongsQuery();
 
     useEffect(() => {
         if(data) {
@@ -17,6 +17,10 @@ const UserHome = ({ user }: { user: User | null }) => {
             dispatch(setSongList({ songKey: 'ref-favorite', data: anyData['favorites'] }));
         }
     }, [isFetching])
+
+    useEffect(() => {
+        refetch();
+    }, [])
 
     return (
         <div className='user__home flex flex--col gap--1'>

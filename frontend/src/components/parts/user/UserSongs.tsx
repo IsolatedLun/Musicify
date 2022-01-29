@@ -8,7 +8,7 @@ import { setSongList } from '../../../features/music-slice';
 import ResultTitle from '../utils/ResultTitle';
 
 const UserSongs = ({ user }: { user: User }) => {
-    const { data, isLoading, isFetching, isSuccess, error } = useGetUploadedSongsQuery();
+    const { data, isLoading, isFetching, isSuccess, error, refetch } = useGetUploadedSongsQuery();
     
     const uploadedSongs = useAppSelector(state => state.music.songsToPlay['ref-uploaded'])
     const dispatch = useAppDispatch();
@@ -19,6 +19,10 @@ const UserSongs = ({ user }: { user: User }) => {
         }
 
     }, [isFetching])
+
+    useEffect(() => {
+        refetch();
+    }, [])
 
     if(isFetching)
         return <Loader text='Loading uploaded songs...'/>
