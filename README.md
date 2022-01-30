@@ -5,6 +5,7 @@ Musicify, a nice music app.
 <img src="./home.png" width="1024"/>
 
 **Change, like/dislike and donwload songs**
+---
 <img src="./intr.png" width="1024"/>
 
 **Upload songs**
