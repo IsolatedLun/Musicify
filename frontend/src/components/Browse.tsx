@@ -26,7 +26,7 @@ const Browse = () => {
             id: 'song-genre-select', options: null, selectValues: filters.genres, disableLabel: true },
             
         { inputType: 'select', label: 'item type', name: 'itemType ', type: 'singleStr', 
-            formPartCls: 'width-auto', setter: setSearch, data: search,
+            formPartCls: 'width-auto', setter: setItemType, data: itemType,
             id: 'item-type-select', options: null, selectValues: filters.itemTypes, disableLabel: true },
     ]
 
@@ -54,7 +54,7 @@ const Browse = () => {
 
                     <Input props={inputs[0]} />
 
-                    <Input props={inputs[1]} />
+                    {/* <Input props={inputs[1]} /> */}
                     
                     <button onClick={() => refetch()} name='refresh' 
                         aria-label='Refresh button' aria-hidden='true'

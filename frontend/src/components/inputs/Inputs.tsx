@@ -49,9 +49,9 @@ export interface InputProps {
 */
 const Inputs = ({ props } : { props: Inputs }) => {
     return <>{
-        props.inputs.map(input => (
+        props.inputs.map((input, idx) => (
         
-        <Input props={{ ...input, setter: props.setter, data: props.data }} />
+        <Input key={idx} props={{ ...input, setter: props.setter, data: props.data }} />
         ))
     }</>
 

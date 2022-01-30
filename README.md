@@ -19,9 +19,8 @@ Musicify, a nice music app.
 ### Desc
 I made this app to strengthen my knowledge of programming/web dev. in general, I learned numerous crucial things and am definitely having fun!
 
-#### Experimental features (WIP)
-- Payments
-- Premieres
-- Rating
-- Favorites
+#### What can you do?
+- Everything that a typical music app can but maybe with less features :>
+
+##### Made and finished with <3 by IsolatedGamer at Jan. 30, 2022
 

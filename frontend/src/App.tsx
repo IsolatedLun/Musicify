@@ -22,7 +22,7 @@ function App() {
 
   const fetchUser = async() => {
     try {
-      await authedUser().unwrap();
+      await authedUser();
     }
 
     catch(err: any) {

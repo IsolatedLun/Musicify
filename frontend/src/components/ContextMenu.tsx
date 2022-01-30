@@ -23,7 +23,7 @@ const ContextMenu = () => {
     }
 
     return(
-        <div onClick={() => document.getElementById('context-menu')?.blur()}
+        <div onClick={(e) => (e.target as HTMLElement).blur()}
             className="context-menu" id='context-menu' tabIndex={-1}>
             <ul className="menu__options">
                 <button onClick={() => postDeleteItem()}
