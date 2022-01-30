@@ -2,12 +2,22 @@
 Musicify, a nice music app.
 **A WIP app that will have it's on twists!**
 ---
+<img src="./home.png" width="1024"/>
+
+**Change, like/dislike and donwload songs**
 <img src="./intr.png" width="1024"/>
+
+**Upload songs**
 ---
 <img src="./upload.png" width="1024"/>
+
+**Delete songs with a custom context menu**
 ---
-<img src="./musicPlayer.png" width="1024"/>
+<img src="./contextmenu.png" width="1024"/>
+
+**Edit albums**
 ---
+<img src="./album.png" width="1024"/>
 
 ## How to run
 * Clone this repo
