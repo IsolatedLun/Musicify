@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { setSongList } from '../../../features/music-slice';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { useGetAlbumSongsQuery } from '../../../services/albumService';
 import Loader from '../../layout/Loader';
 import Songs from '../song/Songs';
@@ -9,13 +9,16 @@ import ResultTitle from '../utils/ResultTitle';
 
 const EditAlbum = () => {
     const { albumId } = useParams();
+
+    const { data, isSuccess, isFetching, refetch } = useGetAlbumSongsQuery(Number(albumId!));  
+    const albumSongs = useAppSelector(state => state.music.songsToPlay['ref-album-' + albumId]);
     const [searchParams, setSearchParams] = useSearchParams();
     const albumName = searchParams.get('album_name');
     const dispatch = useAppDispatch();
-    const { data, isSuccess, isFetching, refetch } = useGetAlbumSongsQuery(Number(albumId));
+    
     
     useEffect(() => {
-        if(data)
+        if(data && data !== undefined)
             dispatch(setSongList({songKey: `ref-album-${albumId}`, data}));
     }, [isFetching])
 
@@ -23,7 +26,7 @@ const EditAlbum = () => {
         refetch();
     }, [])
     
-    if(data && albumName)
+    if(data && albumName && albumSongs)
         return(
             <div className="album">
                 <div className="flex flex--align--between">
@@ -35,7 +38,7 @@ const EditAlbum = () => {
 
                 <div className="song-list">
                     { isFetching && <Loader text='Loading album songs...'/> }
-                    { isSuccess && <Songs songs={data} referBy={'ref-album-' + albumId}
+                    { isSuccess && <Songs songs={albumSongs} referBy={'ref-album-' + albumId}
                         fallbackEl={<></>} direction='horiz' editable={true} /> }
                 </div>
 
